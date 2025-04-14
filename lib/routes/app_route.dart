@@ -1,10 +1,14 @@
 import 'package:gcc_admin/bindings/menu_binding.dart';
 import 'package:gcc_admin/bindings/signup_binding.dart';
 import 'package:gcc_admin/bindings/welcome_binding.dart';
+import 'package:gcc_admin/components/AddTeacher.dart';
+import 'package:gcc_admin/pages/home_page/Teacher/list_teacher/list_teacher.dart';
 import 'package:gcc_admin/pages/class_page/class_page.dart';
 import 'package:gcc_admin/pages/class_page/list_page/list_siswa.dart';
 import 'package:gcc_admin/pages/class_page/report_page/list_report.dart';
 import 'package:gcc_admin/pages/class_page/report_page/view_report.dart';
+import 'package:gcc_admin/pages/home_page/schedule/schedule_page/schedule.dart';
+import 'package:gcc_admin/pages/home_page/schedule/view_schedule/view_schedule.dart';
 import 'package:gcc_admin/pages/main_menu/menu_page.dart';
 import 'package:gcc_admin/pages/profile_page/profile_page.dart';
 import 'package:gcc_admin/pages/signIn_signUp/signin_page.dart';
@@ -25,6 +29,10 @@ class Routes {
   static const listSiswa = '/list-siswa';
   static const listReport = '/list-report';
   static const viewReport = '/view-report';
+  static const listTeacher = '/list-teacher';
+  static const addTeacher = '/add-teacher';
+  static const schedule = '/schedule';
+  static const viewSchedule = '/view-schedule';
 }
 
 class AppPages {
@@ -48,6 +56,10 @@ class AppPages {
     GetPage(name: Routes.profile, page: () => ProfilePage()),
     GetPage(name: Routes.listSiswa, page: () => ListStudent()),
     GetPage(name: Routes.listReport, page: () => ListReport()),
-    GetPage(name: Routes.viewReport, page: () => ViewReport())
+    GetPage(name: Routes.viewReport, page: () => ViewReport()),
+    GetPage(name: Routes.listTeacher, page: () => Listteacher()),
+    GetPage(name: Routes.addTeacher, page: () => Addteacher()),
+    GetPage(name: Routes.schedule, page: () => Schedule()),
+    GetPage(name: Routes.viewSchedule, page: () => ViewSchedule()),
   ];
 }

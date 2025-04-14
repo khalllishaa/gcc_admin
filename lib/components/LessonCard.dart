@@ -1,75 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 
-class LessonCard extends StatelessWidget {
+class WavyCard extends StatelessWidget {
   final String title;
-  final String lessonCount;
-  final String imagePath;
-  final Color? backgroundColor;
-  final VoidCallback? onTap; // Tambahin onTap
+  final VoidCallback onTap;
 
-  const LessonCard({
+  const WavyCard({
     super.key,
     required this.title,
-    required this.lessonCount,
-    required this.imagePath,
-    this.backgroundColor,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.85,
-          padding: EdgeInsets.all(AppStyles.paddingL),
-          decoration: BoxDecoration(
-            color: backgroundColor ?? AppStyles.primary,
-            borderRadius: BorderRadius.circular(AppStyles.radiusM),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(width: AppStyles.spaceS),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        height: 150,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.transparent,
+        ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+              child: Container(
+                color: AppStyles.secondaryLight,
+                child: Stack(
                   children: [
-                    Text(
-                      title,
-                      style: AppStyles.heading1.copyWith(color: AppStyles.light),
-                    ),
-                    SizedBox(height: AppStyles.spaceM),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppStyles.paddingM,
-                        vertical: AppStyles.paddingXS,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppStyles.dark.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(AppStyles.radiusXL),
-                      ),
-                      child: Text(
-                        lessonCount ,
-                        style: AppStyles.lesson,
+                    Positioned.fill(
+                      child: CustomPaint(
+                        painter: WavePainter(),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(width: 16),
-              Image.asset(
-                imagePath,
-                width: AppStyles.categoryLineHeightt,
-                height: AppStyles.categoryLineHeightt,
-                fit: BoxFit.contain,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                AppStyles.paddingFont,
+                AppStyles.padding,
+                AppStyles.paddingL,
+                AppStyles.paddingL,
               ),
-            ],
-          ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      title,
+                      style: AppStyles.heading1.copyWith(color: AppStyles.light),
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ],
+              ),
+            ),
+
+          ],
         ),
       ),
     );
   }
+}
+
+class WavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = AppStyles.secondary;
+
+    final path = Path();
+    path.lineTo(0, size.height * 0.5);
+    path.quadraticBezierTo(
+      size.width * 0.15, size.height,
+      size.width * 0.5, size.height * 0.55,
+    );
+    path.quadraticBezierTo(
+      size.width * 0.75, size.height * 0.3,
+      size.width, size.height * 0.65,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

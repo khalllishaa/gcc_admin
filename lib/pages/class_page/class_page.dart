@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 
+import '../../routes/app_route.dart';
+
 class ClassPage extends StatelessWidget {
   const ClassPage({super.key});
 
@@ -62,7 +64,9 @@ class ClassPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () => Get.toNamed('/list-siswa'),
+                  onTap: () {
+                    Get.toNamed(Routes.listTeacher);
+                  },
                   child: const KelasCard(
                     imagePath: 'images/maths.png',
                     title: 'Kelas 9',
