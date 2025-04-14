@@ -61,7 +61,7 @@ class ListStudent extends StatelessWidget {
               onEdit: () {},
               onDelete: () {},
               onMore: () =>
-                  Get.toNamed('/list-report'), // ⬅️ Navigasi ditambahkan
+                  Get.toNamed('/list-report'),
             ),
             const SizedBox(height: 8),
             StudentCard(

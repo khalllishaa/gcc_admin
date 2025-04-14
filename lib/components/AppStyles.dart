@@ -9,7 +9,7 @@ class AppStyles {
   static const Color primary = Color(0xFF368D8D);
   static const Color primaryLight = Color(0xFF40B2B7);
   static const Color primaryDark = Color(0xFF00979F);
-  static const Color secondary = Color(0xFF40B2B7);
+  static const Color secondary = Color(0xFF37ABB1);
   static const Color schedule = Color(0xFFFF9F4B);
   static const Color login = Color(0xFFFFF8E8);
   static const Color secondaryLight = Color(0xFFA2DFE2);
@@ -44,6 +44,7 @@ class AppStyles {
   static const double classCardHeight = 126.0;
   static const double detailHeaderHeight = 100.0;
   static const double detailHeaderRadius = 50.0;
+  static const double teacherHeight = 100.0;
 
   // Icon Sizes
   static const double iconS = 12.0;
@@ -61,6 +62,7 @@ class AppStyles {
   static const double paddingL = 15.0;
   static const double paddingXL = 20.0;
   static const double padding = 24.0;
+  static const double paddingFont = 30.0;
   static const double paddingXXL = 100.0;
 
   // Spacing
