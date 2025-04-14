@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 
 class ScheduleCard extends StatelessWidget {
   final String day;
   final String subject;
-  final String topic;
   final String time;
   final String teacher;
 
@@ -11,7 +11,6 @@ class ScheduleCard extends StatelessWidget {
     super.key,
     required this.day,
     required this.subject,
-    required this.topic,
     required this.time,
     required this.teacher,
   });
@@ -44,7 +43,7 @@ class ScheduleCard extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10),
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(16.0),
@@ -63,24 +62,12 @@ class ScheduleCard extends StatelessWidget {
                     color: Color.fromRGBO(0, 102, 107, 1),
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: AppStyles.spaceS),
                 Row(
                   children: [
-                    const Icon(Icons.menu_book,
+                    Icon(Icons.access_time,
                         size: 16, color: Color.fromRGBO(0, 102, 107, 1)),
-                    const SizedBox(width: 4),
-                    Text(
-                      topic,
-                      style: const TextStyle(
-                          color: Color.fromRGBO(0, 102, 107, 1)),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.access_time,
-                        size: 16, color: Color.fromRGBO(0, 102, 107, 1)),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       time,
                       style: const TextStyle(
@@ -88,11 +75,12 @@ class ScheduleCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: AppStyles.spaceXS),
                 Row(
                   children: [
-                    const Icon(Icons.person,
+                    Icon(Icons.person,
                         size: 16, color: Color.fromRGBO(0, 102, 107, 1)),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       teacher,
                       style: const TextStyle(
