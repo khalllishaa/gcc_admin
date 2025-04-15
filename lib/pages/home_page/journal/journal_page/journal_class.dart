@@ -3,11 +3,10 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
-import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-class Schedule extends StatelessWidget {
-  const Schedule({super.key});
+class JournalClass extends StatelessWidget {
+  const JournalClass({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class Schedule extends StatelessWidget {
             ),
             SizedBox(height: AppStyles.spaceS),
             GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
+              onTap: () => Get.toNamed('/journal'),
               child: KelasCard(
                 imagePath: 'images/maths.png',
                 title: 'Kelas 8.1',
@@ -59,7 +58,7 @@ class Schedule extends StatelessWidget {
             ),
             SizedBox(height: AppStyles.spaceS),
             GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
+              onTap: () => Get.toNamed('/journal'),
               child: KelasCard(
                 imagePath: 'images/maths.png',
                 title: 'Kelas 8.1',
@@ -72,7 +71,7 @@ class Schedule extends StatelessWidget {
             ),
             SizedBox(height: AppStyles.spaceS),
             GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
+              onTap: () => Get.toNamed('/journal'),
               child: KelasCard(
                 imagePath: 'images/maths.png',
                 title: 'Kelas 8.1',
@@ -85,7 +84,7 @@ class Schedule extends StatelessWidget {
             ),
             SizedBox(height: AppStyles.spaceS),
             GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
+              onTap: () => Get.toNamed('/journal'),
               child: KelasCard(
                 imagePath: 'images/maths.png',
                 title: 'Kelas 8.1',

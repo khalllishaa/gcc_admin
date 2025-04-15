@@ -16,7 +16,7 @@ class Addteacher extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(AppStyles.paddingL),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,16 +28,16 @@ class Addteacher extends StatelessWidget {
                     height: 40,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color.fromRGBO(0, 151, 159, 1),
+                      color: AppStyles.primary,
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: AppStyles.light),
+                      icon: Icon(Icons.arrow_back, color: AppStyles.light),
                       onPressed: () => Get.back(),
                       padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      constraints: BoxConstraints(),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
                       title: 'Add Teacher',
@@ -47,7 +47,7 @@ class Addteacher extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingM),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,7 +92,7 @@ class Addteacher extends StatelessWidget {
 
 Widget buildSectionTitle(String title) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    padding: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
     child: Text(
       title,
       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

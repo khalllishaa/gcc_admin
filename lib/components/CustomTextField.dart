@@ -22,11 +22,11 @@ class _CustomtextfieldState extends State<Customtextfield> {
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingS),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.teal, width: 1.5),
-        borderRadius: BorderRadius.circular(12),
+        color: AppStyles.light,
+        border: Border.all(color: AppStyles.primary, width: 1.5),
+        borderRadius: BorderRadius.circular(AppStyles.radiusS),
       ),
       child: Column(
         children: [
@@ -38,7 +38,7 @@ class _CustomtextfieldState extends State<Customtextfield> {
               hintText: widget.hintText,
               hintStyle: TextStyle(color: AppStyles.grey1),
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+              contentPadding: EdgeInsets.symmetric(vertical: 14),
             ),
           ),
           Divider(

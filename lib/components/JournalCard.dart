@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;
@@ -17,8 +18,8 @@ class CourseCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(71, 193, 199, 0.5),
-        borderRadius: BorderRadius.circular(16),
+        color: AppStyles.secondaryLight,
+        borderRadius: BorderRadius.circular(AppStyles.radiusL),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -44,9 +44,7 @@ class HomePage extends StatelessWidget {
                     ),
                     WavyCard(
                       title: 'Journal Kelas',
-                      onTap: () {
-                        print("List Guru tapped");
-                      },
+                      onTap: () => Get.toNamed('/journal-class'),
                     ),
                   ],
                 ),
