@@ -16,7 +16,7 @@ class ViewSchedule extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppStyles.paddingL),
         child: Column(
           children: [
             SizedBox(height: AppStyles.spaceXXL),
@@ -25,18 +25,18 @@ class ViewSchedule extends StatelessWidget {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromRGBO(0, 151, 159, 1),
+                    color: AppStyles.primaryDark,
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppStyles.light),
+                    icon: Icon(Icons.arrow_back, color: AppStyles.light),
                     onPressed: () => Get.back(),
                     padding: EdgeInsets.zero,
                     constraints: BoxConstraints(),
                   ),
                 ),
-                SizedBox(width: 12),
+                SizedBox(width: AppStyles.spaceS),
                 Expanded(
                   child: CategoriesLine(
                     title: 'Schedule',
@@ -72,7 +72,7 @@ class ViewSchedule extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 16, right: 16),
+        margin: EdgeInsets.only(bottom: AppStyles.paddingL, right: AppStyles.paddingL),
         child: FloatingActionButton(
           onPressed: () {
             Get.toNamed(Routes.addSchedule);

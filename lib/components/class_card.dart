@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/OverlappingAvatar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,20 +16,20 @@ class KelasCard extends StatelessWidget {
     required this.imagePath,
     required this.title,
     this.avatarImagePaths = const [],
-    this.backgroundColor = const Color.fromRGBO(71, 193, 199, 0.5),
-    this.textColor = const Color.fromRGBO(0, 102, 107, 1),
+    this.backgroundColor = AppStyles.secondaryLight,
+    this.textColor = AppStyles.primary,
     this.iconColor = const Color(0xFF004D40),
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 310, // Atur lebar manual di sini
-      height: 130, // Atur tinggi manual di sini
-      padding: const EdgeInsets.all(10),
+      width: AppStyles.classCard,
+      height: AppStyles.classCard2,
+      padding: EdgeInsets.all(AppStyles.paddingS),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(AppStyles.radiusS),
       ),
       child: Row(
         children: [
@@ -37,7 +38,7 @@ class KelasCard extends StatelessWidget {
             width: 150,
             height: 150,
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: AppStyles.spaceM),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +52,7 @@ class KelasCard extends StatelessWidget {
                     color: textColor,
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: AppStyles.spaceXXS),
                 OverlappingAvatars(
                   imagePaths: avatarImagePaths,
                   radius: 14,

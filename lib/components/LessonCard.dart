@@ -16,10 +16,10 @@ class WavyCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
         height: 150,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppStyles.radiusM),
           color: Colors.transparent,
         ),
         child: Stack(

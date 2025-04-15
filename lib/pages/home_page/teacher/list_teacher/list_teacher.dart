@@ -27,7 +27,7 @@ class Listteacher extends StatelessWidget {
                   height: 40,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromRGBO(0, 151, 159, 1),
+                    color: AppStyles.primary,
                   ),
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back, color: AppStyles.light),
@@ -36,7 +36,7 @@ class Listteacher extends StatelessWidget {
                     constraints: BoxConstraints(),
                   ),
                 ),
-                SizedBox(width: 12),
+                SizedBox(width: AppStyles.spaceS),
                 Expanded(
                   child: CategoriesLine(
                     title: 'Teacher',
@@ -52,35 +52,35 @@ class Listteacher extends StatelessWidget {
               onMore: () =>
                   Get.toNamed('/list-report'),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: AppStyles.spaceS),
             StudentCard(
               name: 'Guru 2',
               onEdit: () {},
               onDelete: () {},
               onMore: () => Get.toNamed('/list-report'),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: AppStyles.spaceS),
             StudentCard(
               name: 'Guru 3',
               onEdit: () {},
               onDelete: () {},
               onMore: () => Get.toNamed('/list-report'),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: AppStyles.spaceS),
             StudentCard(
               name: 'Guru 4',
               onEdit: () {},
               onDelete: () {},
               onMore: () => Get.toNamed('/list-report'),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: AppStyles.spaceS),
             StudentCard(
               name: 'Guru 5',
               onEdit: () {},
               onDelete: () {},
               onMore: () => Get.toNamed('/list-report'),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: AppStyles.spaceS),
             StudentCard(
               name: 'Guru 6',
               onEdit: () {},
@@ -92,7 +92,7 @@ class Listteacher extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 16, right: 16),
+        margin: EdgeInsets.only(bottom: AppStyles.paddingL, right: AppStyles.paddingL),
         child: FloatingActionButton(
           onPressed: () {
             Get.toNamed(Routes.addTeacher);

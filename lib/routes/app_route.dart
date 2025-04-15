@@ -1,6 +1,10 @@
 import 'package:gcc_admin/bindings/menu_binding.dart';
 import 'package:gcc_admin/bindings/signup_binding.dart';
 import 'package:gcc_admin/bindings/welcome_binding.dart';
+import 'package:gcc_admin/pages/home_page/journal/add_journal/add_journal.dart';
+import 'package:gcc_admin/pages/home_page/journal/journal_page/journal.dart';
+import 'package:gcc_admin/pages/home_page/journal/journal_page/journal_class.dart';
+import 'package:gcc_admin/pages/home_page/journal/view_journal/view_journal.dart';
 import 'package:gcc_admin/pages/home_page/schedule/add_schedule/add_schedule.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:gcc_admin/pages/home_page/Teacher/list_teacher/list_teacher.dart';
@@ -35,6 +39,10 @@ class Routes {
   static const schedule = '/schedule';
   static const viewSchedule = '/view-schedule';
   static const addSchedule = '/add-schedule';
+  static const journal = '/journal';
+  static const viewJournal = '/view-journal';
+  static const addJournal = '/add-journal';
+  static const journalClass = '/journal-class';
 }
 
 class AppPages {
@@ -64,5 +72,9 @@ class AppPages {
     GetPage(name: Routes.schedule, page: () => Schedule()),
     GetPage(name: Routes.viewSchedule, page: () => ViewSchedule()),
     GetPage(name: Routes.addSchedule, page: () => AddSchedule()),
+    GetPage(name: Routes.journal, page: () => Journal()),
+    GetPage(name: Routes.viewJournal, page: () => ViewJournal()),
+    GetPage(name: Routes.addJournal, page: () => AddJournal()),
+    GetPage(name: Routes.journalClass, page: () => JournalClass()),
   ];
 }

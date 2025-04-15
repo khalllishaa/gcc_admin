@@ -45,6 +45,8 @@ class AppStyles {
   static const double detailHeaderHeight = 100.0;
   static const double detailHeaderRadius = 50.0;
   static const double teacherHeight = 100.0;
+  static const double classCard = 310.0;
+  static const double classCard2 = 130.0;
 
   // Icon Sizes
   static const double iconS = 12.0;
@@ -80,6 +82,7 @@ class AppStyles {
   static const double radiusM = 12.0;
   static const double radiusL = 16.0;
   static const double radiusXL = 20.0;
+  static const double radiussXL = 30.0;
   static const double radius = 40.0;
   static const double radiusXXL = 50.0;
 

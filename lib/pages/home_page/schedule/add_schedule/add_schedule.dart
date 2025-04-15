@@ -17,7 +17,7 @@ class AddSchedule extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(AppStyles.paddingL),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,7 +29,7 @@ class AddSchedule extends StatelessWidget {
                     height: 40,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color.fromRGBO(0, 151, 159, 1),
+                      color: AppStyles.primaryDark,
                     ),
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back, color: AppStyles.light),
@@ -38,7 +38,7 @@ class AddSchedule extends StatelessWidget {
                       constraints: const BoxConstraints(),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
                       title: 'Add Schedule',
@@ -48,7 +48,7 @@ class AddSchedule extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingS),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -101,7 +101,7 @@ class AddSchedule extends StatelessWidget {
 
 Widget buildSectionTitle(String title) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    padding: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
     child: Text(
       title,
       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
