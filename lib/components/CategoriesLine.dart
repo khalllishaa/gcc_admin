@@ -11,7 +11,6 @@ class CategoriesLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: AppStyles.categoryLineHeight,
       margin: EdgeInsets.symmetric(horizontal: AppStyles.paddingS),
       child: Stack(
         clipBehavior: Clip.none,

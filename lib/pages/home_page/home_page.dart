@@ -5,7 +5,7 @@ import 'package:gcc_admin/components/WelcomeSign.dart';
 import 'package:gcc_admin/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
-import '../../components/ClassCard.dart';
+
 import '../../components/LessonCard.dart';
 import '../../controllers/menu_controller.dart';
 

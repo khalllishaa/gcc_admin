@@ -24,9 +24,12 @@ class ClassPage extends StatelessWidget {
                   image: 'images/categories.png',
                   title: 'Kelas',
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () => Get.toNamed('/list-siswa'),
-                  child: const KelasCard(
+                  child: KelasCard(
                     imagePath: 'images/maths.png',
                     title: 'Kelas 7',
                     avatarImagePaths: [
@@ -34,6 +37,7 @@ class ClassPage extends StatelessWidget {
                       'images/learning.png',
                       'images/logo_gcc.png',
                     ],
+                    onEdit: () => Get.toNamed('/edit-class'),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -82,6 +86,13 @@ class ClassPage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed('/add-class'),
+        backgroundColor: Colors.black,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Color.fromRGBO(55, 171, 177, 1)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
