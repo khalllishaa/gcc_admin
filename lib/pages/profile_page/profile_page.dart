@@ -11,6 +11,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileController controller = Get.find();
+    Get.put(ProfileController());
 
     return Scaffold(
       backgroundColor: AppStyles.primary,

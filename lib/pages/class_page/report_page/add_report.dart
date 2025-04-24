@@ -3,8 +3,8 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/ReportCard.dart';
 import 'package:get/get.dart';
 
-class ViewReport extends StatelessWidget {
-  const ViewReport({super.key});
+class AddReport extends StatelessWidget {
+  const AddReport({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class ViewReport extends StatelessWidget {
                     const Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Report',
+                        title: 'Add Report',
                       ),
                     ),
                   ],

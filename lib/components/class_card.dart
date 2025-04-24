@@ -10,6 +10,7 @@ class KelasCard extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final Color iconColor;
+  final VoidCallback? onEdit; // Tambahkan parameter onEdit
 
   const KelasCard({
     super.key,
@@ -19,6 +20,7 @@ class KelasCard extends StatelessWidget {
     this.backgroundColor = AppStyles.secondaryLight,
     this.textColor = AppStyles.primary,
     this.iconColor = const Color(0xFF004D40),
+    this.onEdit,
   });
 
   @override
@@ -31,36 +33,57 @@ class KelasCard extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(AppStyles.radiusS),
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Image.asset(
-            imagePath,
-            width: 150,
-            height: 150,
+          Row(
+            children: [
+              Image.asset(
+                imagePath,
+                width: 150,
+                height: 150,
+              ),
+              SizedBox(width: AppStyles.spaceM),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                    SizedBox(height: AppStyles.spaceXXS),
+                    OverlappingAvatars(
+                      imagePaths: avatarImagePaths,
+                      radius: 14,
+                      overlap: 8,
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          SizedBox(width: AppStyles.spaceM),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
+          // Tombol Edit di pojok kanan atas
+          Positioned(
+            top: 0,
+            right: 0,
+            child: InkWell(
+              onTap: onEdit,
+              borderRadius: BorderRadius.circular(20),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Icon(
+                  Icons.more_vert,
+                  size: 20,
+                  color: iconColor,
                 ),
-                SizedBox(height: AppStyles.spaceXXS),
-                OverlappingAvatars(
-                  imagePaths: avatarImagePaths,
-                  radius: 14,
-                  overlap: 8,
-                ),
-              ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

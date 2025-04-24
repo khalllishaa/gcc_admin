@@ -1,6 +1,11 @@
 import 'package:gcc_admin/bindings/menu_binding.dart';
 import 'package:gcc_admin/bindings/signup_binding.dart';
 import 'package:gcc_admin/bindings/welcome_binding.dart';
+import 'package:gcc_admin/pages/class_page/add_class.dart';
+import 'package:gcc_admin/pages/class_page/edit_class.dart';
+import 'package:gcc_admin/pages/class_page/report_page/add_report.dart';
+import 'package:gcc_admin/pages/class_page/siswa_page/add_siswa.dart';
+import 'package:gcc_admin/pages/class_page/siswa_page/edit_siswa.dart';
 import 'package:gcc_admin/pages/home_page/journal/add_journal/add_journal.dart';
 import 'package:gcc_admin/pages/home_page/journal/journal_page/journal.dart';
 import 'package:gcc_admin/pages/home_page/journal/journal_page/journal_class.dart';
@@ -9,7 +14,7 @@ import 'package:gcc_admin/pages/home_page/schedule/add_schedule/add_schedule.dar
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:gcc_admin/pages/home_page/Teacher/list_teacher/list_teacher.dart';
 import 'package:gcc_admin/pages/class_page/class_page.dart';
-import 'package:gcc_admin/pages/class_page/list_page/list_siswa.dart';
+import 'package:gcc_admin/pages/class_page/siswa_page/list_siswa.dart';
 import 'package:gcc_admin/pages/class_page/report_page/list_report.dart';
 import 'package:gcc_admin/pages/class_page/report_page/view_report.dart';
 import 'package:gcc_admin/pages/home_page/schedule/schedule_page/schedule.dart';
@@ -43,6 +48,11 @@ class Routes {
   static const viewJournal = '/view-journal';
   static const addJournal = '/add-journal';
   static const journalClass = '/journal-class';
+  static const addSiswa = '/add-siswa';
+  static const editSiswa = '/edit-siswa';
+  static const addClass = '/add-class';
+  static const editClass = '/edit-class';
+  static const addReport = '/add-report';
 }
 
 class AppPages {
@@ -76,5 +86,10 @@ class AppPages {
     GetPage(name: Routes.viewJournal, page: () => ViewJournal()),
     GetPage(name: Routes.addJournal, page: () => AddJournal()),
     GetPage(name: Routes.journalClass, page: () => JournalClass()),
+    GetPage(name: Routes.addSiswa, page: () => AddStudent()),
+    GetPage(name: Routes.editSiswa, page: () => EditStudent()),
+    GetPage(name: Routes.addClass, page: () => AddClass()),
+    GetPage(name: Routes.editClass, page: () => EditClass()),
+    GetPage(name: Routes.addReport, page: () => AddReport()),
   ];
 }

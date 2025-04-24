@@ -56,23 +56,31 @@ class ListReport extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Get.toNamed('/view-report'),
-              child: const CourseCard(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => Get.toNamed('/view-report'),
+                child: const CourseCard(
                   title: "Report",
                   subtitle: "Murid 1",
-                  imagePath: "images/student.png"),
-            ),
-          ],
+                  imagePath: "images/student.png",
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed('/add-report'),
+        backgroundColor: Colors.black,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Color.fromRGBO(55, 171, 177, 1)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
