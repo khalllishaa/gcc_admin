@@ -7,6 +7,8 @@ import 'package:gcc_admin/components/TextField2.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 
+import '../../teacher/add_teacher/add_teacher.dart';
+
 class AddJournal extends StatelessWidget {
   const AddJournal({super.key});
 
@@ -17,7 +19,7 @@ class AddJournal extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(AppStyles.paddingL),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -32,13 +34,13 @@ class AddJournal extends StatelessWidget {
                       color: AppStyles.primaryDark,
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: AppStyles.light),
+                      icon: Icon(Icons.arrow_back, color: AppStyles.light),
                       onPressed: () => Get.back(),
                       padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      constraints: BoxConstraints(),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
                       title: 'Add Journal',
@@ -48,7 +50,7 @@ class AddJournal extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingM),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -87,7 +89,7 @@ class AddJournal extends StatelessWidget {
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                      text: 'Add Schedule',
+                      text: 'Add Journal',
                       onPressed: () => Get.back(),
                     ),
                   ],
@@ -99,14 +101,4 @@ class AddJournal extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget buildSectionTitle(String title) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Text(
-      title,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    ),
-  );
 }

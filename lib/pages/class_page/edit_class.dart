@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/InputCard.dart';
 import 'package:get/get.dart';
+
+import '../../components/CustomTextField.dart';
+import '../../components/ReuseButton.dart';
+import '../home_page/teacher/add_teacher/add_teacher.dart';
 
 class EditClass extends StatelessWidget {
   const EditClass({super.key});
@@ -9,46 +14,52 @@ class EditClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppStyles.light,
       body: SafeArea(
-        // SafeArea ditambahkan di sini
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 40),
+                SizedBox(height: AppStyles.radius),
                 Row(
                   children: [
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(0, 151, 159, 1),
+                        color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        icon: Icon(Icons.arrow_back, color: AppStyles.dark),
                         onPressed: () => Get.back(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Expanded(
+                    SizedBox(width: AppStyles.spaceS),
+                    Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Edit Kelas',
+                        title: 'Edit Class',
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                InputCard(
-                  label: "Nama",
-                  value: "Kelas 7",
-                  onEdit: () => Get.back(),
+                SizedBox(height: AppStyles.spaceM),
+                buildSectionTitle('Nama'),
+                SizedBox(height: AppStyles.spaceS),
+                Customtextfield(
+                  controller: TextEditingController(),
+                  keyboardType: TextInputType.text,
+                  hintText: 'Kelas 10',
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceL),
+                ReuseButton(
+                  text: 'Edit Class',
+                  onPressed: () => Get.back(),
+                ),
+                SizedBox(height: AppStyles.spaceS),
               ],
             ),
           ),

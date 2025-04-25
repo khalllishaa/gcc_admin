@@ -44,7 +44,7 @@ class Schedule extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: AppStyles.spaceS),
+            SizedBox(height: AppStyles.spaceM),
             GestureDetector(
               onTap: () => Get.toNamed('/view-schedule'),
               child: KelasCard(

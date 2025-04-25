@@ -18,7 +18,7 @@ class Textfield2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingM),
+      padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingM),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: AppStyles.primary, width: 1.5),
@@ -38,20 +38,20 @@ class Textfield2 extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(vertical: AppStyles.paddingM),
             ),
           ),
-          const Divider(color: Colors.black87, thickness: 1),
+          Divider(color: AppStyles.dark, thickness: 1),
           SizedBox(height: AppStyles.spaceS),
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               onPressed: onUploadPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppStyles.secondaryLight,
+                backgroundColor: AppStyles.primaryLight,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppStyles.radiussXL),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingS),
               ),
-              child: const Text(
+              child: Text(
                 'Upload',
                 style: TextStyle(color: AppStyles.light),
               ),

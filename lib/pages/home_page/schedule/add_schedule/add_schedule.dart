@@ -98,13 +98,3 @@ class AddSchedule extends StatelessWidget {
     );
   }
 }
-
-Widget buildSectionTitle(String title) {
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
-    child: Text(
-      title,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    ),
-  );
-}

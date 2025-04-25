@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/StudentCard.dart';
 import 'package:get/get.dart';
@@ -9,32 +10,31 @@ class ListStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppStyles.light,
       body: SafeArea(
-        // SafeArea ditambahkan di sini
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                SizedBox(height: AppStyles.radius),
                 Row(
                   children: [
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(0, 151, 159, 1),
+                        color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        icon: Icon(Icons.arrow_back, color: AppStyles.light),
                         onPressed: () => Get.back(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Expanded(
+                    SizedBox(width: AppStyles.spaceS),
+                    Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
                         title: 'Kelas',
@@ -42,70 +42,70 @@ class ListStudent extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: AppStyles.spaceM),
                 StudentCard(
-                  name: 'Murid 1',
+                  name: 'Ocean',
                   onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 2',
-                  onEdit: () {},
+                  name: 'Jadin',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 3',
-                  onEdit: () {},
+                  name: 'Khalisha',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 4',
-                  onEdit: () {},
+                  name: 'Syifa',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 5',
-                  onEdit: () {},
+                  name: 'Keanu',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 6',
-                  onEdit: () {},
+                  name: 'Khansa',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 7',
-                  onEdit: () {},
+                  name: 'Jeri',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 8',
-                  onEdit: () {},
+                  name: 'Kafka',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
                 StudentCard(
-                  name: 'Murid 9',
-                  onEdit: () {},
+                  name: 'Audine',
+                  onEdit: () => Get.toNamed('/edit-siswa'),
                   onDelete: () {},
-                  onMore: () => Get.toNamed('/list-report'),
+                  onTap: () => Get.toNamed('/list-report'),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceS),
               ],
             ),
           ),
@@ -113,9 +113,9 @@ class ListStudent extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/add-siswa'),
-        backgroundColor: Colors.black,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Color.fromRGBO(55, 171, 177, 1)),
+        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

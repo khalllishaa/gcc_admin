@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
 import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
@@ -14,19 +15,17 @@ class ClassPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
-                const CategoriesLine(
+                SizedBox(height: AppStyles.radius),
+                CategoriesLine(
                   image: 'images/categories.png',
                   title: 'Kelas',
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: AppStyles.spaceL),
                 GestureDetector(
                   onTap: () => Get.toNamed('/list-siswa'),
                   child: KelasCard(
@@ -40,10 +39,10 @@ class ClassPage extends StatelessWidget {
                     onEdit: () => Get.toNamed('/edit-class'),
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: AppStyles.spaceS),
                 GestureDetector(
                   onTap: () => Get.toNamed('/list-siswa'),
-                  child: const KelasCard(
+                  child: KelasCard(
                     imagePath: 'images/maths.png',
                     title: 'Kelas 8.1',
                     avatarImagePaths: [
@@ -53,10 +52,10 @@ class ClassPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: AppStyles.spaceS),
                 GestureDetector(
                   onTap: () => Get.toNamed('/list-siswa'),
-                  child: const KelasCard(
+                  child: KelasCard(
                     imagePath: 'images/maths.png',
                     title: 'Kelas 8.2',
                     avatarImagePaths: [
@@ -66,12 +65,12 @@ class ClassPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: AppStyles.spaceS),
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(Routes.listTeacher);
                   },
-                  child: const KelasCard(
+                  child: KelasCard(
                     imagePath: 'images/maths.png',
                     title: 'Kelas 9',
                     avatarImagePaths: [
@@ -88,9 +87,9 @@ class ClassPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/add-class'),
-        backgroundColor: Colors.black,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Color.fromRGBO(55, 171, 177, 1)),
+        backgroundColor:AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

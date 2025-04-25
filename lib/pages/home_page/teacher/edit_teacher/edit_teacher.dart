@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-import 'package:gcc_admin/components/ReportCard.dart';
+import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:get/get.dart';
 
-import '../../../components/ReuseButton.dart';
+import '../../../../components/ReuseButton.dart';
+import '../add_teacher/add_teacher.dart';
 
-class AddReport extends StatelessWidget {
-  const AddReport({super.key});
+class EditTeacher extends StatelessWidget {
+  const EditTeacher({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppStyles.light,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: AppStyles.radius),
                 Row(
@@ -28,7 +29,7 @@ class AddReport extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppStyles.primaryLight,
+                        color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
                         icon: Icon(Icons.arrow_back, color: AppStyles.light),
@@ -39,22 +40,23 @@ class AddReport extends StatelessWidget {
                     Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Add Report',
+                        title: 'Edit Guru',
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
-                AssessmentCard(subject: 'Bahasa Inggris'),
-                AssessmentCard(subject: 'Bahasa Indonesia'),
-                AssessmentCard(subject: 'Matematika'),
-                AssessmentCard(subject: 'IPA'),
-                SizedBox(height: AppStyles.spaceS),
-                ReuseButton(
-                  text: 'Add Report',
-                  onPressed: () => Get.back(),
+                buildSectionTitle('Nama'),
+                Customtextfield(
+                  controller: TextEditingController(),
+                  keyboardType: TextInputType.text,
+                  hintText: 'Miss Ica',
                 ),
                 SizedBox(height: AppStyles.spaceL),
+                ReuseButton(
+                  text: 'Edit Teacher',
+                  onPressed: () => Get.back(),
+                ),
               ],
             ),
           ),

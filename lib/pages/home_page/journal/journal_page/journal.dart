@@ -17,7 +17,7 @@ class Journal extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppStyles.paddingL),
         child: Column(
           children: [
             SizedBox(height: AppStyles.spaceXXL),
@@ -39,15 +39,33 @@ class Journal extends StatelessWidget {
                 ),
                 SizedBox(width: AppStyles.spaceS),
                 Expanded(
-                  child:
-                  CategoriesLine(
-                    title: 'Journal',
-                    image: 'images/categories.png',
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: AppStyles.primaryDark,
+                      borderRadius: BorderRadius.circular(AppStyles.radiusL),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.calendar_today, color: AppStyles.light, size: AppStyles.iconL),
+                        SizedBox(width: AppStyles.spaceS),
+                        Text(
+                          "13 Januari",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: AppStyles.spaceS),
+            SizedBox(height: AppStyles.spaceM),
             GestureDetector(
               onTap: () => Get.toNamed('/view-journal'),
               child: CourseCard(
@@ -59,17 +77,15 @@ class Journal extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: AppStyles.paddingL, right: AppStyles.paddingL),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.toNamed(Routes.addJournal);
-          },
-          backgroundColor: AppStyles.primary,
-          child: Icon(Icons.add_circle_outline, color: AppStyles.light),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.addJournal);
+        },
+        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
                       title: 'Home Page',
                       image: 'images/categories.png',
                     ),
+                    SizedBox(height: AppStyles.spaceS),
                     WavyCard(
                       title: 'List Guru',
                       onTap: () => Get.toNamed('/list-teacher'),

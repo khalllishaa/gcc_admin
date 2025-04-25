@@ -26,7 +26,7 @@ class _CustomtextfieldState extends State<Customtextfield> {
       decoration: BoxDecoration(
         color: AppStyles.light,
         border: Border.all(color: AppStyles.primary, width: 1.5),
-        borderRadius: BorderRadius.circular(AppStyles.radiusS),
+        borderRadius: BorderRadius.circular(AppStyles.radiusL),
       ),
       child: Column(
         children: [
@@ -38,11 +38,11 @@ class _CustomtextfieldState extends State<Customtextfield> {
               hintText: widget.hintText,
               hintStyle: TextStyle(color: AppStyles.grey1),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(vertical: 14),
+              contentPadding: EdgeInsets.symmetric(vertical: AppStyles.paddingL),
             ),
           ),
           Divider(
-            color: Colors.black87,
+            color: AppStyles.dark,
             thickness: 1,
             height: 1,
           ),
