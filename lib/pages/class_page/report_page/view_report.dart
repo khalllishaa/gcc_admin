@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/ReportCard.dart';
 import 'package:get/get.dart';
@@ -9,32 +10,31 @@ class ViewReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:AppStyles.primaryLight,
       body: SafeArea(
-        // SafeArea ditambahkan di sini
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                SizedBox(height: AppStyles.radius),
                 Row(
                   children: [
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(0, 151, 159, 1),
+                        color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        icon: Icon(Icons.arrow_back, color: AppStyles.light),
                         onPressed: () => Get.back(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Expanded(
+                    SizedBox(width: AppStyles.spaceS),
+                    Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
                         title: 'Report',
@@ -42,7 +42,7 @@ class ViewReport extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: AppStyles.spaceM),
                 AssessmentCard(subject: 'Bahasa Inggris'),
                 AssessmentCard(subject: 'Bahasa Indonesia'),
                 AssessmentCard(subject: 'Matematika'),

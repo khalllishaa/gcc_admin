@@ -6,7 +6,7 @@ class AppStyles {
   static const Color dark = Color(0xFF191919);
   static const Color grey1 = Color(0xFF606060);
   static const Color grey2 = Color(0xFFE8E8E8);
-  static const Color primary = Color(0xFF368D8D);
+  static const Color primary = Color(0xFF00666B);
   static const Color primaryLight = Color(0xFF40B2B7);
   static const Color primaryDark = Color(0xFF00979F);
   static const Color secondary = Color(0xFF37ABB1);
@@ -49,9 +49,9 @@ class AppStyles {
   static const double classCard2 = 130.0;
 
   // Icon Sizes
-  static const double iconS = 12.0;
-  static const double iconM = 20.0;
-  static const double iconL = 24.0;
+  static const double iconS = 15.0;
+  static const double iconM = 17.0;
+  static const double iconL = 20.0;
   static const double iconXL = 30.0;
   static const double avatarIconSize = 30.0;
   static const double classImageSize = 104.0;

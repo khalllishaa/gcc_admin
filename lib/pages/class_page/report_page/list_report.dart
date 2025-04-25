@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/JournalCard.dart';
 import 'package:get/get.dart';
 
@@ -11,35 +12,35 @@ class ListReport extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: Row(
             children: [
               Container(
                 width: 40,
                 height: 40,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color.fromRGBO(0, 151, 159, 1),
+                  color: AppStyles.primaryDark,
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  icon: Icon(Icons.arrow_back, color: AppStyles.light),
                   onPressed: () => Get.back(),
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: AppStyles.spaceS),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
                   height: 50,
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(0, 151, 159, 1),
-                    borderRadius: BorderRadius.circular(15),
+                    color: AppStyles.primaryDark,
+                    borderRadius: BorderRadius.circular(AppStyles.radiusL),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.calendar_today, color: Colors.white, size: 20),
-                      SizedBox(width: 10),
+                    children: [
+                      Icon(Icons.calendar_today, color: AppStyles.light, size: AppStyles.iconL),
+                      SizedBox(width: AppStyles.spaceS),
                       Text(
                         "13 Januari",
                         style: TextStyle(
@@ -58,13 +59,13 @@ class ListReport extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingFont),
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: AppStyles.spaceL),
               GestureDetector(
                 onTap: () => Get.toNamed('/view-report'),
-                child: const CourseCard(
+                child: CourseCard(
                   title: "Report",
                   subtitle: "Murid 1",
                   imagePath: "images/student.png",
@@ -76,9 +77,9 @@ class ListReport extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/add-report'),
-        backgroundColor: Colors.black,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Color.fromRGBO(55, 171, 177, 1)),
+        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color:AppStyles.primaryLight),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

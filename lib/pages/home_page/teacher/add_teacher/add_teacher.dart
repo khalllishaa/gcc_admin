@@ -26,15 +26,13 @@ class Addteacher extends StatelessWidget {
                   Container(
                     width: 40,
                     height: 40,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppStyles.primary,
+                      color: AppStyles.primaryDark,
                     ),
                     child: IconButton(
                       icon: Icon(Icons.arrow_back, color: AppStyles.light),
                       onPressed: () => Get.back(),
-                      padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
                     ),
                   ),
                   SizedBox(width: AppStyles.spaceS),

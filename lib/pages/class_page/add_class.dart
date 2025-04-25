@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
+import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/InputCard.dart';
+import 'package:gcc_admin/components/ReuseButton.dart';
 import 'package:get/get.dart';
+
+import '../../components/AppStyles.dart';
+import '../home_page/teacher/add_teacher/add_teacher.dart';
 
 class AddClass extends StatelessWidget {
   const AddClass({super.key});
@@ -11,44 +16,50 @@ class AddClass extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        // SafeArea ditambahkan di sini
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 40),
+                SizedBox(height: AppStyles.radius),
                 Row(
                   children: [
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromRGBO(0, 151, 159, 1),
+                        color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        icon: Icon(Icons.arrow_back, color: AppStyles.light),
                         onPressed: () => Get.back(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    const Expanded(
+                    SizedBox(width: AppStyles.spaceS),
+                    Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Add Kelas',
+                        title: 'Add Class',
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                InputCard(
-                  label: "Nama",
-                  value: "Kelas 9.1",
-                  onEdit: () => Get.back(),
+                SizedBox(height: AppStyles.spaceM),
+                buildSectionTitle('Nama'),
+                SizedBox(height: AppStyles.spaceS),
+                Customtextfield(
+                  controller: TextEditingController(),
+                  keyboardType: TextInputType.text,
+                  hintText: 'Nama Kelas',
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: AppStyles.spaceL),
+                ReuseButton(
+                  text: 'Add Class',
+                  onPressed: () => Get.back(),
+                ),
+                SizedBox(height: AppStyles.spaceS),
               ],
             ),
           ),

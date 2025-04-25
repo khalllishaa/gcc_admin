@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../routes/app_route.dart';
 
 class ProfileController extends GetxController{
+
+  // Observable for image picked state
+  var isImagePicked = false.obs;
+  var profileImage = ''.obs;
 
   @override
   void onInit() {
@@ -61,5 +66,15 @@ class ProfileController extends GetxController{
         ),
       ),
     );
+  }
+
+  Future<void> pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      profileImage.value = pickedFile.path;
+      isImagePicked.value = true;
+    }
   }
 }

@@ -54,7 +54,7 @@ class _MyTextFieldState extends State<MyTextField> {
             child: Icon(
               widget.icon,
               color: AppStyles.light,
-              size: AppStyles.iconM,
+              size: AppStyles.iconL,
             ),
           ),
         ),

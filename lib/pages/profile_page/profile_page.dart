@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/ProfileItem.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
 import 'package:gcc_admin/controllers/profile_controller.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../components/ProfileImage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -36,10 +41,13 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('images/profile.png'),
-                  ),
+                  Obx(() => ProfileImagePicker(
+                    image: controller.isImagePicked.value
+                        ? FileImage(File(controller.profileImage.value))
+                        : const AssetImage('images/profile.png') as ImageProvider,
+                    onPickFromCamera: () => controller.pickImage(ImageSource.camera),
+                    onPickFromGallery: () => controller.pickImage(ImageSource.gallery),
+                  )),
                   SizedBox(height: AppStyles.spaceS),
                   Text(
                     "oceantheteacher",

@@ -1,71 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
+import 'package:get/get.dart';
 
 class StudentCard extends StatelessWidget {
   final String name;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
-  final VoidCallback onMore;
+  final VoidCallback onTap;
 
   const StudentCard({
     Key? key,
     required this.name,
     required this.onEdit,
     required this.onDelete,
-    required this.onMore,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: const Color.fromRGBO(0, 102, 107, 1), width: 1),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      color: Colors.cyan.shade100,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              backgroundColor: const Color.fromRGBO(0, 102, 107, 1),
-              child: Icon(Icons.person_outline, color: Colors.white),
-            ),
-            SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppStyles.radiusL),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppStyles.primary, width: 1),
+          borderRadius: BorderRadius.circular(AppStyles.radiusL),
+        ),
+        color: AppStyles.secondaryLight,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppStyles.paddingL,
+            vertical: AppStyles.paddingM,
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: AppStyles.primary,
+                child: Icon(Icons.person_outline, color: AppStyles.light),
               ),
-            ),
-            // More button
-            InkWell(
-              onTap: onMore,
-              borderRadius: BorderRadius.circular(20),
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(Icons.more_horiz, size: 15),
+              SizedBox(width: AppStyles.radiusM),
+              Expanded(
+                child: Text(
+                  name,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            // Edit button
-            InkWell(
-              onTap: onEdit,
-              borderRadius: BorderRadius.circular(20),
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(Icons.edit_outlined, size: 15),
+              // Edit button
+              InkWell(
+                onTap: onEdit,
+                borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+                child: Padding(
+                  padding: EdgeInsets.all(AppStyles.paddingXS),
+                  child: Icon(Icons.edit_outlined, size: AppStyles.iconS),
+                ),
               ),
-            ),
-            // Delete button
-            InkWell(
-              onTap: onDelete,
-              borderRadius: BorderRadius.circular(20),
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(Icons.delete_outline, size: 17),
+              // Delete button
+              InkWell(
+                onTap: () {
+                  Get.defaultDialog(
+                    title: "Delete",
+                    middleText: "Are you sure you want to delete this item?",
+                    titleStyle: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppStyles.light,
+                    ),
+                    middleTextStyle: TextStyle(
+                      fontSize: 16,
+                      color: AppStyles.light,
+                    ),
+                    backgroundColor: AppStyles.primary,
+                    radius: AppStyles.radiusXL,
+                    barrierDismissible: false,
+                    cancel: OutlinedButton(
+                      onPressed: () {
+                        Get.back(); // Close dialog
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: AppStyles.light),
+                      ),
+                      child: Text(
+                        "No",
+                        style: TextStyle(fontSize: 16, color: AppStyles.light),
+                      ),
+                    ),
+                    confirm: ElevatedButton(
+                      onPressed: () {
+                        Get.back(); // Close dialog first
+                        onDelete(); // Then execute delete
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppStyles.primaryLight,
+                        foregroundColor: AppStyles.light,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+                        ),
+                      ),
+                      child: Text(
+                        "Yes",
+                        style: TextStyle(fontSize: 16, color: AppStyles.light),
+                      ),
+                    ),
+                  );
+                },
+                borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+                child: Padding(
+                  padding: EdgeInsets.all(AppStyles.paddingXS),
+                  child: Icon(Icons.delete_outline, size: AppStyles.iconM),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

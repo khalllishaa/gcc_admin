@@ -50,9 +50,10 @@ class ViewSchedule extends StatelessWidget {
               padding: EdgeInsets.only(left: AppStyles.paddingL, right: AppStyles.paddingL),
                 child: Column(
                   children: [
+                    SizedBox(height: AppStyles.spaceM),
                     ScheduleCard(
-                      day: "Tuesday",
-                      subject: "Matematika",
+                      day: "Monday",
+                      subject: "Bahasa Inggris",
                       time: "13.00 - 14.30",
                       teacher: "Miss Ica",
                     ),
@@ -61,7 +62,14 @@ class ViewSchedule extends StatelessWidget {
                       day: "Tuesday",
                       subject: "Matematika",
                       time: "13.00 - 14.30",
-                      teacher: "Miss Ica",
+                      teacher: "Miss Sari",
+                    ),
+                    SizedBox(height: AppStyles.spaceS),
+                    ScheduleCard(
+                      day: "Wednesday",
+                      subject: "IPA",
+                      time: "13.00 - 14.30",
+                      teacher: "Miss Candra",
                     ),
                     SizedBox(height: AppStyles.spaceM),
                   ],
@@ -70,17 +78,15 @@ class ViewSchedule extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: AppStyles.paddingL, right: AppStyles.paddingL),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.toNamed(Routes.addSchedule);
-          },
-          backgroundColor: AppStyles.primary,
-          child: Icon(Icons.add_circle_outline, color: AppStyles.light),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.addSchedule);
+        },
+        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

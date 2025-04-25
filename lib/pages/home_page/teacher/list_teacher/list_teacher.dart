@@ -16,7 +16,7 @@ class Listteacher extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppStyles.paddingL),
         child: Column(
           children: [
             SizedBox(height: AppStyles.spaceXXL),
@@ -25,15 +25,13 @@ class Listteacher extends StatelessWidget {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppStyles.primary,
+                    color: AppStyles.primaryDark,
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppStyles.light),
+                    icon: Icon(Icons.arrow_back, color: AppStyles.light),
                     onPressed: () => Get.back(),
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
                   ),
                 ),
                 SizedBox(width: AppStyles.spaceS),
@@ -45,62 +43,59 @@ class Listteacher extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: AppStyles.spaceL),
             StudentCard(
-              name: 'Guru 1',
-              onEdit: () {},
+              name: 'Miss Ica',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () =>
-                  Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
             SizedBox(height: AppStyles.spaceS),
             StudentCard(
-              name: 'Guru 2',
-              onEdit: () {},
+              name: 'Miss Candra',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () => Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
             SizedBox(height: AppStyles.spaceS),
             StudentCard(
-              name: 'Guru 3',
-              onEdit: () {},
+              name: 'Miss Sari',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () => Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
             SizedBox(height: AppStyles.spaceS),
             StudentCard(
-              name: 'Guru 4',
-              onEdit: () {},
+              name: 'Miss Ima',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () => Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
             SizedBox(height: AppStyles.spaceS),
             StudentCard(
-              name: 'Guru 5',
-              onEdit: () {},
+              name: 'Miss Fani',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () => Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
             SizedBox(height: AppStyles.spaceS),
             StudentCard(
-              name: 'Guru 6',
-              onEdit: () {},
+              name: 'Miss Sinta',
+              onEdit: () => Get.toNamed('/edit-teacher'),
               onDelete: () {},
-              onMore: () => Get.toNamed('/list-report'),
+              onTap: () {  },
             ),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: AppStyles.paddingL, right: AppStyles.paddingL),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.toNamed(Routes.addTeacher);
-          },
-          backgroundColor: AppStyles.primary,
-          child: Icon(Icons.add_circle_outline, color: AppStyles.light),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.addTeacher);
+        },        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
