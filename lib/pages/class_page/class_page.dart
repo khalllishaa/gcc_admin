@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 
+import '../../components/WelcomeSign.dart';
 import '../../routes/app_route.dart';
 
 class ClassPage extends StatelessWidget {
@@ -11,83 +12,87 @@ class ClassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: AppStyles.radius),
-                CategoriesLine(
-                  image: 'images/categories.png',
-                  title: 'Kelas',
+        child: Column(
+          children: [
+            WelcomeSign(),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                child: Column(
+                  children: [
+                    SizedBox(height: AppStyles.space),
+                    CategoriesLine(
+                      image: 'images/categories.png',
+                      title: 'Kelas',
+                    ),
+                    SizedBox(height: AppStyles.spaceL),
+                    GestureDetector(
+                      onTap: () => Get.toNamed('/list-siswa'),
+                      child: KelasCard(
+                        imagePath: 'images/maths.png',
+                        title: 'Kelas 7',
+                        avatarImagePaths: [
+                          'images/categories.png',
+                          'images/learning.png',
+                          'images/logo_gcc.png',
+                        ],
+                        onEdit: () => Get.toNamed('/edit-class'),
+                      ),
+                    ),
+                    SizedBox(height: AppStyles.spaceS),
+                    GestureDetector(
+                      onTap: () => Get.toNamed('/list-siswa'),
+                      child: KelasCard(
+                        imagePath: 'images/maths.png',
+                        title: 'Kelas 8.1',
+                        avatarImagePaths: [
+                          'images/categories.png',
+                          'images/learning.png',
+                          'images/logo_gcc.png',
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: AppStyles.spaceS),
+                    GestureDetector(
+                      onTap: () => Get.toNamed('/list-siswa'),
+                      child: KelasCard(
+                        imagePath: 'images/maths.png',
+                        title: 'Kelas 8.2',
+                        avatarImagePaths: [
+                          'images/categories.png',
+                          'images/learning.png',
+                          'images/logo_gcc.png',
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: AppStyles.spaceS),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.listTeacher),
+                      child: KelasCard(
+                        imagePath: 'images/maths.png',
+                        title: 'Kelas 9',
+                        avatarImagePaths: [
+                          'images/categories.png',
+                          'images/learning.png',
+                          'images/logo_gcc.png',
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: AppStyles.spaceL),
+                  ],
                 ),
-                SizedBox(height: AppStyles.spaceL),
-                GestureDetector(
-                  onTap: () => Get.toNamed('/list-siswa'),
-                  child: KelasCard(
-                    imagePath: 'images/maths.png',
-                    title: 'Kelas 7',
-                    avatarImagePaths: [
-                      'images/categories.png',
-                      'images/learning.png',
-                      'images/logo_gcc.png',
-                    ],
-                    onEdit: () => Get.toNamed('/edit-class'),
-                  ),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                GestureDetector(
-                  onTap: () => Get.toNamed('/list-siswa'),
-                  child: KelasCard(
-                    imagePath: 'images/maths.png',
-                    title: 'Kelas 8.1',
-                    avatarImagePaths: [
-                      'images/categories.png',
-                      'images/learning.png',
-                      'images/logo_gcc.png',
-                    ],
-                  ),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                GestureDetector(
-                  onTap: () => Get.toNamed('/list-siswa'),
-                  child: KelasCard(
-                    imagePath: 'images/maths.png',
-                    title: 'Kelas 8.2',
-                    avatarImagePaths: [
-                      'images/categories.png',
-                      'images/learning.png',
-                      'images/logo_gcc.png',
-                    ],
-                  ),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.listTeacher);
-                  },
-                  child: KelasCard(
-                    imagePath: 'images/maths.png',
-                    title: 'Kelas 9',
-                    avatarImagePaths: [
-                      'images/categories.png',
-                      'images/learning.png',
-                      'images/logo_gcc.png',
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+            ))
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/add-class'),
-        backgroundColor:AppStyles.dark,
+        backgroundColor: AppStyles.dark,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),

@@ -18,12 +18,12 @@ class AppStyles {
   static Color shadowColor = Colors.grey.withOpacity(0.1);
 
   // Text Style
-  static const TextStyle headingStyle = TextStyle(fontSize: 20, fontFamily: 'Times New Roman', fontWeight: FontWeight.bold, color: AppStyles.light);
-  static const TextStyle heading1 = TextStyle(fontSize: 20, fontFamily: 'Times New Roman', fontWeight: FontWeight.bold, color: AppStyles.dark);
-  static const TextStyle heading2 = TextStyle(fontSize: 12, fontFamily: 'Times New Roman', fontWeight: FontWeight.w500, color: AppStyles.grey1);
-  static const TextStyle welcome1 = TextStyle(fontSize: 30, fontFamily: 'Times New Roman', fontWeight: FontWeight.bold, color: AppStyles.light);
-  static const TextStyle welcome2 = TextStyle(fontSize: 16, fontFamily: 'Times New Roman', fontWeight: FontWeight.w500, color: AppStyles.light);
-  static const TextStyle lesson = TextStyle(fontSize: 13, fontFamily: 'Times New Roman', fontWeight: FontWeight.w500, color: AppStyles.light);
+  static const TextStyle headingStyle = TextStyle(fontSize: 20, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.light);
+  static const TextStyle heading1 = TextStyle(fontSize: 20, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.dark);
+  static const TextStyle heading2 = TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.grey1);
+  static const TextStyle welcome1 = TextStyle(fontSize: 30, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.light);
+  static const TextStyle welcome2 = TextStyle(fontSize: 16, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.light);
+  static const TextStyle lesson = TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.light);
   static const TextStyle profileText1 = TextStyle(fontSize: 14, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.dark);
   static const TextStyle profileText2 = TextStyle(fontSize: 16, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.dark);
 
@@ -73,8 +73,8 @@ class AppStyles {
   static const double spaceS = 10.0;
   static const double spaceM = 15.0;
   static const double spaceL = 20.0;
-  static const double space = 25.0;
-  static const double spaceXL = 35.0;
+  static const double space = 28.0;
+  static const double spaceXL = 45.0;
   static const double spaceXXL = 60.0;
 
   // Border Radius

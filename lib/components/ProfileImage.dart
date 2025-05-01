@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
+import 'package:iconly/iconly.dart';
 
 class ProfileImagePicker extends StatelessWidget {
   final ImageProvider image;
@@ -7,10 +8,11 @@ class ProfileImagePicker extends StatelessWidget {
   final VoidCallback onPickFromGallery;
 
   const ProfileImagePicker({
+    Key? key,
     required this.image,
     required this.onPickFromCamera,
     required this.onPickFromGallery,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class ProfileImagePicker extends StatelessWidget {
             onTap: () {
               showModalBottomSheet(
                 context: context,
-                backgroundColor: AppStyles.light,
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
                 builder: (_) => _buildBottomSheet(context),
               );
             },
@@ -46,52 +49,51 @@ class ProfileImagePicker extends StatelessWidget {
 
   Widget _buildBottomSheet(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppStyles.spaceL),
       height: 280,
       decoration: BoxDecoration(
         color: AppStyles.light,
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppStyles.radiusXL)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 10,
-          )
-        ],
       ),
       child: Column(
         children: [
-          Container(
-            width: 50,
-            height: 5,
-            decoration: BoxDecoration(
-              color: AppStyles.light,
-              borderRadius: BorderRadius.circular(AppStyles.radiusS),
+          Padding(
+            padding: EdgeInsets.only(top: AppStyles.paddingM, bottom: AppStyles.paddingXL),
+            child: Container(
+              width: 60,
+              height: 5,
+              decoration: BoxDecoration(
+                color: AppStyles.dark,
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
           ),
-          SizedBox(height: AppStyles.spaceL),
+          SizedBox(height: AppStyles.spaceM),
           Text(
             "Pilih Sumber Foto",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: AppStyles.dark,
-            ),
+            style: AppStyles.heading1,
           ),
           SizedBox(height: AppStyles.spaceXL),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildOption(icon: Icons.camera_alt, label: "Kamera", onTap: () {
-                Navigator.pop(context);
-                onPickFromCamera();
-              }),
-              _buildOption(icon: Icons.photo_library, label: "Galeri", onTap: () {
-                Navigator.pop(context);
-                onPickFromGallery();
-              }),
+              _buildOption(
+                icon: IconlyBold.camera,
+                label: "Kamera",
+                onTap: () {
+                  Navigator.pop(context);
+                  onPickFromCamera();
+                },
+              ),
+              _buildOption(
+                icon: IconlyBold.folder,
+                label: "Galeri",
+                onTap: () {
+                  Navigator.pop(context);
+                  onPickFromGallery();
+                },
+              ),
             ],
-          ),
+          )
         ],
       ),
     );
@@ -106,30 +108,11 @@ class ProfileImagePicker extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Icon(icon, size: 40),
-          SizedBox(height: 10),
-          Text(label),
+          Icon(icon, size: 60, color: AppStyles.dark),
+          SizedBox(height: AppStyles.spaceS),
+          Text(label, style: TextStyle(fontSize: 14, color: AppStyles.dark)),
         ],
       ),
     );
   }
 }
-
-// class ProfileImagePickerModel {
-//   final ImageProvider image;
-//   final double avatarRadius;
-//   final double cameraRadius;
-//   final Color cameraBackgroundColor;
-//   final Icon cameraIcon;
-//   final VoidCallback onCameraTap;
-//
-//   ProfileImagePickerModel({
-//     required this.image,
-//     required this.avatarRadius,
-//     required this.cameraRadius,
-//     required this.cameraBackgroundColor,
-//     required this.cameraIcon,
-//     required this.onCameraTap,
-//   });
-// }
-

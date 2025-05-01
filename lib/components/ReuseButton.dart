@@ -12,7 +12,7 @@ class ReuseButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.backgroundColor = AppStyles.primaryLight,
+    this.backgroundColor = AppStyles.primaryDark,
     this.textColor = AppStyles.light,
     this.borderColor = Colors.transparent,
   });
