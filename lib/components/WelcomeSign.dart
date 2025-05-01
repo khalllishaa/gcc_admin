@@ -54,7 +54,7 @@ class WelcomeSign extends StatelessWidget {
             // Logo
             GestureDetector(
               onTap: () {
-                mainMenuController.updateIndex(3);
+                mainMenuController.updateIndex(2);
               },
               child: Container(
                 width: AppStyles.logoHeading,

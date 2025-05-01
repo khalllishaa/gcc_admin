@@ -19,41 +19,48 @@ class HomePage extends StatelessWidget {
     MainMenuController mainMenuController = Get.find();
 
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: AppStyles.space),
             WelcomeSign(),
-            SizedBox(height: AppStyles.spaceL),
-            Padding(
-              padding: EdgeInsets.only(left: AppStyles.paddingXL, right: AppStyles.paddingXL),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CategoriesLine(
-                      title: 'Home Page',
-                      image: 'images/categories.png',
+            Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                    child: Column(
+                      children: [
+                        SizedBox(height: AppStyles.space),
+                        CategoriesLine(
+                          title: 'Home Page',
+                          image: 'images/categories.png',
+                        ),
+                        SizedBox(height: AppStyles.spaceS),
+                        WavyCard(
+                          title: 'List Guru',
+                          onTap: () => Get.toNamed('/list-teacher'),
+                        ),
+                        WavyCard(
+                          title: 'Jadwal Mata Pelajaran',
+                          onTap: () => Get.toNamed('/schedule'),
+                        ),
+                        WavyCard(
+                          title: 'Journal Kelas',
+                          onTap: () => Get.toNamed('/journal-class'),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: AppStyles.spaceS),
-                    WavyCard(
-                      title: 'List Guru',
-                      onTap: () => Get.toNamed('/list-teacher'),
-                    ),
-                    WavyCard(
-                      title: 'Jadwal Mata Pelajaran',
-                      onTap: () => Get.toNamed('/schedule'),
-                    ),
-                    WavyCard(
-                      title: 'Journal Kelas',
-                      onTap: () => Get.toNamed('/journal-class'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                ))
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed('/add-class'),
+        backgroundColor: AppStyles.dark,
+        shape: CircleBorder(),
+        child: Icon(Icons.add, color: AppStyles.primaryLight),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
