@@ -42,7 +42,7 @@ class StudentCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   name,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: AppStyles.welcome2.copyWith(color: AppStyles.dark),
                 ),
               ),
               // Edit button
@@ -60,15 +60,8 @@ class StudentCard extends StatelessWidget {
                   Get.defaultDialog(
                     title: "Delete",
                     middleText: "Are you sure you want to delete this item?",
-                    titleStyle: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: AppStyles.light,
-                    ),
-                    middleTextStyle: TextStyle(
-                      fontSize: 16,
-                      color: AppStyles.light,
-                    ),
+                    titleStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 22),
+                    middleTextStyle: AppStyles.welcome2,
                     backgroundColor: AppStyles.primary,
                     radius: AppStyles.radiusXL,
                     barrierDismissible: false,
@@ -81,7 +74,7 @@ class StudentCard extends StatelessWidget {
                       ),
                       child: Text(
                         "No",
-                        style: TextStyle(fontSize: 16, color: AppStyles.light),
+                        style: AppStyles.welcome2,
                       ),
                     ),
                     confirm: ElevatedButton(
@@ -98,7 +91,7 @@ class StudentCard extends StatelessWidget {
                       ),
                       child: Text(
                         "Yes",
-                        style: TextStyle(fontSize: 16, color: AppStyles.light),
+                        style: AppStyles.welcome2,
                       ),
                     ),
                   );

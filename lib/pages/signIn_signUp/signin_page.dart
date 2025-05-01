@@ -54,7 +54,7 @@ class SigninPage extends StatelessWidget {
                         Text(
                           'Silahkan isi terlebih dahulu sebelum masuk.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: AppStyles.profileText1.copyWith(fontWeight: FontWeight.w500, fontSize: 12),
                         ),
                         SizedBox(height: AppStyles.spaceM),
                         MyTextField(
@@ -73,7 +73,6 @@ class SigninPage extends StatelessWidget {
                         ReuseButton(
                           text: 'Masuk',
                           onPressed: () {
-                            // Get.offAllNamed(Routes.main);
                             controller.goToSignIn();
                           },
                           backgroundColor: AppStyles.schedule,
@@ -83,25 +82,6 @@ class SigninPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // SizedBox(height: AppStyles.spaceL),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text('Belum punya akun? '),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Get.toNamed(Routes.signup);
-                  //       },
-                  //       child: Text(
-                  //         'Daftar',
-                  //         style: TextStyle(
-                  //           color: AppStyles.primary,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
             ),

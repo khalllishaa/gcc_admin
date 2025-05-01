@@ -24,7 +24,7 @@ class ViewJournal extends StatelessWidget {
                   color: AppStyles.primaryDark,
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                  icon: Icon(Icons.arrow_back, color:AppStyles.light),
                   onPressed: () => Get.back(),
                 ),
               ),
@@ -35,17 +35,13 @@ class ViewJournal extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                     color: AppStyles.primaryDark,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(AppStyles.radiusL),
                   ),
-                  child: const Align(
+                  child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Journal 13 Januari 2025",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

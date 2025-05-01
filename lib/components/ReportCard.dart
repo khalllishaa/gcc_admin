@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/components/AppStyles.dart';
 
 class AssessmentCard extends StatefulWidget {
   final String subject;
@@ -17,34 +18,31 @@ class _AssessmentCardState extends State<AssessmentCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: AppStyles.paddingM),
+      padding: EdgeInsets.all(AppStyles.paddingL),
       decoration: BoxDecoration(
-        color: const Color(0xFFB6E9EC),
-        borderRadius: BorderRadius.circular(20),
+        color:AppStyles.secondaryLight,
+        borderRadius: BorderRadius.circular(AppStyles.radiusXL),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.menu_book, color: Colors.teal, size: 30),
-              const SizedBox(width: 8),
+              Icon(Icons.menu_book, color: AppStyles.primaryDark, size: 30),
+              SizedBox(width: AppStyles.spaceS),
               Text(
                 widget.subject,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppStyles.welcome2.copyWith(color: AppStyles.dark, fontWeight: FontWeight.bold, fontSize: 18),
               )
             ],
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: AppStyles.spaceS),
+          Text(
             'Anak memiliki tingkat pemahaman:',
-            style: TextStyle(fontSize: 14),
+            style: AppStyles.profileText1.copyWith(fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: AppStyles.spaceS),
           Row(
             spacing: 6,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,10 +57,11 @@ class _AssessmentCardState extends State<AssessmentCard> {
                 },
                 selectedColor: Colors.teal,
                 backgroundColor: Colors.white,
-                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                labelPadding: EdgeInsets.symmetric(horizontal: 8),
                 labelStyle: TextStyle(
-                    color: selectedLevel == level ? Colors.white : Colors.black,
-                    fontSize: 10),
+                    color: selectedLevel == level ? AppStyles.light : Colors.black,
+                    fontSize: 10,
+                    fontFamily: 'Poppins'),
                 shape: StadiumBorder(
                   side: BorderSide(color: Colors.black.withOpacity(0.2)),
                 ),

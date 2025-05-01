@@ -25,53 +25,44 @@ class ScheduleCard extends StatelessWidget {
           height: 120,
           child: Container(
             decoration: BoxDecoration(
-              color: const Color.fromRGBO(71, 193, 199, 0.5),
-              borderRadius: BorderRadius.circular(14),
+              color: AppStyles.secondaryLight,
+              borderRadius: BorderRadius.circular(AppStyles.radiusL),
             ),
             child: Center(
               child: RotatedBox(
                 quarterTurns: -1,
                 child: Text(
                   day,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(0, 102, 107, 1),
-                  ),
+                  style: AppStyles.welcome2.copyWith(color: AppStyles.primary, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
         ),
-        SizedBox(width: 10),
+        SizedBox(width: AppStyles.spaceS),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(AppStyles.paddingL),
             decoration: BoxDecoration(
-              color: const Color.fromRGBO(71, 193, 199, 0.5),
-              borderRadius: BorderRadius.circular(12),
+              color: AppStyles.secondaryLight,
+              borderRadius: BorderRadius.circular(AppStyles.radiusM),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   subject,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(0, 102, 107, 1),
-                  ),
+                  style: AppStyles.welcome2.copyWith(color: AppStyles.primary, fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 SizedBox(height: AppStyles.spaceS),
                 Row(
                   children: [
                     Icon(Icons.access_time,
-                        size: 16, color: Color.fromRGBO(0, 102, 107, 1)),
-                    SizedBox(width: 4),
+                        size: 16, color: AppStyles.primary),
+                    SizedBox(width: AppStyles.spaceXS),
                     Text(
                       time,
-                      style: const TextStyle(
-                          color: Color.fromRGBO(0, 102, 107, 1)),
+                      style: AppStyles.welcome2.copyWith(color: AppStyles.primary, fontSize: 14),
                     ),
                   ],
                 ),
@@ -79,12 +70,11 @@ class ScheduleCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.person,
-                        size: 16, color: Color.fromRGBO(0, 102, 107, 1)),
-                    SizedBox(width: 4),
+                        size: 16, color: AppStyles.primary),
+                    SizedBox(width: AppStyles.spaceXS),
                     Text(
                       teacher,
-                      style: const TextStyle(
-                          color: Color.fromRGBO(0, 102, 107, 1)),
+                      style: AppStyles.welcome2.copyWith(color: AppStyles.primary, fontSize: 14),
                     ),
                   ],
                 ),

@@ -53,11 +53,7 @@ class Journal extends StatelessWidget {
                         SizedBox(width: AppStyles.spaceS),
                         Text(
                           "13 Januari",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

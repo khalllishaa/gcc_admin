@@ -24,15 +24,8 @@ class ProfileController extends GetxController{
     Get.defaultDialog(
       title: "Log Out",
       middleText: "Are you sure you want to log out?",
-      titleStyle: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-        color: AppStyles.light,
-      ),
-      middleTextStyle: TextStyle(
-        fontSize: 16,
-        color: AppStyles.light,
-      ),
+      titleStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 22),
+      middleTextStyle: AppStyles.welcome2,
       backgroundColor: AppStyles.primary,
       radius: AppStyles.radiusXL,
       barrierDismissible: false,
@@ -45,7 +38,7 @@ class ProfileController extends GetxController{
         ),
         child: Text(
           "No",
-          style: TextStyle(fontSize: 16, color: AppStyles.light),
+          style: AppStyles.welcome2,
         ),
       ),
       confirm: ElevatedButton(
@@ -62,7 +55,7 @@ class ProfileController extends GetxController{
         ),
         child: Text(
           "Yes",
-          style: TextStyle(fontSize: 16, color: AppStyles.light),
+          style: AppStyles.welcome2,
         ),
       ),
     );

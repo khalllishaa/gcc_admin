@@ -10,7 +10,6 @@ class ViewReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppStyles.primaryLight,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),

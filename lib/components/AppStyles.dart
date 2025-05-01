@@ -19,6 +19,7 @@ class AppStyles {
 
   // Text Style
   static const TextStyle headingStyle = TextStyle(fontSize: 20, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.light);
+  static const TextStyle splashscreen = TextStyle(fontSize: 20, fontFamily: 'Times New Roman', fontWeight: FontWeight.bold, color: AppStyles.light);
   static const TextStyle heading1 = TextStyle(fontSize: 20, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.dark);
   static const TextStyle heading2 = TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.grey1);
   static const TextStyle welcome1 = TextStyle(fontSize: 30, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.light);
