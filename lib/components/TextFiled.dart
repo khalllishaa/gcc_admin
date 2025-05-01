@@ -35,7 +35,7 @@ class _MyTextFieldState extends State<MyTextField> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.labelText,
-        hintStyle: TextStyle(color: Colors.grey.shade500),
+        hintStyle: TextStyle(color: Colors.grey.shade500, fontFamily: 'Poppins'),
         border: UnderlineInputBorder(),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade400, width: 1.5),
@@ -76,7 +76,7 @@ class _MyTextFieldState extends State<MyTextField> {
         )
             : null,
       ),
-      style: const TextStyle(fontSize: 16),
+      style: AppStyles.welcome2.copyWith(color: AppStyles.dark),
     );
   }
 }

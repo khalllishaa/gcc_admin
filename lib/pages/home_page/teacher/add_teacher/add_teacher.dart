@@ -49,6 +49,7 @@ class Addteacher extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: AppStyles.spaceS),
                     buildSectionTitle('Nama'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
@@ -93,7 +94,7 @@ Widget buildSectionTitle(String title) {
     padding: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
     child: Text(
       title,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: AppStyles.welcome2.copyWith(color: AppStyles.dark, fontSize: 18, fontWeight: FontWeight.bold),
     ),
   );
 }

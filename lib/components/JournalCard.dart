@@ -29,19 +29,16 @@ class CourseCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: AppStyles.dark),
               ),
-              SizedBox(height: 4),
+              SizedBox(height: AppStyles.spaceXS),
               Row(
                 children: [
                   Icon(Icons.school, size: 16),
-                  SizedBox(width: 4),
+                  SizedBox(width: AppStyles.spaceXS),
                   Text(
                     subtitle,
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    style: AppStyles.welcome2.copyWith(color: AppStyles.dark, fontSize: 12),
                   ),
                 ],
               ),

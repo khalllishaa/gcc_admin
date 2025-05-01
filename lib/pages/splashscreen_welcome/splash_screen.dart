@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: AppStyles.logo,
             ),
             SizedBox(height: AppStyles.spaceL),
-            Text('Golden Children Club', style: AppStyles.headingStyle),
+            Text('Golden Children Club', style: AppStyles.splashscreen),
             SizedBox(height: AppStyles.spaceL),
             CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(AppStyles.light),

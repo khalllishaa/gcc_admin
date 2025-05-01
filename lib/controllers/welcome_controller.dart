@@ -30,7 +30,7 @@ class SignInController extends GetxController {
     }
 
     if (username == 'admin' && password == '1234') {
-      await saveLoginStatus(); // Simpan status login setelah sukses
+      await saveLoginStatus();
 
       Get.snackbar(
         'Login Berhasil',
@@ -41,7 +41,7 @@ class SignInController extends GetxController {
       );
 
       Future.delayed(Duration(seconds: 1), () {
-        Get.offNamed(Routes.welcome);
+        Get.offNamed(Routes.main);
       });
     } else {
       Get.snackbar(
