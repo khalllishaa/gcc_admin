@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../components/AppStyles.dart';
 import '../../routes/app_route.dart';
+import '../services/api_service.dart'; // tambahkan import ini
 
 class SignInController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final isLoading = false.obs;
 
   Future<void> saveLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,33 +30,48 @@ class SignInController extends GetxController {
       return;
     }
 
-    if (username == 'admin' && password == '1234') {
-      await saveLoginStatus();
+    try {
+      isLoading.value = true;
 
-      Get.snackbar(
-        'Login Berhasil',
-        'Selamat datang, $username!',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppStyles.secondaryLight,
-        colorText: AppStyles.dark,
-      );
+      final response = await ApiService.login(username, password);
 
-      Future.delayed(Duration(seconds: 1), () {
-        Get.offNamed(Routes.main);
-      });
-    } else {
+      if (response['message'] == 'Login successful') {
+        await saveLoginStatus();
+
+        Get.snackbar(
+          'Login Berhasil',
+          'Selamat datang, ${response['user']['name']}!',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: AppStyles.secondaryLight,
+          colorText: AppStyles.dark,
+        );
+
+        Future.delayed(Duration(seconds: 1), () {
+          Get.offNamed(Routes.main);
+        });
+      } else {
+        Get.snackbar(
+          'Login Gagal',
+          'Username atau password salah!',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: AppStyles.error,
+          colorText: AppStyles.light,
+        );
+      }
+    } catch (e) {
       Get.snackbar(
         'Login Gagal',
-        'Username atau password salah!',
+        e.toString(),
         snackPosition: SnackPosition.TOP,
         backgroundColor: AppStyles.error,
         colorText: AppStyles.light,
       );
+    } finally {
+      isLoading.value = false;
     }
   }
 
   void goToSignUp() {
     Get.toNamed(Routes.signup);
   }
-
 }

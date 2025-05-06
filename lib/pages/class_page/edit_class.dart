@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-import 'package:gcc_admin/components/InputCard.dart';
 import 'package:get/get.dart';
-
 import '../../components/CustomTextField.dart';
 import '../../components/ReuseButton.dart';
 import '../home_page/teacher/add_teacher/add_teacher.dart';
