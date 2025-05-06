@@ -12,81 +12,89 @@ class ClassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             WelcomeSign(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingM),
+              child: Column(
+                children: [
+                  SizedBox(height: AppStyles.space),
+                  CategoriesLine(
+                    image: 'images/categories.png',
+                    title: 'Kelas',
+                  ),
+                ],
+              ),
+            ),
             Expanded(
-                child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
-                child: Column(
-                  children: [
-                    SizedBox(height: AppStyles.space),
-                    CategoriesLine(
-                      image: 'images/categories.png',
-                      title: 'Kelas',
-                    ),
-                    SizedBox(height: AppStyles.spaceL),
-                    GestureDetector(
-                      onTap: () => Get.toNamed('/list-siswa'),
-                      child: KelasCard(
-                        imagePath: 'images/maths.png',
-                        title: 'Kelas 7',
-                        avatarImagePaths: [
-                          'images/categories.png',
-                          'images/learning.png',
-                          'images/logo_gcc.png',
-                        ],
-                        onEdit: () => Get.toNamed('/edit-class'),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                  child: Column(
+                    children: [
+                      SizedBox(height: AppStyles.space),
+                      GestureDetector(
+                        onTap: () => Get.toNamed('/list-siswa'),
+                        child: KelasCard(
+                          imagePath: 'images/maths.png',
+                          title: 'Kelas 7',
+                          avatarImagePaths: [
+                            'images/categories.png',
+                            'images/learning.png',
+                            'images/logo_gcc.png',
+                          ],
+                          onEdit: () => Get.toNamed('/edit-class'),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppStyles.spaceS),
-                    GestureDetector(
-                      onTap: () => Get.toNamed('/list-siswa'),
-                      child: KelasCard(
-                        imagePath: 'images/maths.png',
-                        title: 'Kelas 8.1',
-                        avatarImagePaths: [
-                          'images/categories.png',
-                          'images/learning.png',
-                          'images/logo_gcc.png',
-                        ],
+                      SizedBox(height: AppStyles.spaceS),
+                      GestureDetector(
+                        onTap: () => Get.toNamed('/list-siswa'),
+                        child: KelasCard(
+                          imagePath: 'images/maths.png',
+                          title: 'Kelas 8.1',
+                          avatarImagePaths: [
+                            'images/categories.png',
+                            'images/learning.png',
+                            'images/logo_gcc.png',
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppStyles.spaceS),
-                    GestureDetector(
-                      onTap: () => Get.toNamed('/list-siswa'),
-                      child: KelasCard(
-                        imagePath: 'images/maths.png',
-                        title: 'Kelas 8.2',
-                        avatarImagePaths: [
-                          'images/categories.png',
-                          'images/learning.png',
-                          'images/logo_gcc.png',
-                        ],
+                      SizedBox(height: AppStyles.spaceS),
+                      GestureDetector(
+                        onTap: () => Get.toNamed('/list-siswa'),
+                        child: KelasCard(
+                          imagePath: 'images/maths.png',
+                          title: 'Kelas 8.2',
+                          avatarImagePaths: [
+                            'images/categories.png',
+                            'images/learning.png',
+                            'images/logo_gcc.png',
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppStyles.spaceS),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(Routes.listTeacher),
-                      child: KelasCard(
-                        imagePath: 'images/maths.png',
-                        title: 'Kelas 9',
-                        avatarImagePaths: [
-                          'images/categories.png',
-                          'images/learning.png',
-                          'images/logo_gcc.png',
-                        ],
+                      SizedBox(height: AppStyles.spaceS),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.listTeacher),
+                        child: KelasCard(
+                          imagePath: 'images/maths.png',
+                          title: 'Kelas 9',
+                          avatarImagePaths: [
+                            'images/categories.png',
+                            'images/learning.png',
+                            'images/logo_gcc.png',
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppStyles.spaceL),
-                  ],
+                      SizedBox(height: AppStyles.spaceL),
+                    ],
+                  ),
                 ),
               ),
-            ))
+            ),
           ],
         ),
       ),
