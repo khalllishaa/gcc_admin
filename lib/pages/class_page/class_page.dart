@@ -1,98 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
 import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-
+import '../../controllers/class_controller.dart';
 import '../../components/WelcomeSign.dart';
-import '../../routes/app_route.dart';
+import '../../components/AppStyles.dart';
 
 class ClassPage extends StatelessWidget {
   const ClassPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ClassController());
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            WelcomeSign(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingM),
-              child: Column(
-                children: [
-                  SizedBox(height: AppStyles.space),
-                  CategoriesLine(
-                    image: 'images/categories.png',
-                    title: 'Kelas',
-                  ),
-                ],
-              ),
-            ),
+            Obx(() => WelcomeSign(
+              username: controller.classList.isNotEmpty
+                  ? controller.classList[0].users[0].name
+                  : 'Guest',
+            )),
+            // Add Expanded with a padding to make content not too close to edges
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
-                  child: Column(
-                    children: [
-                      SizedBox(height: AppStyles.space),
-                      GestureDetector(
-                        onTap: () => Get.toNamed('/list-siswa'),
-                        child: KelasCard(
-                          imagePath: 'images/maths.png',
-                          title: 'Kelas 7',
-                          avatarImagePaths: [
-                            'images/categories.png',
-                            'images/learning.png',
-                            'images/logo_gcc.png',
-                          ],
-                          onEdit: () => Get.toNamed('/edit-class'),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                child: Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  return ListView.builder(
+                    padding: EdgeInsets.only(top: AppStyles.spaceS),
+                    itemCount: controller.classList.length,
+                    itemBuilder: (context, index) {
+                      final kelas = controller.classList[index];
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: AppStyles.spaceS),
+                        child: GestureDetector(
+                          onTap: () {
+                            controller.getStudents(kelas.id);
+                            Get.toNamed('/list-siswa');
+                          },
+                          child: KelasCard(
+                            imagePath: 'images/maths.png',
+                            title: kelas.name,
+                            avatarImagePaths: [
+                              'images/categories.png',
+                              'images/learning.png',
+                              'images/logo_gcc.png',
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: AppStyles.spaceS),
-                      GestureDetector(
-                        onTap: () => Get.toNamed('/list-siswa'),
-                        child: KelasCard(
-                          imagePath: 'images/maths.png',
-                          title: 'Kelas 8.1',
-                          avatarImagePaths: [
-                            'images/categories.png',
-                            'images/learning.png',
-                            'images/logo_gcc.png',
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppStyles.spaceS),
-                      GestureDetector(
-                        onTap: () => Get.toNamed('/list-siswa'),
-                        child: KelasCard(
-                          imagePath: 'images/maths.png',
-                          title: 'Kelas 8.2',
-                          avatarImagePaths: [
-                            'images/categories.png',
-                            'images/learning.png',
-                            'images/logo_gcc.png',
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppStyles.spaceS),
-                      GestureDetector(
-                        onTap: () => Get.toNamed(Routes.listTeacher),
-                        child: KelasCard(
-                          imagePath: 'images/maths.png',
-                          title: 'Kelas 9',
-                          avatarImagePaths: [
-                            'images/categories.png',
-                            'images/learning.png',
-                            'images/logo_gcc.png',
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppStyles.spaceL),
-                    ],
-                  ),
-                ),
+                      );
+                    },
+                  );
+                }),
               ),
             ),
           ],

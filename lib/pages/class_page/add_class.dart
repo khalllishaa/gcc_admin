@@ -5,6 +5,8 @@ import 'package:gcc_admin/components/ReuseButton.dart';
 import 'package:get/get.dart';
 
 import '../../components/AppStyles.dart';
+import '../../controllers/class_controller.dart';
+import '../../services/api_service.dart';
 import '../home_page/teacher/add_teacher/add_teacher.dart';
 
 class AddClass extends StatelessWidget {
@@ -12,6 +14,8 @@ class AddClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ClassController());
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -49,14 +53,16 @@ class AddClass extends StatelessWidget {
                 buildSectionTitle('Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
-                  controller: TextEditingController(),
+                  controller: controller.classNameController,  // Menggunakan controller untuk textfield
                   keyboardType: TextInputType.text,
                   hintText: 'Nama Kelas',
                 ),
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
                   text: 'Add Class',
-                  onPressed: () => Get.back(),
+                  onPressed: () {
+                    controller.addClass();  // Panggil method addClass dari controller
+                  },
                 ),
                 SizedBox(height: AppStyles.spaceS),
               ],

@@ -4,18 +4,28 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api_models/user_models.dart';
 import '../routes/app_route.dart';
+import '../services/api_service.dart';
 
 class ProfileController extends GetxController{
-
   // Observable for image picked state
   var isImagePicked = false.obs;
   var profileImage = ''.obs;
+  var user = Rxn<UsersModel>();
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    fetchUser(1);
+  }
+
+  void fetchUser(int id) async {
+    UsersModel? data = await ApiService.getUserById(id);
+    if (data != null) {
+      user.value = data;
+    }
   }
 
   Future<void> logout() async {
@@ -24,8 +34,15 @@ class ProfileController extends GetxController{
     Get.defaultDialog(
       title: "Log Out",
       middleText: "Are you sure you want to log out?",
-      titleStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 22),
-      middleTextStyle: AppStyles.welcome2,
+      titleStyle: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: AppStyles.light,
+      ),
+      middleTextStyle: TextStyle(
+        fontSize: 16,
+        color: AppStyles.light,
+      ),
       backgroundColor: AppStyles.primary,
       radius: AppStyles.radiusXL,
       barrierDismissible: false,
@@ -38,7 +55,7 @@ class ProfileController extends GetxController{
         ),
         child: Text(
           "No",
-          style: AppStyles.welcome2,
+          style: TextStyle(fontSize: 16, color: AppStyles.light),
         ),
       ),
       confirm: ElevatedButton(
@@ -55,7 +72,7 @@ class ProfileController extends GetxController{
         ),
         child: Text(
           "Yes",
-          style: AppStyles.welcome2,
+          style: TextStyle(fontSize: 16, color: AppStyles.light),
         ),
       ),
     );
@@ -70,4 +87,5 @@ class ProfileController extends GetxController{
       isImagePicked.value = true;
     }
   }
+
 }

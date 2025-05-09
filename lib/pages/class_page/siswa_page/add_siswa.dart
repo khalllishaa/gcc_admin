@@ -4,15 +4,23 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
+import '../../../controllers/class_controller.dart';
 import '../../home_page/teacher/add_teacher/add_teacher.dart';
 
 class AddStudent extends StatelessWidget {
-  const AddStudent({super.key});
+  AddStudent({super.key});
+
+  final controller = Get.find<ClassController>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+
+  final int classId = 1; // Ganti sesuai class yang dipilih!
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppStyles.light,
+      backgroundColor: AppStyles.light,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
@@ -45,17 +53,29 @@ class AddStudent extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
+
                 buildSectionTitle('Nama'),
-                SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
-                  controller: TextEditingController(),
+                  controller: nameController,
                   keyboardType: TextInputType.text,
                   hintText: 'Nama Murid',
                 ),
+                SizedBox(height: AppStyles.spaceS),
                 SizedBox(height: AppStyles.spaceL),
+
                 ReuseButton(
                   text: 'Add Student',
-                  onPressed: () => Get.back(),
+                  onPressed: () async {
+                    try {
+                      await controller.addStudent(
+                        name: nameController.text,
+                        classId: classId,
+                      );
+                      Get.back();
+                    } catch (_) {
+                      Get.snackbar('Error', 'Gagal menambahkan siswa');
+                    }
+                  },
                 ),
               ],
             ),
