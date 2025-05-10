@@ -3,14 +3,13 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 
-import '../controllers/home_controller.dart';
-
 class WelcomeSign extends StatelessWidget {
-  const WelcomeSign({Key? key}) : super(key: key);
+  final String username;
+
+  const WelcomeSign({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Get.find();
     MainMenuController mainMenuController = Get.find();
 
     return Container(
@@ -37,7 +36,7 @@ class WelcomeSign extends StatelessWidget {
                       ),
                       SizedBox(width: AppStyles.spaceS),
                       Text(
-                        controller.userName,
+                        username.isNotEmpty ? username : 'Guest',
                         style: AppStyles.heading1,
                       ),
                     ],

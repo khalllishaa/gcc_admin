@@ -4,11 +4,15 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/StudentCard.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/class_controller.dart';
+
 class ListStudent extends StatelessWidget {
   const ListStudent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ClassController>();
+
     return Scaffold(
       backgroundColor: AppStyles.light,
       body: SafeArea(
@@ -43,69 +47,32 @@ class ListStudent extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
-                StudentCard(
-                  name: 'Ocean',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Jadin',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Khalisha',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Syifa',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Keanu',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Khansa',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Jeri',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Kafka',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
-                StudentCard(
-                  name: 'Audine',
-                  onEdit: () => Get.toNamed('/edit-siswa'),
-                  onDelete: () {},
-                  onTap: () => Get.toNamed('/list-report'),
-                ),
-                SizedBox(height: AppStyles.spaceS),
+
+                // Displaying students for the selected class
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (controller.studentsList.isEmpty) {
+                    return Text('Tidak ada siswa di kelas ini');
+                  }
+
+                  return Column(
+                    children: List.generate(
+                      controller.studentsList.length,
+                          (index) {
+                        final student = controller.studentsList[index];
+                        return StudentCard(
+                          name: student.name,
+                          onEdit: () => Get.toNamed('/edit-siswa', arguments: student),
+                          onDelete: () {},
+                          onTap: () => Get.toNamed('/list-report'),
+                        );
+                      },
+                    ),
+                  );
+                })
               ],
             ),
           ),
