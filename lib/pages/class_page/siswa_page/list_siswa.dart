@@ -39,10 +39,14 @@ class ListStudent extends StatelessWidget {
                     ),
                     SizedBox(width: AppStyles.spaceS),
                     Expanded(
-                      child: CategoriesLine(
-                        image: 'images/categories.png',
-                        title: 'Kelas',
-                      ),
+                      child: Obx(() {
+                        return CategoriesLine(
+                          image: 'images/categories.png',
+                          title: controller.selectedClassName.isEmpty
+                              ? 'Class'
+                              : controller.selectedClassName.value,
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -55,7 +59,29 @@ class ListStudent extends StatelessWidget {
                   }
 
                   if (controller.studentsList.isEmpty) {
-                    return Text('Tidak ada siswa di kelas ini');
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: AppStyles.spaceeXL),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: Image.asset(
+                              'images/motorcycle.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: AppStyles.spaceM),
+                          Text(
+                            'Tidak ada siswa di kelas ini',
+                            style: AppStyles.profileText2,
+                          ),
+                        ],
+                      ),
+                    );
                   }
 
                   return Column(
@@ -66,7 +92,9 @@ class ListStudent extends StatelessWidget {
                         return StudentCard(
                           name: student.name,
                           onEdit: () => Get.toNamed('/edit-siswa', arguments: student),
-                          onDelete: () {},
+                          onDelete: () {
+                            controller.deleteStudent(student.id);
+                          },
                           onTap: () => Get.toNamed('/list-report'),
                         );
                       },

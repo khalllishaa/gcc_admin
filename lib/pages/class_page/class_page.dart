@@ -22,13 +22,41 @@ class ClassPage extends StatelessWidget {
                   ? controller.classList[0].users[0].name
                   : 'Guest',
             )),
-            // Add Expanded with a padding to make content not too close to edges
+
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
                 child: Obx(() {
                   if (controller.isLoading.value) {
                     return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (controller.classList.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: Image.asset(
+                              'images/motorcycle.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: AppStyles.spaceM),
+                          Text(
+                            'Tidak ada kelas tersedia',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppStyles.primaryDark,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
 
                   return ListView.builder(
@@ -51,6 +79,9 @@ class ClassPage extends StatelessWidget {
                               'images/learning.png',
                               'images/logo_gcc.png',
                             ],
+                            onEdit: () {
+                              Get.toNamed('/edit-class');
+                            },
                           ),
                         ),
                       );

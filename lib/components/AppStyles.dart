@@ -77,6 +77,7 @@ class AppStyles {
   static const double space = 28.0;
   static const double spaceXL = 45.0;
   static const double spaceXXL = 60.0;
+  static const double spaceeXL = 100.0;
 
   // Border Radius
   static const double radiusS = 10.0;

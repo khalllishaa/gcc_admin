@@ -67,15 +67,14 @@ class KelasCard extends StatelessWidget {
               )
             ],
           ),
-          // Tombol Edit di pojok kanan atas
           Positioned(
             top: 0,
             right: 0,
             child: InkWell(
               onTap: onEdit,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
               child: Padding(
-                padding: const EdgeInsets.all(6),
+                padding: EdgeInsets.all(AppStyles.paddingS),
                 child: Icon(
                   Icons.more_vert,
                   size: 20,

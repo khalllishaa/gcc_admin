@@ -5,7 +5,7 @@ import '../api_models/class_models.dart';
 import '../api_models/user_models.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://f998-160-22-25-26.ngrok-free.app/api';
+  static const String baseUrl = 'https://af3e-103-41-200-4.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
@@ -46,40 +46,6 @@ class ApiService {
     }
   }
 
-  static Future<void> addStudent({
-    required String name,
-    required int classId,
-  }) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': name,
-        'class_id': classId,
-      }),
-    );
-
-    print('Status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 302) {
-      String redirectUrl = response.headers['location'] ?? '';
-      if (redirectUrl.isNotEmpty) {
-        print('Redirecting to: $redirectUrl');
-        final redirectResponse = await http.get(Uri.parse(redirectUrl));
-        if (redirectResponse.statusCode == 200) {
-          print('Redirected successfully: ${redirectResponse.body}');
-        } else {
-          throw Exception('Failed to redirect to new URL');
-        }
-      }
-    }
-
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception('Gagal menambahkan siswa');
-    }
-  }
-
   static Future<UsersModel?> getUserById(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/users'));
 
@@ -109,5 +75,52 @@ class ApiService {
     }
   }
 
+  // Tambahkan ini di ApiService
+  static Future<void> updateStudent({
+    required int id,
+    required String name,
+  }) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/users/update/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'name': name}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Student updated on API');
+    } else {
+      throw Exception('Failed to update student: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> deleteStudent(int studentId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/users/delete/$studentId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('Student deleted successfully');
+    } else {
+      throw Exception('Failed to delete student: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> updateClass({
+    required int id,
+    required String name,
+  }) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/classes/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'name': name}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Class updated successfully');
+    } else {
+      throw Exception('Failed to update class: ${response.statusCode}');
+    }
+  }
 
 }

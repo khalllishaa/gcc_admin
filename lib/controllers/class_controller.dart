@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/api_models/class_models.dart';
 import 'package:get/get.dart';
-
 import '../services/api_service.dart';
 
 class ClassController extends GetxController {
   var classList = <ClassModel>[].obs;
   var studentsList = <User>[].obs;
   var isLoading = false.obs;
+  var selectedClassName = ''.obs;
   var classNameController = TextEditingController();
-
 
   @override
   void onInit() {
@@ -34,8 +33,8 @@ class ClassController extends GetxController {
     try {
       final classes = await ApiService.fetchClasses();
       final selectedClass = classes.firstWhere((kelas) => kelas.id == classId);
+      selectedClassName.value = selectedClass.name;
       final students = selectedClass.users.where((user) => user.role == 'student').toList();
-
       studentsList.value = students;
     } catch (e) {
       print('Error fetching students: $e');
@@ -44,24 +43,6 @@ class ClassController extends GetxController {
     }
   }
 
-  Future<void> addStudent({
-    required String name,
-    required int classId,
-  }) async {
-    isLoading.value = true;
-    try {
-      await ApiService.addStudent(
-        name: name,
-        classId: classId,
-      );
-      await getStudents(classId);
-    } catch (e) {
-      print('Error adding student: $e');
-      rethrow;
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
   Future<void> addClass() async {
     isLoading.value = true;
@@ -81,5 +62,46 @@ class ClassController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> updateStudentName(int id, String newName) async {
+    await ApiService.updateStudent(id: id, name: newName);
+
+    int index = studentsList.indexWhere((student) => student.id == id);
+    if (index != -1) {
+      studentsList[index] = studentsList[index].copyWith(name: newName);
+      studentsList.refresh();
+    }
+  }
+
+  Future<void> deleteStudent(int studentId) async {
+    isLoading.value = true;
+    try {
+      await ApiService.deleteStudent(studentId);
+      studentsList.removeWhere((student) => student.id == studentId);
+    } catch (e) {
+      print('Error deleting student: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateClassName(int id) async {
+    isLoading.value = true;
+    try {
+      String name = classNameController.text;
+      if (name.isNotEmpty) {
+        await ApiService.updateClass(id: id, name: name);
+        await getClasses();
+        Get.back();
+      } else {
+        print('Nama kelas tidak boleh kosong');
+      }
+    } catch (e) {
+      print('Error updating class: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
 }
