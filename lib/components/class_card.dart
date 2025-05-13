@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/OverlappingAvatar.dart';
+import 'package:gcc_admin/components/StudentCard.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 
 class KelasCard extends StatelessWidget {
   final String imagePath;
@@ -10,7 +13,7 @@ class KelasCard extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final Color iconColor;
-  final VoidCallback? onEdit; // Tambahkan parameter onEdit
+  final VoidCallback onDelete;
 
   const KelasCard({
     super.key,
@@ -19,8 +22,8 @@ class KelasCard extends StatelessWidget {
     this.avatarImagePaths = const [],
     this.backgroundColor = AppStyles.secondaryLight,
     this.textColor = AppStyles.primary,
-    this.iconColor = const Color(0xFF004D40),
-    this.onEdit,
+    this.iconColor = AppStyles.primary,
+    required this.onDelete,
   });
 
   @override
@@ -71,12 +74,17 @@ class KelasCard extends StatelessWidget {
             top: 0,
             right: 0,
             child: InkWell(
-              onTap: onEdit,
-              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+              onTap: () {
+                Get.dialog(DeleteConfirmationDialog(
+                  onConfirm: () {
+                    onDelete();
+                  },
+                ));
+              },              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
               child: Padding(
                 padding: EdgeInsets.all(AppStyles.paddingS),
                 child: Icon(
-                  Icons.more_vert,
+                  IconlyBold.delete,
                   size: 20,
                   color: iconColor,
                 ),

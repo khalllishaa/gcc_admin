@@ -17,12 +17,12 @@ class ClassPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Obx(() => WelcomeSign(
-              username: controller.classList.isNotEmpty
-                  ? controller.classList[0].users[0].name
-                  : 'Guest',
-            )),
-
+            // Obx(() => WelcomeSign(
+            //   username: controller.classList.isNotEmpty
+            //       ? controller.classList[0].users[0].name
+            //       : 'Guest',
+            // )),
+            WelcomeSign(username: 'username'),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
@@ -79,8 +79,8 @@ class ClassPage extends StatelessWidget {
                               'images/learning.png',
                               'images/logo_gcc.png',
                             ],
-                            onEdit: () {
-                              Get.toNamed('/edit-class');
+                            onDelete: () {
+                              controller.deleteClass(kelas.id);
                             },
                           ),
                         ),

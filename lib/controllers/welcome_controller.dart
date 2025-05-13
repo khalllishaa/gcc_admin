@@ -10,10 +10,9 @@ class SignInController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final isLoading = false.obs;
 
-  Future<void> saveLoginStatus(String username) async {
+  Future<void> saveLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
-    await prefs.setString('username', username); // simpan username
   }
 
   Future<String?> getSavedUsername() async {
@@ -42,25 +41,7 @@ class SignInController extends GetxController {
       final response = await ApiService.login(username, password);
 
       if (response['message'] == 'Login successful') {
-        // Mengambil instance sharedPreferences
-        final sharedPreferences = await SharedPreferences.getInstance();
-        // await saveLoginStatus();
-
-        // Mengecek role setelah login
-        if (response['user']['role'] != 'student') {
-          Get.snackbar(
-            'Akses Ditolak',
-            'Akun ini bukan siswa. Silakan login di aplikasi yang sesuai.',
-            backgroundColor: Colors.red.withOpacity(0.7),
-            colorText: Colors.white,
-          );
-
-          await sharedPreferences.remove('token');
-          await sharedPreferences.remove('username');
-
-          Get.offAllNamed(Routes.splash);
-          return;
-        }
+        await saveLoginStatus();
 
         Get.snackbar(
           'Login Berhasil',
@@ -71,7 +52,7 @@ class SignInController extends GetxController {
         );
 
         Future.delayed(Duration(seconds: 1), () {
-          Get.offNamed(Routes.welcome);
+          Get.offNamed(Routes.main);
         });
       } else {
         Get.snackbar(

@@ -11,6 +11,7 @@ class AddStudent extends StatelessWidget {
   AddStudent({super.key});
 
   final controller = Get.find<ClassController>();
+  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class AddStudent extends StatelessWidget {
 
                 buildSectionTitle('Nama'),
                 Customtextfield(
-                  controller: TextEditingController(),
+                  controller: nameController,
                   keyboardType: TextInputType.text,
                   hintText: 'Nama Murid',
                 ),
@@ -60,7 +61,18 @@ class AddStudent extends StatelessWidget {
 
                 ReuseButton(
                   text: 'Add Student',
-                    onPressed: () => Get.back(),
+                  onPressed: () async {
+                    if (nameController.text.isNotEmpty) {
+                      try {
+                        await controller.addStudent(nameController.text);
+                        Get.back();
+                      } catch (e) {
+                        Get.snackbar('Error', 'Gagal menambah siswa: $e');
+                      }
+                    } else {
+                      Get.snackbar('Validasi', 'Nama murid tidak boleh kosong');
+                    }
+                  },
                 ),
               ],
             ),

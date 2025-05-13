@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/api_models/class_models.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../services/api_service.dart';
 
 class ClassController extends GetxController {
@@ -85,23 +86,36 @@ class ClassController extends GetxController {
     }
   }
 
-  Future<void> updateClassName(int id) async {
+  Future<void> deleteClass(int classId) async {
     isLoading.value = true;
     try {
-      String name = classNameController.text;
-      if (name.isNotEmpty) {
-        await ApiService.updateClass(id: id, name: name);
-        await getClasses();
-        Get.back();
-      } else {
-        print('Nama kelas tidak boleh kosong');
-      }
+      await ApiService.deleteClass(classId);
+      await getClasses();
     } catch (e) {
-      print('Error updating class: $e');
+      print('Error deleting class: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
+  Future<void> addStudent(String name) async {
+    if (selectedClassName.value.isEmpty) {
+      throw Exception('Tidak ada kelas yang dipilih.');
+    }
+
+    final selectedClass = classList.firstWhere((k) => k.name == selectedClassName.value);
+    final classId = selectedClass.id;
+
+    // Ambil token yang telah disimpan
+    final box = GetStorage();
+    String token = box.read('token') ?? '';  // Ambil token dari GetStorage
+
+    if (token.isEmpty) {
+      throw Exception('Token tidak ditemukan');
+    }
+
+    await ApiService.addStudent(name: name, classId: classId, token: token);
+    await getStudents(classId); // Refresh daftar siswa
+  }
 
 }

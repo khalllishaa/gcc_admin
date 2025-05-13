@@ -22,11 +22,12 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Obx(() => WelcomeSign(
-              username: controller.classList.isNotEmpty
-                  ? controller.classList[0].users[0].name
-                  : 'Admin',
-            )),
+            // Obx(() => WelcomeSign(
+            //   username: controller.classList.isNotEmpty
+            //       ? controller.classList[2].users[2].name
+            //       : 'Admin',
+            // )),
+            WelcomeSign(username: 'username'),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -34,9 +35,37 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: AppStyles.space),
-                      CategoriesLine(
-                        title: 'Home Page',
-                        image: 'images/categories.png',
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: CategoriesLine(
+                              title: 'Home Page',
+                              image: 'images/categories.png',
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () => Get.toNamed('/notif'),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: AppStyles.paddingS),
+                                  padding: EdgeInsets.all(AppStyles.paddingS),
+                                  decoration: BoxDecoration(
+                                    color: AppStyles.primaryDark,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.notifications,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: AppStyles.spaceS),
+                            ],
+                          )
+                        ],
                       ),
                       SizedBox(height: AppStyles.spaceS),
                       WavyCard(

@@ -96,7 +96,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Get.back(); // Close dialog
+            Get.back();
           },
           style: TextButton.styleFrom(
             foregroundColor: AppStyles.light,
@@ -108,8 +108,8 @@ class DeleteConfirmationDialog extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            Get.back(); // Close dialog first
-            onConfirm(); // Then execute delete
+            Get.back();
+            onConfirm();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppStyles.primaryLight,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../api_models/class_models.dart';
@@ -24,6 +25,24 @@ class ApiService {
       throw Exception('Login gagal: ${response.statusCode}');
     }
   }
+
+  // static Future<Map<String, dynamic>> login(String username, String password) async {
+  //   final response = await http.post(
+  //     Uri.parse('$baseUrl/auth/login'),
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: jsonEncode({'name': username, 'password': password}),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     var responseBody = jsonDecode(response.body);
+  //     String token = responseBody['token'];  // Ambil token dari respons login
+  //     final box = GetStorage();
+  //     box.write('token', token);  // Simpan token di GetStorage
+  //     return responseBody;
+  //   } else {
+  //     throw Exception('Login gagal: ${response.statusCode}');
+  //   }
+  // }
 
   static Future<List<ClassModel>> fetchClasses() async {
     final response = await http.get(Uri.parse('$baseUrl/classes'));
@@ -120,6 +139,44 @@ class ApiService {
       print('Class updated successfully');
     } else {
       throw Exception('Failed to update class: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> deleteClass(int classId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/classes/$classId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('Class deleted successfully');
+    } else {
+      throw Exception('Failed to delete class: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> addStudent({
+    required String name,
+    required int classId,
+    required String token,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/register'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',  // Kirim token sebagai Authorization Bearer
+      },
+      body: jsonEncode({
+        'name': name,
+        'class_id': classId,
+        'role': 'student',
+      }),
+    );
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print('Student added successfully');
+    } else {
+      throw Exception('Failed to add student: ${response.statusCode}');
     }
   }
 
