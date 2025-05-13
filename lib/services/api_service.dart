@@ -5,7 +5,7 @@ import '../api_models/class_models.dart';
 import '../api_models/user_models.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://f998-160-22-25-26.ngrok-free.app/api';
+  static const String baseUrl = 'https://c0ae-160-22-25-26.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
@@ -108,6 +108,7 @@ class ApiService {
       throw Exception('Failed to add class: ${response.statusCode}');
     }
   }
+  
 
 
 }

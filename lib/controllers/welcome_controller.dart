@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/AppStyles.dart';
 import '../../routes/app_route.dart';
-import '../services/api_service.dart';
 
 class SignInController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
@@ -13,7 +14,7 @@ class SignInController extends GetxController {
   Future<void> saveLoginStatus(String username) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
-    await prefs.setString('username', username); // simpan username
+    await prefs.setString('username', username);
   }
 
   Future<String?> getSavedUsername() async {
@@ -39,15 +40,18 @@ class SignInController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await ApiService.login(username, password);
+      final response = await http.post(
+        Uri.parse('https://c0ae-160-22-25-26.ngrok-free.app/api/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'name': username, 'password': password}),
+      );
 
-      if (response['message'] == 'Login successful') {
-        // Mengambil instance sharedPreferences
-        final sharedPreferences = await SharedPreferences.getInstance();
-        // await saveLoginStatus();
+      final data = jsonDecode(response.body);
 
-        // Mengecek role setelah login
-        if (response['user']['role'] != 'student') {
+      if (response.statusCode == 200 && data['message'] == 'Login successful') {
+        final user = data['user'];
+
+        if (user['role'] != 'admin') {
           Get.snackbar(
             'Akses Ditolak',
             'Akun ini bukan siswa. Silakan login di aplikasi yang sesuai.',
@@ -55,23 +59,25 @@ class SignInController extends GetxController {
             colorText: Colors.white,
           );
 
-          await sharedPreferences.remove('token');
-          await sharedPreferences.remove('username');
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.clear();
 
           Get.offAllNamed(Routes.splash);
           return;
         }
 
+        await saveLoginStatus(user['name']);
+
         Get.snackbar(
           'Login Berhasil',
-          'Selamat datang, ${response['user']['name']}!',
+          'Selamat datang, ${user['name']}!',
           snackPosition: SnackPosition.TOP,
           backgroundColor: AppStyles.secondaryLight,
           colorText: AppStyles.dark,
         );
 
         Future.delayed(Duration(seconds: 1), () {
-          Get.offNamed(Routes.welcome);
+          Get.offNamed(Routes.main);
         });
       } else {
         Get.snackbar(
