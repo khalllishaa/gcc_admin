@@ -3,10 +3,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../api_models/class_models.dart';
+import '../api_models/schedule_models.dart';
 import '../api_models/user_models.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://af3e-103-41-200-4.ngrok-free.app/api';
+  static const String baseUrl = 'https://a90e-160-22-25-26.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
@@ -89,12 +90,10 @@ class ApiService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Class added successfully');
     } else {
-      // Throw an exception for any other status codes
       throw Exception('Failed to add class: ${response.statusCode}');
     }
   }
 
-  // Tambahkan ini di ApiService
   static Future<void> updateStudent({
     required int id,
     required String name,
@@ -164,7 +163,7 @@ class ApiService {
       Uri.parse('$baseUrl/auth/register'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',  // Kirim token sebagai Authorization Bearer
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
         'name': name,
@@ -179,5 +178,22 @@ class ApiService {
       throw Exception('Failed to add student: ${response.statusCode}');
     }
   }
+
+  static Future<List<ScheduleModels>> fetchSchedules() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/schedules'));
+      if (response.statusCode == 200) {
+        print('Schedule response: ${response.body}');
+        return scheduleModelsFromJson(response.body);
+      } else {
+        print('Error status code: ${response.statusCode}');
+        throw Exception('Failed to load schedules');
+      }
+    } catch (e) {
+      print('Error fetching schedules: $e');
+      throw Exception('Failed to load schedules');
+    }
+  }
+
 
 }

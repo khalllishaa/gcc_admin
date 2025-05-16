@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/api_models/class_models.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../api_models/schedule_models.dart';
 import '../services/api_service.dart';
 
 class ClassController extends GetxController {
   var classList = <ClassModel>[].obs;
+  // var scheduleList = <ScheduleModels>[].obs;
+  RxList<ScheduleModels> scheduleList = <ScheduleModels>[].obs;
   var studentsList = <User>[].obs;
   var isLoading = false.obs;
   var selectedClassName = ''.obs;
@@ -15,6 +18,7 @@ class ClassController extends GetxController {
   void onInit() {
     super.onInit();
     getClasses();
+    getSchedules();
   }
 
   Future<void> getClasses() async {
@@ -43,7 +47,6 @@ class ClassController extends GetxController {
       isLoading.value = false;
     }
   }
-
 
   Future<void> addClass() async {
     isLoading.value = true;
@@ -99,23 +102,58 @@ class ClassController extends GetxController {
   }
 
   Future<void> addStudent(String name) async {
-    if (selectedClassName.value.isEmpty) {
-      throw Exception('Tidak ada kelas yang dipilih.');
+    isLoading.value = true;
+    try {
+      final box = GetStorage();
+      final token = box.read('token');
+      if (token == null) {
+        throw Exception('Token not found. User might not be logged in.');
+      }
+
+      final selectedClass = classList.firstWhere(
+            (cls) => cls.name == selectedClassName.value,
+        orElse: () => throw Exception('Selected class not found'),
+      );
+
+      await ApiService.addStudent(
+        name: name,
+        classId: selectedClass.id,
+        token: token,
+      );
+
+      await getStudents(selectedClass.id);
+    } catch (e) {
+      print('Error adding student: $e');
+      rethrow;
+    } finally {
+      isLoading.value = false;
     }
+  }
 
-    final selectedClass = classList.firstWhere((k) => k.name == selectedClassName.value);
-    final classId = selectedClass.id;
-
-    // Ambil token yang telah disimpan
-    final box = GetStorage();
-    String token = box.read('token') ?? '';  // Ambil token dari GetStorage
-
-    if (token.isEmpty) {
-      throw Exception('Token tidak ditemukan');
+  Future<void> getSchedules() async {
+    isLoading.value = true;
+    try {
+      final result = await ApiService.fetchSchedules();
+      print('Schedules fetched: $result');
+      scheduleList.value = result;
+    } catch (e) {
+      print('Error fetching schedules: $e');
+    } finally {
+      isLoading.value = false;
     }
+  }
 
-    await ApiService.addStudent(name: name, classId: classId, token: token);
-    await getStudents(classId); // Refresh daftar siswa
+  Future<void> fetchSchedulesByClass(int classId) async {
+    try {
+      isLoading.value = true;
+      final allSchedules = await ApiService.fetchSchedules();
+      scheduleList.value = allSchedules.where((s) => s.classId == classId).toList();
+      scheduleList.assignAll(allSchedules);
+    } catch (e) {
+      print('Error fetching schedule: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
 }
