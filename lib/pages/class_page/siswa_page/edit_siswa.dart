@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
@@ -49,7 +50,7 @@ class EditStudent extends StatelessWidget {
                 ),
                 SizedBox(height: AppStyles.spaceM),
                 SizedBox(height: AppStyles.spaceM),
-                buildSectionTitle('Nama'),
+                SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
                   controller: TextEditingController(),

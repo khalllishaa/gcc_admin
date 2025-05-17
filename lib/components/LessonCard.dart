@@ -16,7 +16,7 @@ class WavyCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: AppStyles.paddingS),
+        margin: EdgeInsets.symmetric(vertical: AppStyles.spaceXS),
         height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppStyles.radiusM),
@@ -52,7 +52,8 @@ class WavyCard extends StatelessWidget {
                   Flexible(
                     child: Text(
                       title,
-                      style: AppStyles.heading1.copyWith(color: AppStyles.light),
+                      style:
+                          AppStyles.heading1.copyWith(color: AppStyles.light),
                     ),
                   ),
                   Icon(
@@ -63,7 +64,6 @@ class WavyCard extends StatelessWidget {
                 ],
               ),
             ),
-
           ],
         ),
       ),
@@ -79,12 +79,16 @@ class WavePainter extends CustomPainter {
     final path = Path();
     path.lineTo(0, size.height * 0.5);
     path.quadraticBezierTo(
-      size.width * 0.15, size.height,
-      size.width * 0.5, size.height * 0.55,
+      size.width * 0.15,
+      size.height,
+      size.width * 0.5,
+      size.height * 0.55,
     );
     path.quadraticBezierTo(
-      size.width * 0.75, size.height * 0.3,
-      size.width, size.height * 0.65,
+      size.width * 0.75,
+      size.height * 0.3,
+      size.width,
+      size.height * 0.65,
     );
     path.lineTo(size.width, 0);
     path.close();

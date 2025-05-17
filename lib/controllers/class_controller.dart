@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gcc_admin/api_models/class_models.dart';
+import 'package:gcc_admin/data/models/class_model.dart';
 import 'package:get/get.dart';
 
-import '../services/api_service.dart';
+import '../data/services/class_service.dart';
+import '../data/services/student_service.dart';
+import '../data/models/class_model.dart';
+import '../data/models/user_model.dart';
 
 class ClassController extends GetxController {
   var classList = <ClassModel>[].obs;
   var studentsList = <User>[].obs;
   var isLoading = false.obs;
   var classNameController = TextEditingController();
-
 
   @override
   void onInit() {
@@ -20,7 +22,7 @@ class ClassController extends GetxController {
   Future<void> getClasses() async {
     isLoading.value = true;
     try {
-      final result = await ApiService.fetchClasses();
+      final result = await ClassService.fetchClasses();
       classList.value = result;
     } catch (e) {
       print('Error fetching classes: $e');
@@ -32,9 +34,7 @@ class ClassController extends GetxController {
   Future<void> getStudents(int classId) async {
     isLoading.value = true;
     try {
-      final classes = await ApiService.fetchClasses();
-      final selectedClass = classes.firstWhere((kelas) => kelas.id == classId);
-      final students = selectedClass.users.where((user) => user.role == 'student').toList();
+      final students = await ClassService.fetchStudents(classId);
 
       studentsList.value = students;
     } catch (e) {
@@ -50,7 +50,7 @@ class ClassController extends GetxController {
   }) async {
     isLoading.value = true;
     try {
-      await ApiService.addStudent(
+      await StudentService.addStudent(
         name: name,
         classId: classId,
       );
@@ -69,7 +69,7 @@ class ClassController extends GetxController {
       String className = classNameController.text;
 
       if (className.isNotEmpty) {
-        await ApiService.addClass(className);
+        await ClassService.addClass(className);
         await getClasses();
         Get.back();
       } else {
@@ -81,5 +81,4 @@ class ClassController extends GetxController {
       isLoading.value = false;
     }
   }
-
 }

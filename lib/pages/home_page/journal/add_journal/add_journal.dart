@@ -3,6 +3,7 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/components/TextField2.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
@@ -54,7 +55,7 @@ class AddJournal extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildSectionTitle('Teacher'),
+                    SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -62,7 +63,7 @@ class AddJournal extends StatelessWidget {
                       hintText: 'Teacher',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Subject'),
+                    SectionTitle(title: 'Subject'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -70,7 +71,7 @@ class AddJournal extends StatelessWidget {
                       hintText: 'Topic',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('List Student'),
+                    SectionTitle(title: 'List Student'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -78,7 +79,7 @@ class AddJournal extends StatelessWidget {
                       hintText: 'List Student',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Task'),
+                    SectionTitle(title: 'Task'),
                     SizedBox(height: AppStyles.spaceS),
                     Textfield2(
                       controller: TextEditingController(),

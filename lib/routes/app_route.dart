@@ -1,3 +1,4 @@
+import 'package:gcc_admin/bindings/list_teacher_binding.dart';
 import 'package:gcc_admin/bindings/menu_binding.dart';
 import 'package:gcc_admin/bindings/signup_binding.dart';
 import 'package:gcc_admin/bindings/welcome_binding.dart';
@@ -85,7 +86,7 @@ class AppPages {
     GetPage(name: Routes.viewReport, page: () => ViewReport()),
     GetPage(name: Routes.addReport, page: () => AddReport()),
 
-    GetPage(name: Routes.listTeacher, page: () => Listteacher()),
+    GetPage(name: Routes.listTeacher, page: () => Listteacher(),binding: ListTeacherBinding()),
     GetPage(name: Routes.addTeacher, page: () => Addteacher()),
     GetPage(name: Routes.editTeacher, page: () => EditTeacher()),
 

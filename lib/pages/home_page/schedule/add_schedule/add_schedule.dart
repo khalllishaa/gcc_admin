@@ -3,6 +3,7 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class AddSchedule extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildSectionTitle('Day'),
+                    SectionTitle(title: 'Day'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -60,7 +61,7 @@ class AddSchedule extends StatelessWidget {
                       hintText: 'Day',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Time'),
+                    SectionTitle(title: 'Time'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -68,7 +69,7 @@ class AddSchedule extends StatelessWidget {
                       hintText: 'Time',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Teacher'),
+                    SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),
@@ -76,7 +77,7 @@ class AddSchedule extends StatelessWidget {
                       hintText: 'Teacher',
                     ),
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Subject'),
+                    SectionTitle(title: 'Subject'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),

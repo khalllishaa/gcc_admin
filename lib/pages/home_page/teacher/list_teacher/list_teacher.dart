@@ -4,7 +4,7 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/menu_controller.dart';
+import '../../../../controllers/list_teacher_controller.dart';
 import '../../../../components/StudentCard.dart';
 
 class Listteacher extends StatelessWidget {
@@ -12,86 +12,70 @@ class Listteacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
+    final controller = Get.find<ListTeacherController>();
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(AppStyles.paddingL),
-        child: Column(
-          children: [
-            SizedBox(height: AppStyles.spaceXXL),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppStyles.primaryDark,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL),
+          child: Column(
+            children: [
+              SizedBox(height: AppStyles.spaceXL),
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppStyles.primaryDark,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back, color: AppStyles.light),
+                      onPressed: () => Get.back(),
+                    ),
                   ),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back, color: AppStyles.light),
-                    onPressed: () => Get.back(),
+                  SizedBox(width: AppStyles.spaceS),
+                  Expanded(
+                    child: CategoriesLine(
+                      title: 'Teacher',
+                      image: 'images/categories.png',
+                    ),
                   ),
-                ),
-                SizedBox(width: AppStyles.spaceS),
-                Expanded(
-                  child: CategoriesLine(
-                    title: 'Teacher',
-                    image: 'images/categories.png',
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: AppStyles.spaceL),
-            StudentCard(
-              name: 'Miss Ica',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            StudentCard(
-              name: 'Miss Candra',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            StudentCard(
-              name: 'Miss Sari',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            StudentCard(
-              name: 'Miss Ima',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            StudentCard(
-              name: 'Miss Fani',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            StudentCard(
-              name: 'Miss Sinta',
-              onEdit: () => Get.toNamed('/edit-teacher'),
-              onDelete: () {},
-              onTap: () {  },
-            ),
-          ],
+                ],
+              ),
+              SizedBox(height: AppStyles.spaceL),
+              Expanded(
+                child: Obx(() {
+                  if (controller.isLoading.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  return ListView.separated(
+                    itemCount: controller.teachers.length,
+                    separatorBuilder: (_, __) =>
+                        SizedBox(height: AppStyles.spaceS),
+                    itemBuilder: (context, index) {
+                      final teacher = controller.teachers[index];
+                      return StudentCard(
+                        name: teacher.name,
+                        onEdit: () => controller.editTeacher(index),
+                        onDelete: () => controller.deleteTeacher(teacher.id),
+                        onTap: () {},
+                      );
+                    },
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(Routes.addTeacher);
-        },        backgroundColor: AppStyles.dark,
+        },
+        backgroundColor: AppStyles.dark,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
