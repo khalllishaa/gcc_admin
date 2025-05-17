@@ -48,19 +48,6 @@ class ProfilePage extends StatelessWidget {
                     onPickFromGallery: () => controller.pickImage(ImageSource.gallery),
                   )),
                   SizedBox(height: AppStyles.spaceS),
-                  // Text(
-                  //   "oceantheteacher",
-                  //   style:AppStyles.welcome2.copyWith(color: AppStyles.dark, fontWeight: FontWeight.bold, fontSize: 18),
-                  // ),
-                  // Text(
-                  //   "oceantheteacher@gmail.com",
-                  //   style: AppStyles.lesson.copyWith(color: AppStyles.dark),
-                  // ),
-                  // SizedBox(height: AppStyles.spaceL),
-                  // // Profile Information
-                  // ProfileItem(textPrimary: 'Nama Panjang', textSecond: 'Ocean Karuna Muryanto'),
-                  // ProfileItem(textPrimary: 'No. Telepon', textSecond: '+62 89618488091'),
-                  // ProfileItem(textPrimary: 'Kelas', textSecond: '8'),
                   Obx(() {
                     final user = controller.user.value;
                     if (user == null) return CircularProgressIndicator();

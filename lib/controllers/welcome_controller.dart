@@ -3,17 +3,19 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/AppStyles.dart';
 import '../../routes/app_route.dart';
-import '../services/api_service.dart';
+import '../data/models/auth_model.dart';
+import '../data/services/auth_service.dart';
 
 class SignInController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final isLoading = false.obs;
 
-  Future<void> saveLoginStatus(String username) async {
+  Future<void> saveLoginData(AuthModel user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
-    await prefs.setString('username', username); // simpan username
+    await prefs.setString('username', user.name);
+    await prefs.setString('token', user.token);
   }
 
   Future<String?> getSavedUsername() async {
@@ -39,15 +41,11 @@ class SignInController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await ApiService.login(username, password);
-
+      final response = await AuthService.login(username, password);
       if (response['message'] == 'Login successful') {
-        // Mengambil instance sharedPreferences
-        final sharedPreferences = await SharedPreferences.getInstance();
-        // await saveLoginStatus();
+        AuthModel user = response['user'];
 
-        // Mengecek role setelah login
-        if (response['user']['role'] != 'student') {
+        if (user.role != 'admin') {
           Get.snackbar(
             'Akses Ditolak',
             'Akun ini bukan siswa. Silakan login di aplikasi yang sesuai.',
@@ -55,23 +53,26 @@ class SignInController extends GetxController {
             colorText: Colors.white,
           );
 
-          await sharedPreferences.remove('token');
-          await sharedPreferences.remove('username');
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.remove('token');
+          await prefs.remove('username');
 
           Get.offAllNamed(Routes.splash);
           return;
         }
 
+        await saveLoginData(user);
+
         Get.snackbar(
           'Login Berhasil',
-          'Selamat datang, ${response['user']['name']}!',
+          'Selamat datang, ${user.name}!',
           snackPosition: SnackPosition.TOP,
           backgroundColor: AppStyles.secondaryLight,
           colorText: AppStyles.dark,
         );
 
-        Future.delayed(Duration(seconds: 1), () {
-          Get.offNamed(Routes.welcome);
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.offNamed(Routes.main);
         });
       } else {
         Get.snackbar(

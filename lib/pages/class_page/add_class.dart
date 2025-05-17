@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:get/get.dart';
 
 import '../../components/AppStyles.dart';
 import '../../controllers/class_controller.dart';
-import '../../services/api_service.dart';
 import '../home_page/teacher/add_teacher/add_teacher.dart';
 
 class AddClass extends StatelessWidget {
@@ -50,7 +50,7 @@ class AddClass extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
-                buildSectionTitle('Nama'),
+                SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
                   controller: controller.classNameController,  // Menggunakan controller untuk textfield

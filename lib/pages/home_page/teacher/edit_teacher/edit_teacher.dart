@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:get/get.dart';
 
 import '../../../../components/ReuseButton.dart';
@@ -46,7 +47,8 @@ class EditTeacher extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
-                buildSectionTitle('Nama'),
+                SectionTitle(title: 'Nama'),
+
                 Customtextfield(
                   controller: TextEditingController(),
                   keyboardType: TextInputType.text,

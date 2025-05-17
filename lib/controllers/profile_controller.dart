@@ -3,12 +3,11 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../api_models/user_models.dart';
+import '../data/models/user_model.dart';
+import '../data/services/user_service.dart';
 import '../routes/app_route.dart';
-import '../services/api_service.dart';
 
-class ProfileController extends GetxController{
+class ProfileController extends GetxController {
   // Observable for image picked state
   var isImagePicked = false.obs;
   var profileImage = ''.obs;
@@ -22,7 +21,7 @@ class ProfileController extends GetxController{
   }
 
   void fetchUser(int id) async {
-    UsersModel? data = await ApiService.getUserById(id);
+    UsersModel? data = await UserService.getUserById(id);
     if (data != null) {
       user.value = data;
     }
@@ -87,5 +86,4 @@ class ProfileController extends GetxController{
       isImagePicked.value = true;
     }
   }
-
 }
