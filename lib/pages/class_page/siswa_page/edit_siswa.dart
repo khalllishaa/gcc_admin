@@ -16,6 +16,11 @@ class EditStudent extends StatelessWidget {
     final controller = Get.find<ClassController>();
     final student = Get.arguments;
     TextEditingController studentNameController = TextEditingController(text: student.name);
+    TextEditingController usernameController = TextEditingController(text: student.name);
+    TextEditingController longNameController = TextEditingController(text: student.longName);
+    TextEditingController phoneController = TextEditingController(text: student.phoneNumber);
+    TextEditingController emailController = TextEditingController(text: student.email);
+    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: AppStyles.light,
@@ -57,6 +62,7 @@ class EditStudent extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   hintText: 'Masukkan Nama Terbaru',
                 ),
+
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
                   text: 'Edit Student',

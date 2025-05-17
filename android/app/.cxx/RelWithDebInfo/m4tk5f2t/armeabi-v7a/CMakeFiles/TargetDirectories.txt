@@ -1,0 +1,2 @@
+C:/Users/khalisa kaylanasywa/AndroidStudioProjects/GCC_Admin/android/app/.cxx/RelWithDebInfo/m4tk5f2t/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/khalisa kaylanasywa/AndroidStudioProjects/GCC_Admin/android/app/.cxx/RelWithDebInfo/m4tk5f2t/armeabi-v7a/CMakeFiles/rebuild_cache.dir

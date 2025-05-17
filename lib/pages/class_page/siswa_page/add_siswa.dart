@@ -11,7 +11,13 @@ class AddStudent extends StatelessWidget {
   AddStudent({super.key});
 
   final controller = Get.find<ClassController>();
+
   final nameController = TextEditingController();
+  final longNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,27 +59,97 @@ class AddStudent extends StatelessWidget {
                 buildSectionTitle('Nama'),
                 Customtextfield(
                   controller: nameController,
+                  hintText: 'Username',
                   keyboardType: TextInputType.text,
-                  hintText: 'Nama Murid',
                 ),
                 SizedBox(height: AppStyles.spaceS),
-                SizedBox(height: AppStyles.spaceL),
+
+                buildSectionTitle('Nama Lengkap'),
+                Customtextfield(
+                  controller: longNameController,
+                  hintText: 'Nama lengkap siswa',
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                buildSectionTitle('Email'),
+                Customtextfield(
+                  controller: emailController,
+                  hintText: 'Email siswa',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                buildSectionTitle('Nomor HP'),
+                Customtextfield(
+                  controller: phoneController,
+                  hintText: 'Nomor HP',
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                buildSectionTitle('Password'),
+                Customtextfield(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                buildSectionTitle('Konfirmasi Password'),
+                Customtextfield(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm password',
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                ),
+
+                SizedBox(height: AppStyles.space),
 
                 ReuseButton(
                   text: 'Add Student',
                   onPressed: () async {
-                    if (nameController.text.isNotEmpty) {
-                      try {
-                        await controller.addStudent(nameController.text);
-                        Get.back();
-                      } catch (e) {
-                        Get.snackbar('Error', 'Gagal menambah siswa: $e');
-                      }
-                    } else {
-                      Get.snackbar('Validasi', 'Nama murid tidak boleh kosong');
+                    if (nameController.text.isEmpty ||
+                        longNameController.text.isEmpty ||
+                        emailController.text.isEmpty ||
+                        phoneController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
+                      Get.snackbar('Validasi', 'Semua field harus diisi');
+                      return;
+                    }
+
+                    if (passwordController.text != confirmPasswordController.text) {
+                      Get.snackbar('Validasi', 'Password tidak cocok');
+                      return;
+                    }
+
+                    try {
+                      final selectedClass = controller.classList.firstWhere(
+                            (cls) => cls.name == controller.selectedClassName.value,
+                      );
+
+                      await controller.addUser(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        passwordConfirmation: confirmPasswordController.text,
+                        longName: longNameController.text,
+                        phoneNumber: phoneController.text,
+                        classId: selectedClass.id,
+                        role: 'student',
+                      );
+
+                      Get.snackbar('Sukses', 'Siswa berhasil ditambahkan');
+                      Get.back();
+                    } catch (e) {
+                      Get.snackbar('Error', 'Gagal menambah siswa: $e');
                     }
                   },
                 ),
+                SizedBox(height: AppStyles.spaceL),
+
               ],
             ),
           ),

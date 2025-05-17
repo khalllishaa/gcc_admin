@@ -13,7 +13,8 @@ class KelasCard extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final Color iconColor;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
+  final bool showDeleteIcon;
 
   const KelasCard({
     super.key,
@@ -23,7 +24,8 @@ class KelasCard extends StatelessWidget {
     this.backgroundColor = AppStyles.secondaryLight,
     this.textColor = AppStyles.primary,
     this.iconColor = AppStyles.primary,
-    required this.onDelete,
+    this.onDelete,
+    this.showDeleteIcon = true, // <- default true
   });
 
   @override
@@ -70,27 +72,31 @@ class KelasCard extends StatelessWidget {
               )
             ],
           ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () {
-                Get.dialog(DeleteConfirmationDialog(
-                  onConfirm: () {
-                    onDelete();
-                  },
-                ));
-              },              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
-              child: Padding(
-                padding: EdgeInsets.all(AppStyles.paddingS),
-                child: Icon(
-                  IconlyBold.delete,
-                  size: 20,
-                  color: iconColor,
+
+          // ✅ Tampilkan delete icon hanya jika showDeleteIcon == true
+          if (showDeleteIcon)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  if (onDelete != null) {
+                    Get.dialog(DeleteConfirmationDialog(
+                      onConfirm: onDelete!,
+                    ));
+                  }
+                },
+                borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+                child: Padding(
+                  padding: EdgeInsets.all(AppStyles.paddingS),
+                  child: Icon(
+                    IconlyBold.delete,
+                    size: 20,
+                    color: iconColor,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

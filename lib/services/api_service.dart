@@ -6,7 +6,7 @@ import '../api_models/class_models.dart';
 import '../api_models/user_models.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://af3e-103-41-200-4.ngrok-free.app/api';
+  static const String baseUrl = 'https://2862-114-10-8-191.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
@@ -89,12 +89,10 @@ class ApiService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Class added successfully');
     } else {
-      // Throw an exception for any other status codes
       throw Exception('Failed to add class: ${response.statusCode}');
     }
   }
 
-  // Tambahkan ini di ApiService
   static Future<void> updateStudent({
     required int id,
     required String name,
@@ -164,7 +162,7 @@ class ApiService {
       Uri.parse('$baseUrl/auth/register'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',  // Kirim token sebagai Authorization Bearer
+        // 'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
         'name': name,
@@ -177,6 +175,42 @@ class ApiService {
       print('Student added successfully');
     } else {
       throw Exception('Failed to add student: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> createUser({
+    required String name,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+    required String longName,
+    required String phoneNumber,
+    required int classId,
+    required String role,
+    // required String token,
+  }) async {
+    final url = Uri.parse('$baseUrl/auth/register');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'password': password,
+        'password_confirmation': passwordConfirmation,
+        'long_name': longName,
+        'phone_number': phoneNumber,
+        'class_id': classId,
+        'role': role,
+      }),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception('Failed to create user: ${response.body}');
     }
   }
 
