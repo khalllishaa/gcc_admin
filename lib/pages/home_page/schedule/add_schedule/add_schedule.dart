@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/api_models/schedule_models.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
@@ -7,12 +8,20 @@ import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:get/get.dart';
 
+import '../../../../controllers/class_controller.dart';
+
 class AddSchedule extends StatelessWidget {
   const AddSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
     MainMenuController mainMenuController = Get.find();
+    final controller = Get.find<ClassController>();
+
+    final dayController = TextEditingController();
+    final timeController = TextEditingController();
+    final teacherController = TextEditingController();
+    final subjectController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -55,7 +64,7 @@ class AddSchedule extends StatelessWidget {
                     buildSectionTitle('Day'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: dayController,
                       keyboardType: TextInputType.text,
                       hintText: 'Day',
                     ),
@@ -63,7 +72,7 @@ class AddSchedule extends StatelessWidget {
                     buildSectionTitle('Time'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: timeController,
                       keyboardType: TextInputType.text,
                       hintText: 'Time',
                     ),
@@ -71,7 +80,7 @@ class AddSchedule extends StatelessWidget {
                     buildSectionTitle('Teacher'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: teacherController,
                       keyboardType: TextInputType.text,
                       hintText: 'Teacher',
                     ),
@@ -79,14 +88,32 @@ class AddSchedule extends StatelessWidget {
                     buildSectionTitle('Subject'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: subjectController,
                       keyboardType: TextInputType.text,
                       hintText: 'Subject',
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
                       text: 'Add Schedule',
-                      onPressed: () => Get.back(),
+                        onPressed: () {
+                          final day = dayController.text.trim();
+                          final time = timeController.text.trim();
+                          final teacher = teacherController.text.trim();
+                          final subject = subjectController.text.trim();
+
+                          if (day.isEmpty || time.isEmpty || teacher.isEmpty || subject.isEmpty) {
+                            Get.snackbar('Validasi', 'Semua field harus diisi');
+
+                          } else {
+                            controller.addSchedule(
+                              day: day,
+                              time: time,
+                              teacher: teacher,
+                              subject: subject,
+                            );
+                            Get.back();
+                          }
+                        }
                     ),
                   ],
                 ),

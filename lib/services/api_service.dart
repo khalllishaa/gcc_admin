@@ -7,7 +7,7 @@ import '../api_models/schedule_models.dart';
 import '../api_models/user_models.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://a90e-160-22-25-26.ngrok-free.app/api';
+  static const String baseUrl = 'https://e990-114-10-18-91.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
@@ -195,5 +195,68 @@ class ApiService {
     }
   }
 
+  static Future<List<ScheduleModels>> fetchSchedulesByClassId(int classId) async {
+    final url = Uri.parse('$baseUrl/schedules');
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        List<dynamic> jsonData = jsonDecode(response.body);
+
+        return jsonData
+            .map((json) => ScheduleModels.fromJson(json))
+            .where((schedule) => schedule.classId == classId)
+            .toList();
+      } else {
+        throw Exception('Failed to load schedules');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  // static Future<ScheduleModels?> createSchedule(ScheduleModels schedule) async {
+  //   final url = Uri.parse('$baseUrl/schedules/create');
+  //
+  //   final response = await http.post(
+  //     url,
+  //     headers: {"Content-Type": "application/json"},
+  //     body: jsonEncode(schedule.toJson()),
+  //   );
+  //
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     final data = jsonDecode(response.body);
+  //     return ScheduleModels.fromJson(data['user']);
+  //   } else {
+  //     print("Failed to create schedule: ${response.statusCode}");
+  //     return null;
+  //   }
+  // }
+
+  static Future<void> createSchedule({
+    required String day,
+    required String time,
+    required String teacher,
+    required String subject,
+    required int classId,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/schedules/create'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'day': day,
+        'time': time,
+        'teacher': teacher,
+        'subject': subject,
+        'class_id': classId,
+      }),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception('Gagal menambahkan jadwal');
+    }
+  }
 
 }

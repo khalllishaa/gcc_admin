@@ -76,7 +76,8 @@ class Schedule extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: AppStyles.spaceS),
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed('/view-schedule', arguments: kelas.id);
+                            controller.selectedClassId.value = kelas.id;
+                            Get.toNamed('/view-schedule');
                           },
                           child: KelasCard(
                             imagePath: 'images/maths.png',

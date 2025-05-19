@@ -3,6 +3,7 @@ import 'package:gcc_admin/api_models/class_models.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../api_models/schedule_models.dart';
+import '../components/AppStyles.dart';
 import '../services/api_service.dart';
 
 class ClassController extends GetxController {
@@ -13,12 +14,17 @@ class ClassController extends GetxController {
   var isLoading = false.obs;
   var selectedClassName = ''.obs;
   var classNameController = TextEditingController();
+  var schedules = <ScheduleModels>[].obs;
+  var selectedClassId = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
     getClasses();
-    getSchedules();
+    // getSchedules();
+    ever(selectedClassId, (_) {
+      fetchScheduleByClassId(selectedClassId.value);
+    });
   }
 
   Future<void> getClasses() async {
@@ -47,6 +53,22 @@ class ClassController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> getSchedule(int classId) async {
+    isLoading.value = true;
+    try {
+      final allSchedules = await ApiService.fetchSchedules();
+      final classSchedules = allSchedules
+          .where((schedule) => schedule.classId == classId)
+          .toList();
+      scheduleList.value = classSchedules;
+    } catch (e) {
+      print('Error fetching schedules: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
   Future<void> addClass() async {
     isLoading.value = true;
@@ -143,17 +165,96 @@ class ClassController extends GetxController {
     }
   }
 
-  Future<void> fetchSchedulesByClass(int classId) async {
+  // Future<void> fetchSchedulesByClass(int classId) async {
+  //   try {
+  //     isLoading.value = true;
+  //     final allSchedules = await ApiService.fetchSchedules();
+  //     scheduleList.value = allSchedules.where((s) => s.classId == classId).toList();
+  //     scheduleList.assignAll(allSchedules);
+  //   } catch (e) {
+  //     print('Error fetching schedule: $e');
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
+  void fetchScheduleByClassId(int classId) async {
+    print('Fetching schedule for class ID: $classId');
+    isLoading.value = true;
     try {
-      isLoading.value = true;
-      final allSchedules = await ApiService.fetchSchedules();
-      scheduleList.value = allSchedules.where((s) => s.classId == classId).toList();
-      scheduleList.assignAll(allSchedules);
+      final schedules = await ApiService.fetchSchedulesByClassId(classId);
+      print('Fetched schedules: $schedules');
+      scheduleList.value = schedules;
     } catch (e) {
-      print('Error fetching schedule: $e');
+      print('Error: $e');
+    } finally {
+      isLoading.value = false;
+      print('Done loading');
+    }
+  }
+
+
+  void loadSchedules(int classId) async {
+    isLoading.value = true;
+    try {
+      final result = await ApiService.fetchSchedulesByClassId(classId);
+      schedules.value = result;
+    } catch (e) {
+      print('Error loading schedules: $e');
+      schedules.value = [];
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // Future<bool> createSchedule(ScheduleModels schedule) async {
+  //   isLoading.value = true;
+  //   final result = await ApiService.createSchedule(schedule);
+  //   isLoading.value = false;
+  //
+  //   if (result != null) {
+  //     scheduleList.add(result);
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  Future<void> addSchedule({
+    required String day,
+    required String time,
+    required String teacher,
+    required String subject,
+  }) async {
+    try {
+      await ApiService.createSchedule(
+        day: day,
+        time: time,
+        teacher: teacher,
+        subject: subject,
+        classId: selectedClassId.value,
+      );
+      fetchScheduleByClassId(selectedClassId.value);
+      Get.snackbar(
+        'Sukses',
+        'Schedule berhasil ditambahkan!',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.welcome,
+        colorText: AppStyles.dark,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );
+    } catch (e) {
+      print('Error adding schedule: $e');
+
+      Get.snackbar(
+        'Error',
+        'Gagal menambahkan user.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.error,
+        colorText: AppStyles.light,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );    }
   }
 
 }
