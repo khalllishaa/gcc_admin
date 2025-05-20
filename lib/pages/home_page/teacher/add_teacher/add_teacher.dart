@@ -77,7 +77,8 @@ class Addteacher extends StatelessWidget {
                       text: 'Add Teacher',
                       onPressed: () async {
                         final name = nameController.text.trim();
-                        final classId = int.tryParse(classIdController.text.trim()) ?? 0;
+                        final classId =
+                            int.tryParse(classIdController.text.trim()) ?? 0;
 
                         if (name.isEmpty || classId == 0) {
                           Get.snackbar('Validasi', 'Semua field harus diisi');
@@ -94,7 +95,6 @@ class Addteacher extends StatelessWidget {
                               margin: EdgeInsets.all(16),
                             );
                             Get.back();
-
                           } catch (e) {
                             Get.snackbar(
                               'Error',
@@ -104,7 +104,8 @@ class Addteacher extends StatelessWidget {
                               colorText: AppStyles.light,
                               duration: Duration(seconds: 2),
                               margin: EdgeInsets.all(16),
-                            );                          }
+                            );
+                          }
                         }
                       },
                     ),
