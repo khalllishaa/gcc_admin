@@ -15,13 +15,12 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    fetchUser(1);
+    fetchCurrentUser();
   }
 
-  void fetchUser(int id) async {
-    UsersModel? data = await UserService.getUserById(id);
+  void fetchCurrentUser() async {
+    UsersModel? data = await UserService.getCurrentUser();
     if (data != null) {
       user.value = data;
     }
