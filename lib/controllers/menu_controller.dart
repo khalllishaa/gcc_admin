@@ -8,19 +8,13 @@ class MainMenuController extends GetxController{
 
   void updateIndex(int index) {
     if (index != selectedIndex.value) {
-      selectedIndex.value = index; // Update only if the index changes
+      selectedIndex.value = index;
     }
   }
 
   void changeIndex(int index) {
     selectedIndex.value = index;
   }
-
-  // Future<void> fetchSharedData() async {
-  //   final sharedPreferences = await SharedPreferences.getInstance();
-  //   print("shared data "+sharedPreferences.getString('username').toString());
-  //   username.value = sharedPreferences.getString('username')!;
-  // }
 
   @override
   void onInit() {

@@ -32,7 +32,7 @@ class ProfilePage extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingFont),
               decoration: BoxDecoration(
                 color: AppStyles.light,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(AppStyles.radius)),

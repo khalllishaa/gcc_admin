@@ -4,9 +4,7 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
 import 'package:gcc_admin/components/SectionTile.dart';
-import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/controllers/schedule_controller.dart';
-import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:get/get.dart';
 
 class AddSchedule extends StatelessWidget {
@@ -14,8 +12,7 @@ class AddSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
-    final controller = Get.find<ScheduleController>();
+    ScheduleController controller = Get.find();
 
     final dayController = TextEditingController();
     final timeController = TextEditingController();

@@ -15,7 +15,6 @@ class AddJournal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
 
     return Scaffold(
       body: SingleChildScrollView(

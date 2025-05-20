@@ -95,8 +95,4 @@ class SignInController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  void goToSignUp() {
-    Get.toNamed(Routes.signup);
-  }
 }

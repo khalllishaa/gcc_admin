@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ScheduleCard.dart';
-import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
 class ViewSchedule extends StatelessWidget {
-  final controller = Get.find<ScheduleController>();
+  ScheduleController controller = Get.find();
 
   ViewSchedule({super.key});
 

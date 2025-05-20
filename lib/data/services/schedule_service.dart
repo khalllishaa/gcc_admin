@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../models/schedule_model.dart';
 
 class ScheduleService {
-  static const String baseUrl = 'https://7c4b-160-22-25-46.ngrok-free.app/api';
+  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<List<ScheduleModels>> fetchSchedules() async {
     try {

@@ -15,7 +15,7 @@ class MainMenu extends StatelessWidget {
     ProfilePage(),
   ];
    MainMenu({super.key}) {
-    Get.put(MainMenuController()); // Inisialisasi saat MainMenu dibuat
+    Get.put(MainMenuController());
   }
   @override
   Widget build(BuildContext context) {

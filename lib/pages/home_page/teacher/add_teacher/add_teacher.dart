@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/controllers/list_teacher_controller.dart';
 import 'package:gcc_admin/data/services/teacher_service.dart';
+import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
@@ -17,8 +18,7 @@ class Addteacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
-    final controller = Get.find<ListTeacherController>();
+    ListTeacherController controller = Get.find();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -85,6 +85,7 @@ class Addteacher extends StatelessWidget {
                         } else {
                           try {
                             await controller.addTeacher(name, classId);
+
                             Get.snackbar(
                               'Sukses',
                               'Guru berhasil ditambahkan!',
@@ -94,7 +95,9 @@ class Addteacher extends StatelessWidget {
                               duration: Duration(seconds: 2),
                               margin: EdgeInsets.all(16),
                             );
-                            Get.back();
+
+                            Get.back(result: true);
+
                           } catch (e) {
                             Get.snackbar(
                               'Error',
