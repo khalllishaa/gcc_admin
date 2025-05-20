@@ -98,4 +98,35 @@ class User {
     "updated_at": updatedAt.toIso8601String(),
     "class_id": classId,
   };
+
+  User copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? longName,
+    String? phoneNumber,
+    dynamic profilePicture,
+    dynamic emailVerifiedAt,
+    String? role,
+    dynamic rememberToken,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? classId,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      longName: longName ?? this.longName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      profilePicture: profilePicture ?? this.profilePicture,
+      emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
+      role: role ?? this.role,
+      rememberToken: rememberToken ?? this.rememberToken,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      classId: classId ?? this.classId,
+    );
+  }
+
 }

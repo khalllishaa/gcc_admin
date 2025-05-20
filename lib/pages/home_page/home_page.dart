@@ -17,7 +17,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ClassController controller = Get.find();
-    MainMenuController mainMenuController = Get.find();
 
     return Scaffold(
       body: SafeArea(
@@ -25,42 +24,65 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Obx(() => WelcomeSign(
-                  username: controller.classList.isNotEmpty
-                      ? controller.classList[0].users[0].name
-                      : 'Admin',
-                )),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: AppStyles.space),
-                  CategoriesLine(
-                    title: 'Home Page',
-                    image: 'images/categories.png',
-                  ),
-                  SizedBox(height: AppStyles.spaceS),
-                ],
-              ),
-            ),
+              username: controller.classList.isNotEmpty
+                  ? controller.classList[0].users[0].name
+                  : 'Guest',
+            )),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
-                child: Column(
-                  children: [
-                    WavyCard(
-                      title: 'List Guru',
-                      onTap: () => Get.toNamed('/list-teacher'),
-                    ),
-                    WavyCard(
-                      title: 'Jadwal Mata Pelajaran',
-                      onTap: () => Get.toNamed('/schedule'),
-                    ),
-                    WavyCard(
-                      title: 'Journal Kelas',
-                      onTap: () => Get.toNamed('/journal-class'),
-                    ),
-                  ],
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: AppStyles.space),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: CategoriesLine(
+                              title: 'Home Page',
+                              image: 'images/categories.png',
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () => Get.toNamed('/notif'),
+                                child: Container(
+                                  margin: EdgeInsets.only(left: AppStyles.paddingS),
+                                  padding: EdgeInsets.all(AppStyles.paddingS),
+                                  decoration: BoxDecoration(
+                                    color: AppStyles.primaryDark,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.notifications,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: AppStyles.spaceS),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(height: AppStyles.spaceS),
+                      WavyCard(
+                        title: 'List Guru',
+                        onTap: () => Get.toNamed('/list-teacher'),
+                      ),
+                      WavyCard(
+                        title: 'Jadwal Mata Pelajaran',
+                        onTap: () => Get.toNamed('/schedule'),
+                      ),
+                      WavyCard(
+                        title: 'Journal Kelas',
+                        onTap: () => Get.toNamed('/journal-class'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
+import '../../../controllers/class_controller.dart';
 import '../../home_page/teacher/add_teacher/add_teacher.dart';
 
 class EditStudent extends StatelessWidget {
@@ -13,7 +14,9 @@ class EditStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
+    final controller = Get.find<ClassController>();
+    final student = Get.arguments;
+    TextEditingController studentNameController = TextEditingController(text: student.name);
 
     return Scaffold(
       backgroundColor: AppStyles.light,
@@ -35,7 +38,7 @@ class EditStudent extends StatelessWidget {
                         color: AppStyles.primaryDark,
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, color:AppStyles.light),
+                        icon: Icon(Icons.arrow_back, color: AppStyles.light),
                         onPressed: () => Get.back(),
                       ),
                     ),
@@ -48,19 +51,41 @@ class EditStudent extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: AppStyles.spaceM),
-                SizedBox(height: AppStyles.spaceM),
                 SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
-                  controller: TextEditingController(),
+                  controller: studentNameController,
                   keyboardType: TextInputType.text,
-                  hintText: 'Syifa',
+                  hintText: 'Masukkan Nama Terbaru',
                 ),
+
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
                   text: 'Edit Student',
-                  onPressed: () => Get.back(),
+                  onPressed: () async {
+                    final updatedName = studentNameController.text;
+
+                    try {
+                      await controller.updateStudentName(student.id, updatedName);
+                      Get.back();
+                      Get.snackbar(
+                        'Success',
+                        'Student name updated successfully',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.welcome,
+                        colorText:AppStyles.dark,
+                      );
+                    } catch (e) {
+                      Get.snackbar(
+                        'Failed',
+                        'Failed to update student name because it already exists',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                      );
+                      print('Error updating student: $e');
+                    }
+                  },
                 ),
               ],
             ),

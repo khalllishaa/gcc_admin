@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/class_card.dart';
+import 'package:gcc_admin/controllers/class_controller.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
+import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +13,8 @@ class Schedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
+    final controller = Get.put(ClassController());
+    final scheduleController = Get.put(ScheduleController());
 
     return Scaffold(
       body: Padding(
@@ -24,7 +27,7 @@ class Schedule extends StatelessWidget {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppStyles.primaryDark,
                   ),
@@ -44,56 +47,55 @@ class Schedule extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: AppStyles.spaceM),
-            GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ],
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ],
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ],
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/view-schedule'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+                child: Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (controller.classList.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'Tidak ada kelas tersedia',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppStyles.primaryDark,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    padding: EdgeInsets.only(top: AppStyles.spaceS),
+                    itemCount: controller.classList.length,
+                    itemBuilder: (context, index) {
+                      final kelas = controller.classList[index];
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: AppStyles.spaceS),
+                        child: GestureDetector(
+                          onTap: () {
+                            scheduleController.selectedClassId.value = kelas.id;
+                            Get.toNamed('/view-schedule');
+                          },
+                          child: KelasCard(
+                            imagePath: 'images/maths.png',
+                            title: kelas.name,
+                            avatarImagePaths: [
+                              'images/categories.png',
+                              'images/learning.png',
+                              'images/logo_gcc.png',
+                            ],
+                            onDelete: () {},
+                            showDeleteIcon: false
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }),
               ),
             ),
           ],

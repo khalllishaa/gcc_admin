@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/controllers/list_teacher_controller.dart';
+import 'package:get/get.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/SectionTile.dart';
-import 'package:get/get.dart';
-
-import '../../../../components/ReuseButton.dart';
-import '../add_teacher/add_teacher.dart';
+import 'package:gcc_admin/components/CustomTextField.dart';
+import 'package:gcc_admin/components/ReuseButton.dart';
 
 class EditTeacher extends StatelessWidget {
   const EditTeacher({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ListTeacherController>();
+    final teacher = Get.arguments;
+    TextEditingController teacherNameController = TextEditingController(text: teacher.name);
+
     return Scaffold(
       backgroundColor: AppStyles.light,
       body: SafeArea(
@@ -46,18 +49,44 @@ class EditTeacher extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: AppStyles.spaceM),
                 SectionTitle(title: 'Nama'),
-
+                SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
-                  controller: TextEditingController(),
+                  controller: teacherNameController,
                   keyboardType: TextInputType.text,
-                  hintText: 'Miss Ica',
+                  hintText: 'Masukkan Nama Terbaru',
                 ),
+
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
                   text: 'Edit Teacher',
-                  onPressed: () => Get.back(),
+                    onPressed: () async {
+                      final updatedName = teacherNameController.text.trim();
+
+                      if (updatedName.isEmpty) {
+                        Get.snackbar(
+                          'Validasi',
+                          'Nama tidak boleh kosong',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.error,
+                          colorText: AppStyles.light,
+                        );
+                        return;
+                      }
+
+                      try {
+                        await controller.updateTeacher(teacher.id, updatedName);
+                      } catch (e) {
+                        Get.snackbar(
+                          'Failed',
+                          'Gagal memperbarui nama guru: $e',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.error,
+                          colorText: AppStyles.light,
+                        );
+                        print('Error updating teacher: $e');
+                      }
+                    }
                 ),
               ],
             ),

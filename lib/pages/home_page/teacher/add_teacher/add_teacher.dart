@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/controllers/list_teacher_controller.dart';
 import 'package:gcc_admin/data/services/teacher_service.dart';
 import 'package:get/get.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
@@ -17,6 +18,7 @@ class Addteacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainMenuController mainMenuController = Get.find();
+    final controller = Get.find<ListTeacherController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -74,19 +76,35 @@ class Addteacher extends StatelessWidget {
                     ReuseButton(
                       text: 'Add Teacher',
                       onPressed: () async {
-                        String name = nameController.text;
-                        int classId = int.tryParse(classIdController.text) ?? 0;
+                        final name = nameController.text.trim();
+                        final classId = int.tryParse(classIdController.text.trim()) ?? 0;
 
-                        if (name.isNotEmpty && classId != 0) {
-                          try {
-                            await TeacherService().addTeacher(name, classId);
-                            Get.snackbar('Sukses', 'Guru berhasil ditambahkan');
-                            Get.back();
-                          } catch (e) {
-                            Get.snackbar('Error', e.toString());
-                          }
+                        if (name.isEmpty || classId == 0) {
+                          Get.snackbar('Validasi', 'Semua field harus diisi');
                         } else {
-                          Get.snackbar('Validasi', 'Semua field wajib diisi');
+                          try {
+                            await controller.addTeacher(name, classId);
+                            Get.snackbar(
+                              'Sukses',
+                              'Guru berhasil ditambahkan!',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.welcome,
+                              colorText: AppStyles.dark,
+                              duration: Duration(seconds: 2),
+                              margin: EdgeInsets.all(16),
+                            );
+                            Get.back();
+
+                          } catch (e) {
+                            Get.snackbar(
+                              'Error',
+                              'Gagal menambahkan guru $e',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.error,
+                              colorText: AppStyles.light,
+                              duration: Duration(seconds: 2),
+                              margin: EdgeInsets.all(16),
+                            );                          }
                         }
                       },
                     ),

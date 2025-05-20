@@ -5,6 +5,7 @@ import 'package:gcc_admin/components/CustomTextField.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
 import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
+import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,12 @@ class AddSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainMenuController mainMenuController = Get.find();
+    final controller = Get.find<ScheduleController>();
+
+    final dayController = TextEditingController();
+    final timeController = TextEditingController();
+    final teacherController = TextEditingController();
+    final subjectController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,7 +63,7 @@ class AddSchedule extends StatelessWidget {
                     SectionTitle(title: 'Day'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: dayController,
                       keyboardType: TextInputType.text,
                       hintText: 'Day',
                     ),
@@ -64,7 +71,7 @@ class AddSchedule extends StatelessWidget {
                     SectionTitle(title: 'Time'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: timeController,
                       keyboardType: TextInputType.text,
                       hintText: 'Time',
                     ),
@@ -72,7 +79,7 @@ class AddSchedule extends StatelessWidget {
                     SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: teacherController,
                       keyboardType: TextInputType.text,
                       hintText: 'Teacher',
                     ),
@@ -80,14 +87,48 @@ class AddSchedule extends StatelessWidget {
                     SectionTitle(title: 'Subject'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
-                      controller: TextEditingController(),
+                      controller: subjectController,
                       keyboardType: TextInputType.text,
                       hintText: 'Subject',
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
                       text: 'Add Schedule',
-                      onPressed: () => Get.back(),
+                        onPressed: () async {
+                          final day = dayController.text.trim();
+                          final time = timeController.text.trim();
+                          final teacher = teacherController.text.trim();
+                          final subject = subjectController.text.trim();
+
+                          if (day.isEmpty || time.isEmpty || teacher.isEmpty || subject.isEmpty) {
+                            Get.snackbar(
+                              'Error',
+                              'Semua field harus diisi.',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.error,
+                              colorText: AppStyles.light,
+                              duration: Duration(seconds: 2),
+                              margin: EdgeInsets.all(16),
+                            );
+                          } else {
+                            await controller.addSchedule(
+                              day: day,
+                              time: time,
+                              teacher: teacher,
+                              subject: subject,
+                            );
+                            Get.back();
+                            Get.snackbar(
+                              'Sukses',
+                              'Schedule berhasil ditambahkan!',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.welcome,
+                              colorText: AppStyles.dark,
+                              duration: Duration(seconds: 2),
+                              margin: EdgeInsets.all(16),
+                            );
+                          }
+                        }
                     ),
                   ],
                 ),

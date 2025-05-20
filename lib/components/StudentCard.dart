@@ -57,44 +57,11 @@ class StudentCard extends StatelessWidget {
               // Delete button
               InkWell(
                 onTap: () {
-                  Get.defaultDialog(
-                    title: "Delete",
-                    middleText: "Are you sure you want to delete this item?",
-                    titleStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 22),
-                    middleTextStyle: AppStyles.welcome2,
-                    backgroundColor: AppStyles.primary,
-                    radius: AppStyles.radiusXL,
-                    barrierDismissible: false,
-                    cancel: OutlinedButton(
-                      onPressed: () {
-                        Get.back(); // Close dialog
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppStyles.light),
-                      ),
-                      child: Text(
-                        "No",
-                        style: AppStyles.welcome2,
-                      ),
-                    ),
-                    confirm: ElevatedButton(
-                      onPressed: () {
-                        Get.back(); // Close dialog first
-                        onDelete(); // Then execute delete
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppStyles.primaryLight,
-                        foregroundColor: AppStyles.light,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppStyles.radiusXL),
-                        ),
-                      ),
-                      child: Text(
-                        "Yes",
-                        style: AppStyles.welcome2,
-                      ),
-                    ),
-                  );
+                  Get.dialog(DeleteConfirmationDialog(
+                    onConfirm: () {
+                      onDelete();
+                    },
+                  ));
                 },
                 borderRadius: BorderRadius.circular(AppStyles.radiusXL),
                 child: Padding(
@@ -106,6 +73,57 @@ class StudentCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DeleteConfirmationDialog extends StatelessWidget {
+  final VoidCallback onConfirm;
+
+  const DeleteConfirmationDialog({Key? key, required this.onConfirm}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Delete"),
+      content: Text("Are you sure you want to delete this item?"),
+      titleTextStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+      contentTextStyle: AppStyles.welcome2,
+      backgroundColor: AppStyles.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          style: TextButton.styleFrom(
+            foregroundColor: AppStyles.light,
+          ),
+          child: Text(
+            "No",
+            style: AppStyles.welcome2,
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Get.back();
+            onConfirm();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppStyles.primaryLight,
+            foregroundColor: AppStyles.light,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+            ),
+          ),
+          child: Text(
+            "Yes",
+            style: AppStyles.welcome2,
+          ),
+        ),
+      ],
     );
   }
 }

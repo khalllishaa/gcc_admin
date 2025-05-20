@@ -11,6 +11,8 @@ import 'package:gcc_admin/pages/home_page/journal/add_journal/add_journal.dart';
 import 'package:gcc_admin/pages/home_page/journal/journal_page/journal.dart';
 import 'package:gcc_admin/pages/home_page/journal/journal_page/journal_class.dart';
 import 'package:gcc_admin/pages/home_page/journal/view_journal/view_journal.dart';
+import 'package:gcc_admin/pages/home_page/notification/add_notification.dart';
+import 'package:gcc_admin/pages/home_page/notification/notification.dart';
 import 'package:gcc_admin/pages/home_page/schedule/add_schedule/add_schedule.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher/add_teacher.dart';
 import 'package:gcc_admin/pages/home_page/Teacher/list_teacher/list_teacher.dart';
@@ -36,6 +38,8 @@ class Routes {
   static const signin = '/signin';
   static const signup = '/signup';
   static const main = '/main';
+  static const notif = '/notif';
+  static const addNotif = '/add-notif';
 
   static const kelas = '/kelas';
   static const addClass = '/add-class';
@@ -73,6 +77,8 @@ class AppPages {
     GetPage(name: Routes.signin, page: () => SigninPage(), binding: SignInBinding()),
     GetPage(name: Routes.signup, page: () => SignupPage(), binding: SignUpBinding()),
     GetPage(name: Routes.main, page: () => MainMenu(), binding: MainMenuBinding()),
+    GetPage(name: Routes.notif, page: () => NotificationPage()),
+    GetPage(name: Routes.addNotif, page: () => AddNotification()),
 
     GetPage(name: Routes.kelas, page: () => ClassPage()),
     GetPage(name: Routes.addClass, page: () => AddClass()),

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../components/AppStyles.dart';
 import '../data/models/teacher_model.dart';
 import '../data/services/teacher_service.dart';
 
@@ -30,7 +32,18 @@ class ListTeacherController extends GetxController {
     try {
       final newTeacher = await _teacherService.addTeacher(name, classId);
       teachers.add(newTeacher);
-      Get.snackbar('Berhasil', 'Guru ditambahkan');
+
+      isLoading.value = false;
+      Get.snackbar(
+        'Sukses',
+        'Guru berhasil ditambahkan.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.welcome,
+        colorText: AppStyles.dark,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );
+      Get.back();
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
@@ -40,13 +53,45 @@ class ListTeacherController extends GetxController {
     try {
       await _teacherService.deleteTeacher(id);
       teachers.removeWhere((t) => t.id == id);
-      Get.snackbar('Berhasil', 'Guru dihapus');
+      Get.snackbar(
+        'Succes',
+        'Guru berhasil dihapus.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.welcome,
+        colorText: AppStyles.dark,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
   }
 
-  void editTeacher(int index) {
-    Get.toNamed('/edit-teacher', arguments: teachers[index]);
+  Future<void> updateTeacher(int id, String newName) async {
+    try {
+      isLoading.value = true;
+      final updatedTeacher = await _teacherService.updateTeacherName(id, newName);
+
+      final index = teachers.indexWhere((t) => t.id == id);
+      if (index != -1) {
+        teachers[index] = updatedTeacher;
+        teachers.refresh();
+      }
+
+      isLoading.value = false;
+      Get.back();
+      Get.snackbar(
+        'Sukses',
+        'Nama guru berhasil diperbarui.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.welcome,
+        colorText: AppStyles.dark,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar('Error', e.toString());
+    }
   }
 }

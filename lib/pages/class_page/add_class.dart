@@ -53,7 +53,7 @@ class AddClass extends StatelessWidget {
                 SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
-                  controller: controller.classNameController,  // Menggunakan controller untuk textfield
+                  controller: controller.classNameController,
                   keyboardType: TextInputType.text,
                   hintText: 'Nama Kelas',
                 ),
@@ -61,7 +61,7 @@ class AddClass extends StatelessWidget {
                 ReuseButton(
                   text: 'Add Class',
                   onPressed: () {
-                    controller.addClass();  // Panggil method addClass dari controller
+                    controller.addClass();
                   },
                 ),
                 SizedBox(height: AppStyles.spaceS),
