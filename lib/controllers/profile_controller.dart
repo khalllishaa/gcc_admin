@@ -8,7 +8,6 @@ import '../data/services/user_service.dart';
 import '../routes/app_route.dart';
 
 class ProfileController extends GetxController {
-  // Observable for image picked state
   var isImagePicked = false.obs;
   var profileImage = ''.obs;
   var user = Rxn<UsersModel>();

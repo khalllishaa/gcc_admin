@@ -12,7 +12,7 @@ class Listteacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ListTeacherController>();
+    ListTeacherController controller = Get.find();
 
     return Scaffold(
       body: SafeArea(
@@ -72,8 +72,11 @@ class Listteacher extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.addTeacher);
+        onPressed: () async {
+          final result = await Get.toNamed(Routes.addTeacher);
+          if (result == true) {
+            controller.fetchTeachers();
+          }
         },
         backgroundColor: AppStyles.dark,
         shape: CircleBorder(),

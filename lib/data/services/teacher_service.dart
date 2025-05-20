@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/teacher_model.dart';
 
 class TeacherService {
-  static const String baseUrl = 'https://7c4b-160-22-25-46.ngrok-free.app/api/teachers';
+  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api/teachers';
 
   Future<List<TeacherModel>> fetchTeachers() async {
     final response = await http.get(Uri.parse(baseUrl));

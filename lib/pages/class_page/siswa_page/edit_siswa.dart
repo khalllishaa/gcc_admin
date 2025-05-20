@@ -14,8 +14,8 @@ class EditStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ClassController>();
     final student = Get.arguments;
+    ClassController controller = Get.find();
     TextEditingController studentNameController = TextEditingController(text: student.name);
 
     return Scaffold(

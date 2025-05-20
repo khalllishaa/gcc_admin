@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
-import 'package:gcc_admin/components/class_card.dart';
+import 'package:gcc_admin/components/ClassCard.dart';
 import 'package:gcc_admin/controllers/class_controller.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-class Schedule extends StatelessWidget {
-  const Schedule({super.key});
+class ClassSchedule extends StatelessWidget {
+  const ClassSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClassController());
-    final scheduleController = Get.put(ScheduleController());
+    ClassController controller = Get.find();
+    ScheduleController scheduleController = Get.find();
 
     return Scaffold(
       body: Padding(

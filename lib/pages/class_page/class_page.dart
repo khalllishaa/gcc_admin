@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/controllers/profile_controller.dart';
 import 'package:get/get.dart';
-import 'package:gcc_admin/components/class_card.dart';
+import 'package:gcc_admin/components/ClassCard.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import '../../controllers/class_controller.dart';
 import '../../components/WelcomeSign.dart';
@@ -11,17 +12,20 @@ class ClassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClassController());
+    ClassController controller = Get.find();
+    ProfileController userController = Get.find();
+    // final userController = Get.put(ProfileController());
 
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            Obx(() => WelcomeSign(
-              username: controller.classList.isNotEmpty
-                  ? controller.classList[0].users[0].name
-                  : 'Guest',
-            )),
+            Obx(() {
+              final user = userController.user.value;
+              return WelcomeSign(
+                username: user != null ? user.longName : 'Guest',
+              );
+            }),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),

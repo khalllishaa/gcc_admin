@@ -33,21 +33,11 @@ class ListTeacherController extends GetxController {
       final newTeacher = await _teacherService.addTeacher(name, classId);
       teachers.add(newTeacher);
 
-      isLoading.value = false;
-      Get.snackbar(
-        'Sukses',
-        'Guru berhasil ditambahkan.',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppStyles.welcome,
-        colorText: AppStyles.dark,
-        duration: Duration(seconds: 2),
-        margin: EdgeInsets.all(16),
-      );
-      Get.back();
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
   }
+
 
   Future<void> deleteTeacher(int id) async {
     try {

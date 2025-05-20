@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
-import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/JournalCard.dart';
-import 'package:gcc_admin/components/class_card.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +11,6 @@ class Journal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
 
     return Scaffold(
       body: Padding(

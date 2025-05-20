@@ -14,7 +14,7 @@ class AddClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ClassController());
+    ClassController controller = Get.find();
 
     return Scaffold(
       backgroundColor: Colors.white,

@@ -3,8 +3,9 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/WelcomeSign.dart';
 import 'package:gcc_admin/controllers/class_controller.dart';
-import 'package:gcc_admin/controllers/home_controller.dart';
-import 'package:gcc_admin/controllers/welcome_controller.dart';
+import 'package:gcc_admin/controllers/splashscreen_controller.dart';
+import 'package:gcc_admin/controllers/profile_controller.dart';
+import 'package:gcc_admin/controllers/signIn_controller.dart';
 import 'package:get/get.dart';
 
 import '../../components/LessonCard.dart';
@@ -16,18 +17,19 @@ class HomePage extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    ClassController controller = Get.find();
+    ProfileController userController = Get.find();
 
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() => WelcomeSign(
-              username: controller.classList.isNotEmpty
-                  ? controller.classList[0].users[0].name
-                  : 'Guest',
-            )),
+            Obx(() {
+              final user = userController.user.value;
+              return WelcomeSign(
+                username: user != null ? user.longName : 'Guest',
+              );
+            }),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gcc_admin/controllers/welcome_controller.dart';
+import 'package:gcc_admin/controllers/signIn_controller.dart';
 import 'package:get/get.dart';
 import '../../components/AppStyles.dart';
 import '../../components/ReuseButton.dart';

@@ -9,9 +9,7 @@ import '../../../controllers/class_controller.dart';
 
 class AddStudent extends StatelessWidget {
   AddStudent({super.key});
-
-  final controller = Get.find<ClassController>();
-
+  ClassController controller = Get.find();
   final nameController = TextEditingController();
   final longNameController = TextEditingController();
   final emailController = TextEditingController();

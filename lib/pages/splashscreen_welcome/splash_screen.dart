@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/controllers/splashscreen_controller.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppStyles.dart';
-import '../../routes/app_route.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  SplashScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
-
-  Future<void> checkLoginStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-
-    Future.delayed(Duration(seconds: 3), () {
-      if (isLoggedIn) {
-        Get.offAllNamed(Routes.main);
-      } else {
-        Get.offAllNamed(Routes.signin);
-      }
-    });
-  }
-
+  SplashscreenContoller contoller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

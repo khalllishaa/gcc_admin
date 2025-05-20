@@ -12,7 +12,7 @@ class EditTeacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ListTeacherController>();
+    ListTeacherController controller = Get.find();
     final teacher = Get.arguments;
     TextEditingController teacherNameController = TextEditingController(text: teacher.name);
 

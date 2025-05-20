@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
 class UserService {
-  static const String baseUrl = 'https://7c4b-160-22-25-46.ngrok-free.app/api';
+  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<UsersModel?> getCurrentUser() async {
     final prefs = await SharedPreferences.getInstance();
