@@ -59,7 +59,7 @@ class Listteacher extends StatelessWidget {
                       final teacher = controller.teachers[index];
                       return StudentCard(
                         name: teacher.name,
-                        onEdit: () => controller.editTeacher(index),
+                        onEdit: () => Get.toNamed('/edit-teacher', arguments: teacher),
                         onDelete: () => controller.deleteTeacher(teacher.id),
                         onTap: () {},
                       );

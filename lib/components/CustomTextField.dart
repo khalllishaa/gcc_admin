@@ -5,12 +5,14 @@ class Customtextfield extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final String hintText;
+  final bool obscureText;
 
   const Customtextfield({
     super.key,
     required this.controller,
     required this.keyboardType,
     required this.hintText,
+    this.obscureText = false,
   });
 
   @override
@@ -18,10 +20,17 @@ class Customtextfield extends StatefulWidget {
 }
 
 class _CustomtextfieldState extends State<Customtextfield> {
+  bool _obscureText = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = widget.obscureText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingS),
       decoration: BoxDecoration(
         color: AppStyles.light,
@@ -33,12 +42,24 @@ class _CustomtextfieldState extends State<Customtextfield> {
           TextField(
             controller: widget.controller,
             keyboardType: widget.keyboardType,
+            obscureText: _obscureText,
             style: AppStyles.profileText2,
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: TextStyle(color: AppStyles.grey1),
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(vertical: AppStyles.paddingL),
+              suffixIcon: widget.obscureText ? IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: AppStyles.grey1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              ) : null,
             ),
           ),
           Divider(
@@ -46,7 +67,7 @@ class _CustomtextfieldState extends State<Customtextfield> {
             thickness: 1,
             height: 1,
           ),
-          SizedBox(height: AppStyles.spaceM,)
+          SizedBox(height: AppStyles.spaceM),
         ],
       ),
     );

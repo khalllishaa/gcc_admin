@@ -6,17 +6,18 @@ import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
 import '../../../controllers/class_controller.dart';
-import '../../home_page/teacher/add_teacher/add_teacher.dart';
 
 class AddStudent extends StatelessWidget {
   AddStudent({super.key});
 
   final controller = Get.find<ClassController>();
+
   final nameController = TextEditingController();
+  final longNameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
-
-  final int classId = 1; // Ganti sesuai class yang dipilih!
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +59,130 @@ class AddStudent extends StatelessWidget {
                 SectionTitle(title: 'Nama'),
                 Customtextfield(
                   controller: nameController,
+                  hintText: 'Username',
                   keyboardType: TextInputType.text,
-                  hintText: 'Nama Murid',
                 ),
                 SizedBox(height: AppStyles.spaceS),
-                SizedBox(height: AppStyles.spaceL),
+
+                SectionTitle(title: 'Nama Lengkap'),
+                Customtextfield(
+                  controller: longNameController,
+                  hintText: 'Nama lengkap siswa',
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                SectionTitle(title: 'Email'),
+                Customtextfield(
+                  controller: emailController,
+                  hintText: 'Email siswa',
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                SectionTitle(title: 'Nomor HP'),
+                Customtextfield(
+                  controller: phoneController,
+                  hintText: 'Nomor HP',
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                SectionTitle(title: 'Password'),
+                Customtextfield(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(height: AppStyles.spaceS),
+
+                SectionTitle(title: 'Kofirmasi Password'),
+                Customtextfield(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm password',
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                ),
+
+                SizedBox(height: AppStyles.space),
 
                 ReuseButton(
                   text: 'Add Student',
                   onPressed: () async {
+                    if (nameController.text.isEmpty ||
+                        longNameController.text.isEmpty ||
+                        emailController.text.isEmpty ||
+                        phoneController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
+                      Get.snackbar(
+                        'Error',
+                        'Semua field harus diisi.',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                        duration: Duration(seconds: 2),
+                        margin: EdgeInsets.all(16),
+                      );
+                      return;
+                    }
+
+                    if (passwordController.text !=
+                        confirmPasswordController.text) {
+                      Get.snackbar(
+                        'Error',
+                        'Password tidak cocok.',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                        duration: Duration(seconds: 2),
+                        margin: EdgeInsets.all(16),
+                      );                      return;
+                    }
+
                     try {
-                      await controller.addStudent(
+                      final selectedClass = controller.classList.firstWhere(
+                            (cls) =>
+                        cls.name == controller.selectedClassName.value,
+                      );
+
+                      await controller.addUser(
                         name: nameController.text,
-                        classId: classId,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        passwordConfirmation: confirmPasswordController.text,
+                        longName: longNameController.text,
+                        phoneNumber: phoneController.text,
+                        classId: selectedClass.id,
+                        role: 'student',
+                      );
+
+                      Get.snackbar(
+                        'Sukses',
+                        'User berhasil ditambahkan!',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.welcome,
+                        colorText: AppStyles.dark,
+                        duration: Duration(seconds: 2),
+                        margin: EdgeInsets.all(16),
                       );
                       Get.back();
-                    } catch (_) {
-                      Get.snackbar('Error', 'Gagal menambahkan siswa');
+                    } catch (e) {
+                      Get.snackbar(
+                        'Error',
+                        'Gagal menambahkan siswa: $e',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                        duration: Duration(seconds: 2),
+                        margin: EdgeInsets.all(16),
+                      );
                     }
                   },
                 ),
+                SizedBox(height: AppStyles.spaceL),
+
               ],
             ),
           ),

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/user_model.dart';
 
 class UserService {
-  static const String baseUrl = 'https://4f5e-160-22-25-26.ngrok-free.app/api';
+  static const String baseUrl = 'https://7c4b-160-22-25-46.ngrok-free.app/api';
 
   static Future<UsersModel?> getUserById(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/users'));
