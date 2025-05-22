@@ -1,13 +1,13 @@
 import 'dart:convert';
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 import '../models/class_model.dart';
 import '../models/user_model.dart';
 
 class ClassService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<List<ClassModel>> fetchClasses() async {
-    final response = await http.get(Uri.parse('$baseUrl/classes'));
+    final response = await http.get(Uri.parse('${endpoint.baseUrl}/classes'));
 
     if (response.statusCode == 200) {
       return classModelFromJson(response.body);
@@ -17,7 +17,7 @@ class ClassService {
   }
 
   static Future<List<User>> fetchStudents(int classId) async {
-    final response = await http.get(Uri.parse('$baseUrl/classes/$classId/students'));
+    final response = await http.get(Uri.parse('${endpoint.baseUrl}/classes/$classId/students'));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -28,7 +28,7 @@ class ClassService {
   }
 
   static Future<UsersModel?> getUserById(int userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/users'));
+    final response = await http.get(Uri.parse('${endpoint.baseUrl}/users'));
 
     if (response.statusCode == 200) {
       List<dynamic> users = jsonDecode(response.body);
@@ -43,7 +43,7 @@ class ClassService {
 
   static Future<void> addClass(String className) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/classes'),
+      Uri.parse('${endpoint.baseUrl}/classes'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'name': className}),
     );
@@ -60,7 +60,7 @@ class ClassService {
     required String name,
   }) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/users/update/$id'),
+      Uri.parse('${endpoint.baseUrl}/users/update/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'name': name}),
     );
@@ -74,7 +74,7 @@ class ClassService {
 
   static Future<void> deleteStudent(int studentId) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/users/delete/$studentId'),
+      Uri.parse('${endpoint.baseUrl}/users/delete/$studentId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -90,7 +90,7 @@ class ClassService {
     required String name,
   }) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/classes/$id'),
+      Uri.parse('${endpoint.baseUrl}/classes/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'name': name}),
     );
@@ -104,7 +104,7 @@ class ClassService {
 
   static Future<void> deleteClass(int classId) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/classes/$classId'),
+      Uri.parse('${endpoint.baseUrl}/classes/$classId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -112,31 +112,6 @@ class ClassService {
       print('Class deleted successfully');
     } else {
       throw Exception('Failed to delete class: ${response.statusCode}');
-    }
-  }
-
-  static Future<void> addStudent({
-    required String name,
-    required int classId,
-    required String token,
-  }) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
-        'name': name,
-        'class_id': classId,
-        'role': 'student',
-      }),
-    );
-
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      print('Student added successfully');
-    } else {
-      throw Exception('Failed to add student: ${response.statusCode}');
     }
   }
 
@@ -151,7 +126,7 @@ class ClassService {
     required String role,
     // required String token,
   }) async {
-    final url = Uri.parse('$baseUrl/auth/register');
+    final url = Uri.parse('${endpoint.baseUrl}/auth/register');
 
     final response = await http.post(
       url,

@@ -1,30 +1,14 @@
 import 'dart:convert';
 
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/schedule_model.dart';
 
 class ScheduleService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
-
-  static Future<List<ScheduleModels>> fetchSchedules() async {
-    try {
-      final response = await http.get(Uri.parse('$baseUrl/schedules'));
-      if (response.statusCode == 200) {
-        print('Schedule response: ${response.body}');
-        return scheduleModelsFromJson(response.body);
-      } else {
-        print('Error status code: ${response.statusCode}');
-        throw Exception('Failed to load schedules');
-      }
-    } catch (e) {
-      print('Error fetching schedules: $e');
-      throw Exception('Failed to load schedules');
-    }
-  }
 
   static Future<List<ScheduleModels>> fetchSchedulesByClassId(int classId) async {
-    final url = Uri.parse('$baseUrl/schedules');
+    final url = Uri.parse('${endpoint.baseUrl}/schedules');
     try {
       final response = await http.get(url);
 
@@ -51,7 +35,7 @@ class ScheduleService {
     required int classId,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/schedules/create'),
+      Uri.parse('${endpoint.baseUrl}/schedules/create'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -71,7 +55,7 @@ class ScheduleService {
 
   static Future<void> deleteSchedule(String id) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/schedules/$id'),
+      Uri.parse('${endpoint.baseUrl}/schedules/$id'),
       headers: {
         'Content-Type': 'application/json',
       },

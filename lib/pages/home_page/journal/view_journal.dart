@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
 
-import '../../../../components/ViewJournalCard.dart';
+import '../../../components/ViewJournalCard.dart';
 
 class ViewJournal extends StatelessWidget {
   const ViewJournal({super.key});

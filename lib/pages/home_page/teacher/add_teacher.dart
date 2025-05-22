@@ -85,6 +85,7 @@ class Addteacher extends StatelessWidget {
                         } else {
                           try {
                             await controller.addTeacher(name, classId);
+                            Get.back();
 
                             Get.snackbar(
                               'Sukses',
@@ -96,8 +97,7 @@ class Addteacher extends StatelessWidget {
                               margin: EdgeInsets.all(16),
                             );
 
-                            Get.back(result: true);
-
+                            Get.toNamed('/list-teacher');
                           } catch (e) {
                             Get.snackbar(
                               'Error',

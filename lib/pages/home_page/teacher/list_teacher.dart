@@ -4,8 +4,8 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/list_teacher_controller.dart';
-import '../../../../components/StudentCard.dart';
+import '../../../controllers/list_teacher_controller.dart';
+import '../../../components/StudentCard.dart';
 
 class Listteacher extends StatelessWidget {
   const Listteacher({super.key});
@@ -32,7 +32,7 @@ class Listteacher extends StatelessWidget {
                     ),
                     child: IconButton(
                       icon: Icon(Icons.arrow_back, color: AppStyles.light),
-                      onPressed: () => Get.back(),
+                      onPressed: () => Get.toNamed('/main'),
                     ),
                   ),
                   SizedBox(width: AppStyles.spaceS),
@@ -51,19 +51,26 @@ class Listteacher extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  return ListView.separated(
-                    itemCount: controller.teachers.length,
-                    separatorBuilder: (_, __) =>
-                        SizedBox(height: AppStyles.spaceS),
-                    itemBuilder: (context, index) {
-                      final teacher = controller.teachers[index];
-                      return StudentCard(
-                        name: teacher.name,
-                        onEdit: () => Get.toNamed('/edit-teacher', arguments: teacher),
-                        onDelete: () => controller.deleteTeacher(teacher.id),
-                        onTap: () {},
-                      );
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      await controller.fetchTeachers();
                     },
+                    child: ListView.separated(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: controller.teachers.length,
+                      separatorBuilder: (_, __) =>
+                          SizedBox(height: AppStyles.spaceS),
+                      itemBuilder: (context, index) {
+                        final teacher = controller.teachers[index];
+                        return StudentCard(
+                          name: teacher.name,
+                          onEdit: () =>
+                              Get.toNamed('/edit-teacher', arguments: teacher),
+                          onDelete: () => controller.deleteTeacher(teacher.id),
+                          onTap: () {},
+                        );
+                      },
+                    ),
                   );
                 }),
               ),
@@ -79,7 +86,7 @@ class Listteacher extends StatelessWidget {
           }
         },
         backgroundColor: AppStyles.dark,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

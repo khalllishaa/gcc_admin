@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 import '../models/auth_model.dart';
 
 class AuthService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<Map<String, dynamic>> login(String name, String password) async {
-    final url = Uri.parse('$baseUrl/auth/login');
     final response = await http.post(
-      url,
+      Uri.parse('${endpoint.baseUrl}/auth/login'),
       headers: {
         'Accept': 'application/json',
       },

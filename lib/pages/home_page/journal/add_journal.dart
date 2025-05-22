@@ -8,7 +8,7 @@ import 'package:gcc_admin/components/TextField2.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 
-import '../../teacher/add_teacher/add_teacher.dart';
+import '../teacher/add_teacher.dart';
 
 class AddJournal extends StatelessWidget {
   const AddJournal({super.key});

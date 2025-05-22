@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:convert';
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
 class UserService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<UsersModel?> getCurrentUser() async {
     final prefs = await SharedPreferences.getInstance();
@@ -14,7 +14,7 @@ class UserService {
     if (token == null) return null;
 
     final response = await http.get(
-      Uri.parse('$baseUrl/users/get'),
+      Uri.parse('${endpoint.baseUrl}/users/get'),
       headers: {
         'Authorization': 'Bearer $token',
         'ngrok-skip-browser-warning': '1',
