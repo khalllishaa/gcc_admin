@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 import '../models/teacher_model.dart';
 
 class TeacherService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api/teachers';
 
   Future<List<TeacherModel>> fetchTeachers() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    final response = await http.get(Uri.parse('${endpoint.baseUrl}/teachers'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -18,7 +18,7 @@ class TeacherService {
 
   Future<TeacherModel> addTeacher(String name, int classId) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/create'),
+      Uri.parse('${endpoint.baseUrl}/teachers/create'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'name': name,
@@ -44,7 +44,7 @@ class TeacherService {
   }
 
   Future<TeacherModel> updateTeacherName(int id, String newName) async {
-    final url = Uri.parse('$baseUrl/$id');
+    final url = Uri.parse('${endpoint.baseUrl}/teachers/$id');
     final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -63,7 +63,7 @@ class TeacherService {
   }
 
   Future<void> deleteTeacher(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/$id'));
+    final response = await http.delete(Uri.parse('${endpoint.baseUrl}/teachers/$id'));
 
     if (response.statusCode != 200) {
       throw Exception('Gagal menghapus guru');

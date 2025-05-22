@@ -24,32 +24,6 @@ class ScheduleController extends GetxController{
     });
   }
 
-  Future<void> getSchedules() async {
-    isLoading.value = true;
-    try {
-      final result = await ScheduleService.fetchSchedules();
-      print('Schedules fetched: $result');
-      scheduleList.value = result;
-    } catch (e) {
-      print('Error fetching schedules: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  // Future<void> fetchSchedulesByClass(int classId) async {
-  //   try {
-  //     isLoading.value = true;
-  //     final allSchedules = await ApiService.fetchSchedules();
-  //     scheduleList.value = allSchedules.where((s) => s.classId == classId).toList();
-  //     scheduleList.assignAll(allSchedules);
-  //   } catch (e) {
-  //     print('Error fetching schedule: $e');
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
   void fetchScheduleByClassId(int classId) async {
     print('Fetching schedule for class ID: $classId');
     isLoading.value = true;

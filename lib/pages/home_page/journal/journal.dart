@@ -4,7 +4,7 @@ import 'package:gcc_admin/components/JournalCard.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/menu_controller.dart';
+import '../../../controllers/menu_controller.dart';
 
 class Journal extends StatelessWidget {
   const Journal({super.key});

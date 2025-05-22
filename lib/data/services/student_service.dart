@@ -1,15 +1,15 @@
 import 'dart:convert';
+import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 
 class StudentService {
-  static const String baseUrl = 'https://68c6-114-10-23-55.ngrok-free.app/api';
 
   static Future<void> addStudent({
     required String name,
     required int classId,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
+      Uri.parse('${endpoint.baseUrl}/auth/register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,

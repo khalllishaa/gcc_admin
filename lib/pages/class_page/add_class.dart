@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../components/AppStyles.dart';
 import '../../controllers/class_controller.dart';
-import '../home_page/teacher/add_teacher/add_teacher.dart';
+import '../home_page/teacher/add_teacher.dart';
 
 class AddClass extends StatelessWidget {
   const AddClass({super.key});

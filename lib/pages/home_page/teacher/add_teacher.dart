@@ -86,6 +86,8 @@ class Addteacher extends StatelessWidget {
                           try {
                             await controller.addTeacher(name, classId);
 
+                            Get.back(result: true);
+
                             Get.snackbar(
                               'Sukses',
                               'Guru berhasil ditambahkan!',
@@ -95,8 +97,6 @@ class Addteacher extends StatelessWidget {
                               duration: Duration(seconds: 2),
                               margin: EdgeInsets.all(16),
                             );
-
-                            Get.back(result: true);
 
                           } catch (e) {
                             Get.snackbar(

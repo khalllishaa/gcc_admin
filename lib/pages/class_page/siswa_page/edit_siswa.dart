@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
 import '../../../controllers/class_controller.dart';
-import '../../home_page/teacher/add_teacher/add_teacher.dart';
+import '../../home_page/teacher/add_teacher.dart';
 
 class EditStudent extends StatelessWidget {
   const EditStudent({super.key});

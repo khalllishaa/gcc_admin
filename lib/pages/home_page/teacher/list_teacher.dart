@@ -4,8 +4,8 @@ import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/list_teacher_controller.dart';
-import '../../../../components/StudentCard.dart';
+import '../../../controllers/list_teacher_controller.dart';
+import '../../../components/StudentCard.dart';
 
 class Listteacher extends StatelessWidget {
   const Listteacher({super.key});
