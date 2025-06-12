@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:gcc_admin/api_models/class_models.dart';
+import 'package:gcc_admin/data/models/class_model.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import '../api_models/schedule_models.dart';
 import '../components/AppStyles.dart';
-import '../services/api_service.dart';
+import '../data/services/class_service.dart';
 
 class ClassController extends GetxController {
   var classList = <ClassModel>[].obs;
-  // var scheduleList = <ScheduleModels>[].obs;
-  RxList<ScheduleModels> scheduleList = <ScheduleModels>[].obs;
   var studentsList = <User>[].obs;
   var isLoading = false.obs;
-  var selectedClassName = ''.obs;
   var classNameController = TextEditingController();
-  var schedules = <ScheduleModels>[].obs;
-  var selectedClassId = 0.obs;
+  var selectedClassName = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     getClasses();
-    // getSchedules();
-    ever(selectedClassId, (_) {
-      fetchScheduleByClassId(selectedClassId.value);
-    });
   }
 
   Future<void> getClasses() async {
     isLoading.value = true;
     try {
-      final result = await ApiService.fetchClasses();
+      final result = await ClassService.fetchClasses();
       classList.value = result;
     } catch (e) {
       print('Error fetching classes: $e');
@@ -42,7 +32,7 @@ class ClassController extends GetxController {
   Future<void> getStudents(int classId) async {
     isLoading.value = true;
     try {
-      final classes = await ApiService.fetchClasses();
+      final classes = await ClassService.fetchClasses();
       final selectedClass = classes.firstWhere((kelas) => kelas.id == classId);
       selectedClassName.value = selectedClass.name;
       final students = selectedClass.users.where((user) => user.role == 'student').toList();
@@ -54,43 +44,55 @@ class ClassController extends GetxController {
     }
   }
 
-  Future<void> getSchedule(int classId) async {
-    isLoading.value = true;
-    try {
-      final allSchedules = await ApiService.fetchSchedules();
-      final classSchedules = allSchedules
-          .where((schedule) => schedule.classId == classId)
-          .toList();
-      scheduleList.value = classSchedules;
-    } catch (e) {
-      print('Error fetching schedules: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-
   Future<void> addClass() async {
     isLoading.value = true;
     try {
       String className = classNameController.text;
 
       if (className.isNotEmpty) {
-        await ApiService.addClass(className);
+        await ClassService.addClass(className);
         await getClasses();
         Get.back();
+
+        Get.snackbar(
+          'Sukses',
+          'Kelas berhasil ditambahkan!',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: AppStyles.welcome,
+          colorText: AppStyles.dark,
+          duration: Duration(seconds: 2),
+          margin: EdgeInsets.all(16),
+        );
       } else {
-        print('Nama kelas tidak boleh kosong');
+        Get.snackbar(
+          'Peringatan',
+          'Nama kelas tidak boleh kosong',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: AppStyles.error,
+          colorText: AppStyles.light,
+          duration: Duration(seconds: 2),
+          margin: EdgeInsets.all(16),
+        );
       }
     } catch (e) {
       print('Error adding class: $e');
+      Get.snackbar(
+        'Error',
+        'Gagal menambahkan kelas.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.error,
+        colorText: AppStyles.light,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.all(16),
+      );
     } finally {
       isLoading.value = false;
     }
   }
 
+
   Future<void> updateStudentName(int id, String newName) async {
-    await ApiService.updateStudent(id: id, name: newName);
+    await ClassService.updateStudent(id: id, name: newName);
 
     int index = studentsList.indexWhere((student) => student.id == id);
     if (index != -1) {
@@ -102,159 +104,102 @@ class ClassController extends GetxController {
   Future<void> deleteStudent(int studentId) async {
     isLoading.value = true;
     try {
-      await ApiService.deleteStudent(studentId);
+      await ClassService.deleteStudent(studentId);
       studentsList.removeWhere((student) => student.id == studentId);
-    } catch (e) {
-      print('Error deleting student: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
-  Future<void> deleteClass(int classId) async {
-    isLoading.value = true;
-    try {
-      await ApiService.deleteClass(classId);
-      await getClasses();
-    } catch (e) {
-      print('Error deleting class: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> addStudent(String name) async {
-    isLoading.value = true;
-    try {
-      final box = GetStorage();
-      final token = box.read('token');
-      if (token == null) {
-        throw Exception('Token not found. User might not be logged in.');
-      }
-
-      final selectedClass = classList.firstWhere(
-            (cls) => cls.name == selectedClassName.value,
-        orElse: () => throw Exception('Selected class not found'),
-      );
-
-      await ApiService.addStudent(
-        name: name,
-        classId: selectedClass.id,
-        token: token,
-      );
-
-      await getStudents(selectedClass.id);
-    } catch (e) {
-      print('Error adding student: $e');
-      rethrow;
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> getSchedules() async {
-    isLoading.value = true;
-    try {
-      final result = await ApiService.fetchSchedules();
-      print('Schedules fetched: $result');
-      scheduleList.value = result;
-    } catch (e) {
-      print('Error fetching schedules: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  // Future<void> fetchSchedulesByClass(int classId) async {
-  //   try {
-  //     isLoading.value = true;
-  //     final allSchedules = await ApiService.fetchSchedules();
-  //     scheduleList.value = allSchedules.where((s) => s.classId == classId).toList();
-  //     scheduleList.assignAll(allSchedules);
-  //   } catch (e) {
-  //     print('Error fetching schedule: $e');
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  void fetchScheduleByClassId(int classId) async {
-    print('Fetching schedule for class ID: $classId');
-    isLoading.value = true;
-    try {
-      final schedules = await ApiService.fetchSchedulesByClassId(classId);
-      print('Fetched schedules: $schedules');
-      scheduleList.value = schedules;
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      isLoading.value = false;
-      print('Done loading');
-    }
-  }
-
-
-  void loadSchedules(int classId) async {
-    isLoading.value = true;
-    try {
-      final result = await ApiService.fetchSchedulesByClassId(classId);
-      schedules.value = result;
-    } catch (e) {
-      print('Error loading schedules: $e');
-      schedules.value = [];
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  // Future<bool> createSchedule(ScheduleModels schedule) async {
-  //   isLoading.value = true;
-  //   final result = await ApiService.createSchedule(schedule);
-  //   isLoading.value = false;
-  //
-  //   if (result != null) {
-  //     scheduleList.add(result);
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  Future<void> addSchedule({
-    required String day,
-    required String time,
-    required String teacher,
-    required String subject,
-  }) async {
-    try {
-      await ApiService.createSchedule(
-        day: day,
-        time: time,
-        teacher: teacher,
-        subject: subject,
-        classId: selectedClassId.value,
-      );
-      fetchScheduleByClassId(selectedClassId.value);
       Get.snackbar(
         'Sukses',
-        'Schedule berhasil ditambahkan!',
+        'Siswa berhasil dihapus',
         snackPosition: SnackPosition.TOP,
         backgroundColor: AppStyles.welcome,
         colorText: AppStyles.dark,
         duration: Duration(seconds: 2),
-        margin: EdgeInsets.all(16),
       );
     } catch (e) {
-      print('Error adding schedule: $e');
-
+      print('Error deleting student: $e');
       Get.snackbar(
         'Error',
-        'Gagal menambahkan user.',
+        'Gagal menghapus siswa: $e',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.error,
+        colorText:AppStyles.light,
+        duration: Duration(seconds: 2),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+  Future<void> deleteClass(int classId) async {
+    isLoading.value = true;
+    try {
+      await ClassService.deleteClass(classId);
+      await getClasses();
+
+      Get.snackbar(
+        'Sukses',
+        'Kelas berhasil dihapus',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppStyles.welcome,
+        colorText: AppStyles.dark,
+        duration: Duration(seconds: 2),
+      );
+    } catch (e) {
+      print('Error deleting class: $e');
+      Get.snackbar(
+        'Error',
+        'Gagal menghapus kelas: $e',
         snackPosition: SnackPosition.TOP,
         backgroundColor: AppStyles.error,
         colorText: AppStyles.light,
         duration: Duration(seconds: 2),
-        margin: EdgeInsets.all(16),
-      );    }
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
+
+  Future<void> addUser({
+    required String name,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+    required String longName,
+    required String phoneNumber,
+    required int classId,
+    required String role,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      // final box = GetStorage();
+      // final token = box.read('token');
+      // if (token == null) {
+      //   throw Exception('Token not found. User might not be logged in.');
+      // }
+
+      await ClassService.createUser(
+        name: name,
+        email: email,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+        longName: longName,
+        phoneNumber: phoneNumber,
+        classId: classId,
+        role: role,
+        // token: token,
+      );
+
+      await getStudents(classId);
+
+      Get.back();
+
+    } catch (e) {
+      print('Error adding user: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

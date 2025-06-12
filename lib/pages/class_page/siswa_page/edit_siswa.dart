@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
 import '../../../controllers/class_controller.dart';
-import '../../home_page/teacher/add_teacher/add_teacher.dart';
+import '../../home_page/teacher/add_teacher.dart';
 
 class EditStudent extends StatelessWidget {
   const EditStudent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ClassController>();
     final student = Get.arguments;
+    ClassController controller = Get.find();
     TextEditingController studentNameController = TextEditingController(text: student.name);
 
     return Scaffold(
@@ -50,13 +51,14 @@ class EditStudent extends StatelessWidget {
                     ),
                   ],
                 ),
-                buildSectionTitle('Nama'),
+                SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
                   controller: studentNameController,
                   keyboardType: TextInputType.text,
                   hintText: 'Masukkan Nama Terbaru',
                 ),
+
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
                   text: 'Edit Student',

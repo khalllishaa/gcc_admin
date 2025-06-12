@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/ReuseButton.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:get/get.dart';
 
 import '../../../components/AppStyles.dart';
 import '../../../components/CategoriesLine.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../controllers/menu_controller.dart';
-import '../teacher/add_teacher/add_teacher.dart';
 
 class AddNotification extends StatelessWidget {
   const AddNotification({super.key});
 
   @override
   Widget build(BuildContext context) {
-    MainMenuController mainMenuController = Get.find();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -52,7 +51,7 @@ class AddNotification extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: AppStyles.spaceS),
-                    buildSectionTitle('Add Notification'),
+                    SectionTitle(title: 'Add Notification'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: TextEditingController(),

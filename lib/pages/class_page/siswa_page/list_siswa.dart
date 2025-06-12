@@ -11,7 +11,7 @@ class ListStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ClassController>();
+    ClassController controller = Get.find();
 
     return Scaffold(
       backgroundColor: AppStyles.light,

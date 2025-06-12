@@ -1,5 +1,5 @@
 import 'package:gcc_admin/controllers/class_controller.dart';
-import 'package:gcc_admin/controllers/home_controller.dart';
+import 'package:gcc_admin/controllers/splashscreen_controller.dart';
 import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:gcc_admin/controllers/profile_controller.dart';
 import 'package:get/get.dart';
@@ -18,8 +18,8 @@ class MainMenuBinding extends Bindings{
     if (!Get.isRegistered<ClassController>()) {
       Get.lazyPut(() => ClassController());
     }
-    if (!Get.isRegistered<HomeController>()) {
-      Get.lazyPut(() => HomeController());
-    }
+    // if (!Get.isRegistered<HomeController>()) {
+    //   Get.lazyPut(() => HomeController());
+    // }
   }
 }

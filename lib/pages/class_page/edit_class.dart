@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
+import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:get/get.dart';
 import '../../components/CustomTextField.dart';
 import '../../components/ReuseButton.dart';
-import '../home_page/teacher/add_teacher/add_teacher.dart';
+import '../home_page/teacher/add_teacher.dart';
 
 class EditClass extends StatelessWidget {
   const EditClass({super.key});
@@ -45,7 +46,7 @@ class EditClass extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppStyles.spaceM),
-                buildSectionTitle('Nama'),
+                SectionTitle(title: 'Nama'),
                 SizedBox(height: AppStyles.spaceS),
                 Customtextfield(
                   controller: TextEditingController(),
