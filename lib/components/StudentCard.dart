@@ -7,6 +7,7 @@ class StudentCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onTap;
+  final IconData icon;
 
   const StudentCard({
     Key? key,
@@ -14,6 +15,7 @@ class StudentCard extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onTap,
+    this.icon = Icons.person_outline,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class StudentCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 backgroundColor: AppStyles.primary,
-                child: Icon(Icons.person_outline, color: AppStyles.light),
+                child: Icon(icon, color: AppStyles.light),
               ),
               SizedBox(width: AppStyles.radiusM),
               Expanded(
@@ -45,7 +47,6 @@ class StudentCard extends StatelessWidget {
                   style: AppStyles.welcome2.copyWith(color: AppStyles.dark),
                 ),
               ),
-              // Edit button
               InkWell(
                 onTap: onEdit,
                 borderRadius: BorderRadius.circular(AppStyles.radiusXL),
@@ -54,7 +55,6 @@ class StudentCard extends StatelessWidget {
                   child: Icon(Icons.edit_outlined, size: AppStyles.iconS),
                 ),
               ),
-              // Delete button
               InkWell(
                 onTap: () {
                   Get.dialog(DeleteConfirmationDialog(
