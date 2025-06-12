@@ -15,6 +15,9 @@ import 'package:gcc_admin/pages/home_page/journal/view_journal.dart';
 import 'package:gcc_admin/pages/home_page/notification/add_notification.dart';
 import 'package:gcc_admin/pages/home_page/notification/notification.dart';
 import 'package:gcc_admin/pages/home_page/schedule/add_schedule.dart';
+import 'package:gcc_admin/pages/home_page/subject/add_subject.dart';
+import 'package:gcc_admin/pages/home_page/subject/edit_subject.dart';
+import 'package:gcc_admin/pages/home_page/subject/view_subject.dart';
 import 'package:gcc_admin/pages/home_page/teacher/add_teacher.dart';
 import 'package:gcc_admin/pages/class_page/class_page.dart';
 import 'package:gcc_admin/pages/class_page/siswa_page/list_siswa.dart';
@@ -62,6 +65,10 @@ class Routes {
   static const addJournal = '/add-journal';
   static const journalClass = '/journal-class';
 
+  static const subject = '/subject';
+  static const addSubject = '/add-subject';
+  static const editSubject = '/edit-subject';
+
   static const profile = '/profile';
 
 }
@@ -98,6 +105,10 @@ class AppPages {
     GetPage(name: Routes.viewJournal, page: () => ViewJournal()),
     GetPage(name: Routes.addJournal, page: () => AddJournal()),
     GetPage(name: Routes.journalClass, page: () => JournalClass()),
+
+    GetPage(name: Routes.subject, page: () => ViewSubject()),
+    GetPage(name: Routes.addSubject, page: () => AddSubject()),
+    GetPage(name: Routes.editSubject, page: () => EditSubject()),
 
     GetPage(name: Routes.profile, page: () => ProfilePage()),
 

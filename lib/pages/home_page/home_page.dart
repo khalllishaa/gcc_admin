@@ -30,6 +30,47 @@ class HomePage extends StatelessWidget {
                 username: user != null ? user.longName : 'Guest',
               );
             }),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: AppStyles.spaceS),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CategoriesLine(
+                          title: 'Home Page',
+                          image: 'images/categories.png',
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () => Get.toNamed('/notif'),
+                            child: Container(
+                              margin: EdgeInsets.only(left: AppStyles.paddingS),
+                              padding: EdgeInsets.all(AppStyles.paddingS),
+                              decoration: BoxDecoration(
+                                color: AppStyles.primaryDark,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.notifications,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: AppStyles.spaceS),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -37,51 +78,22 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: AppStyles.space),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: CategoriesLine(
-                              title: 'Home Page',
-                              image: 'images/categories.png',
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () => Get.toNamed('/notif'),
-                                child: Container(
-                                  margin: EdgeInsets.only(left: AppStyles.paddingS),
-                                  padding: EdgeInsets.all(AppStyles.paddingS),
-                                  decoration: BoxDecoration(
-                                    color: AppStyles.primaryDark,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.notifications,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: AppStyles.spaceS),
-                            ],
-                          )
-                        ],
-                      ),
                       SizedBox(height: AppStyles.spaceS),
                       WavyCard(
                         title: 'List Guru',
                         onTap: () => Get.toNamed('/list-teacher'),
                       ),
                       WavyCard(
-                        title: 'Jadwal Mata Pelajaran',
+                        title: 'Jadwal Bimbel',
                         onTap: () => Get.toNamed('/schedule'),
                       ),
                       WavyCard(
-                        title: 'Journal Kelas',
+                        title: 'Materi Kelas',
                         onTap: () => Get.toNamed('/journal-class'),
+                      ),
+                      WavyCard(
+                        title: 'Mata Pelajaran',
+                        onTap: () => Get.toNamed('/subject'),
                       ),
                     ],
                   ),

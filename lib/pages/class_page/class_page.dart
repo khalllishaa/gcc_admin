@@ -14,7 +14,6 @@ class ClassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ClassController controller = Get.find();
     ProfileController userController = Get.find();
-    // final userController = Get.put(ProfileController());
 
     return Scaffold(
       body: SafeArea(
