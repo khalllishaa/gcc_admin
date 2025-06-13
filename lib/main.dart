@@ -12,12 +12,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'GCC APP - Student',
+      title: 'GCC APP - Admin',
       initialRoute: Routes.splash,
       getPages: AppPages.pages,
     );
