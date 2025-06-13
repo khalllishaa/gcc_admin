@@ -83,15 +83,14 @@ class ViewSchedule extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(bottom: AppStyles.spaceS),
                       child: ScheduleCard(
-                        day: schedule.day,
-                        subject: schedule.subject,
-                        time: schedule.time,
-                        teacher: schedule.teacher,
+                        day: schedule.day ?? 'Unknown Day',
+                        subject: schedule.subject ?? 'Unknown Subject',
+                        time: '${schedule.startTime ?? "-"} - ${schedule.endTime ?? "-"}',
+                        teacher: schedule.teacher ?? 'Unknown Teacher',
                         onDelete: () {
                           controller.deleteSchedule(schedule.id);
                         },
                       ),
-
                     );
                   },
                 ),
