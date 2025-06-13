@@ -1,27 +1,27 @@
-// To parse this JSON data, do
-//
-//     final scheduleModels = scheduleModelsFromJson(jsonString);
-
 import 'dart:convert';
 
-List<ScheduleModels> scheduleModelsFromJson(String str) => List<ScheduleModels>.from(json.decode(str).map((x) => ScheduleModels.fromJson(x)));
+List<ScheduleModels> scheduleModelsFromJson(String str) =>
+    List<ScheduleModels>.from(json.decode(str).map((x) => ScheduleModels.fromJson(x)));
 
-String scheduleModelsToJson(List<ScheduleModels> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String scheduleModelsToJson(List<ScheduleModels> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ScheduleModels {
-  int id;
-  String day;
-  String time;
-  String teacher;
-  String subject;
-  int classId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  final int id;
+  final String day;
+  final String startTime;
+  final String endTime;
+  final String teacher;
+  final String subject;
+  final int classId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   ScheduleModels({
     required this.id,
     required this.day,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
     required this.teacher,
     required this.subject,
     required this.classId,
@@ -32,7 +32,8 @@ class ScheduleModels {
   factory ScheduleModels.fromJson(Map<String, dynamic> json) => ScheduleModels(
     id: json["id"],
     day: json["day"],
-    time: json["time"],
+    startTime: json["start_time"],
+    endTime: json["end_time"],
     teacher: json["teacher"],
     subject: json["subject"],
     classId: json["class_id"],
@@ -43,7 +44,8 @@ class ScheduleModels {
   Map<String, dynamic> toJson() => {
     "id": id,
     "day": day,
-    "time": time,
+    "start_time": startTime,
+    "end_time": endTime,
     "teacher": teacher,
     "subject": subject,
     "class_id": classId,

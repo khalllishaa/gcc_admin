@@ -1,8 +1,6 @@
 import 'dart:convert';
-
-import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:gcc_admin/data/services/endpoint.dart';
 import '../models/schedule_model.dart';
 
 class ScheduleService {
@@ -27,33 +25,44 @@ class ScheduleService {
     }
   }
 
+  /// Create a new schedule
   static Future<void> createSchedule({
     required String day,
-    required String time,
+    required String startTime,
+    required String endTime,
     required String teacher,
     required String subject,
     required int classId,
   }) async {
+    final url = Uri.parse('${endpoint.baseUrl}/schedules/create');
+
+    final body = {
+      'day': day,
+      'start_time': startTime,
+      'end_time': endTime,
+      'teacher': teacher,
+      'subject': subject,
+      'class_id': classId,
+    };
+
+    print('>> Sending schedule data: $body');
+
     final response = await http.post(
-      Uri.parse('${endpoint.baseUrl}/schedules/create'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'day': day,
-        'time': time,
-        'teacher': teacher,
-        'subject': subject,
-        'class_id': classId,
-      }),
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
     );
+
+    print('>> Response status: ${response.statusCode}');
+    print('>> Response body: ${response.body}');
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Gagal menambahkan jadwal');
     }
   }
 
-  static Future<void> deleteSchedule(String id) async {
+  /// Delete a schedule by ID
+  static Future<void> deleteSchedule(int id) async {
     final response = await http.delete(
       Uri.parse('${endpoint.baseUrl}/schedules/$id'),
       headers: {
@@ -61,9 +70,20 @@ class ScheduleService {
       },
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception('Gagal menghapus jadwal');
     }
   }
 
+  /// Fetch all schedules (tanpa filter)
+  static Future<List<ScheduleModels>> fetchSchedules() async {
+    final response = await http.get(Uri.parse('${endpoint.baseUrl}/schedules'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => ScheduleModels.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load schedules');
+    }
+  }
 }

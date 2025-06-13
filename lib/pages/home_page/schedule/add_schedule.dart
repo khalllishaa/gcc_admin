@@ -14,8 +14,6 @@ class AddSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     ScheduleController controller = Get.find();
 
-    final dayController = TextEditingController();
-    final timeController = TextEditingController();
     final teacherController = TextEditingController();
     final subjectController = TextEditingController();
 
@@ -59,19 +57,67 @@ class AddSchedule extends StatelessWidget {
                   children: [
                     SectionTitle(title: 'Day'),
                     SizedBox(height: AppStyles.spaceS),
-                    Customtextfield(
-                      controller: dayController,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Day',
-                    ),
+                    Obx(() => DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        hintText: 'Select Day',
+                        hintStyle: TextStyle(color: Colors.grey[600]),
+                      ),
+                      dropdownColor: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      value: controller.selectedDay.value.isEmpty
+                          ? null
+                          : controller.selectedDay.value,
+                      items: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+                          .map((day) => DropdownMenuItem(
+                        value: day,
+                        child: Text(
+                          day,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        controller.selectedDay.value = value ?? '';
+                      },
+                    )),
+
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Time'),
                     SizedBox(height: AppStyles.spaceS),
-                    Customtextfield(
-                      controller: timeController,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Time',
-                    ),
+                    Obx(() => GestureDetector(
+                      onTap: () => controller.pickTimeRange(context),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              controller.selectedTime.value.isEmpty
+                                  ? 'Select Time'
+                                  : controller.selectedTime.value,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: controller.selectedTime.value.isEmpty
+                                    ? Colors.grey
+                                    : Colors.black,
+                              ),
+                            ),
+                            Icon(Icons.access_time, color: Colors.grey),
+                          ],
+                        ),
+                      ),
+                    )),
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
@@ -90,10 +136,10 @@ class AddSchedule extends StatelessWidget {
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                      text: 'Add Schedule',
+                        text: 'Add Schedule',
                         onPressed: () async {
-                          final day = dayController.text.trim();
-                          final time = timeController.text.trim();
+                          final day = controller.selectedDay.value;
+                          final time = controller.selectedTime.value;
                           final teacher = teacherController.text.trim();
                           final subject = subjectController.text.trim();
 
@@ -114,6 +160,8 @@ class AddSchedule extends StatelessWidget {
                               teacher: teacher,
                               subject: subject,
                             );
+                            controller.selectedDay.value = '';
+                            controller.selectedTime.value = '';
                             Get.back();
                             Get.snackbar(
                               'Sukses',
@@ -123,7 +171,7 @@ class AddSchedule extends StatelessWidget {
                               colorText: AppStyles.dark,
                               duration: Duration(seconds: 2),
                               margin: EdgeInsets.all(16),
-                            );
+                              );
                           }
                         }
                     ),
