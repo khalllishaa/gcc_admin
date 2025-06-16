@@ -56,20 +56,25 @@ class AddSchedule extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SectionTitle(title: 'Day'),
-                    SizedBox(height: AppStyles.spaceS),
+                    SizedBox(height: AppStyles.spaceXS),
                     Obx(() => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        contentPadding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingL),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
                         ),
                         filled: true,
-                        fillColor: Colors.grey[100],
+                        fillColor: AppStyles.primaryLight.withOpacity(0.1),
                         hintText: 'Select Day',
-                        hintStyle: TextStyle(color: Colors.grey[600]),
+                        hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
-                      dropdownColor: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      dropdownColor: AppStyles.light,
+                      borderRadius: BorderRadius.circular(AppStyles.radius),
                       value: controller.selectedDay.value.isEmpty
                           ? null
                           : controller.selectedDay.value,
@@ -77,27 +82,25 @@ class AddSchedule extends StatelessWidget {
                           .map((day) => DropdownMenuItem(
                         value: day,
                         child: Text(
-                          day,
-                          style: TextStyle(fontSize: 14),
+                            day,
+                            style: AppStyles.profileText2
                         ),
-                      ))
-                          .toList(),
+                      )).toList(),
                       onChanged: (value) {
                         controller.selectedDay.value = value ?? '';
                       },
                     )),
-
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Time'),
-                    SizedBox(height: AppStyles.spaceS),
+                    SizedBox(height: AppStyles.spaceXS),
                     Obx(() => GestureDetector(
                       onTap: () => controller.pickTimeRange(context),
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                         decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(12),
+                          color: AppStyles.primaryLight.withOpacity(0.1),
+                          border: Border.all(color: AppStyles.primary, width: 1.5),
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,18 +112,49 @@ class AddSchedule extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: controller.selectedTime.value.isEmpty
-                                    ? Colors.grey
-                                    : Colors.black,
+                                    ? AppStyles.grey1
+                                    : AppStyles.dark,
                               ),
                             ),
-                            Icon(Icons.access_time, color: Colors.grey),
+                            Icon(Icons.access_time, color: AppStyles.primary),
                           ],
                         ),
                       ),
                     )),
+
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
+                    // Obx(() {
+                    //   if (controller.isFetchingTeachers.value) {
+                    //     return CircularProgressIndicator(); // Atau shimmer
+                    //   }
+                    //
+                    //   return DropdownButtonFormField<String>(
+                    //     decoration: InputDecoration(
+                    //       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       filled: true,
+                    //       fillColor: Colors.grey[100],
+                    //       hintText: 'Select Teacher',
+                    //       hintStyle: TextStyle(color: Colors.grey[600]),
+                    //     ),
+                    //     value: controller.selectedTeacher.value.isEmpty
+                    //         ? null
+                    //         : controller.selectedTeacher.value,
+                    //     items: controller.teachers
+                    //         .map((teacher) => DropdownMenuItem(
+                    //       value: teacher.name,
+                    //       child: Text(teacher.name),
+                    //     ))
+                    //         .toList(),
+                    //     onChanged: (value) {
+                    //       controller.selectedTeacher.value = value ?? '';
+                    //     },
+                    //   );
+                    // }),
                     Customtextfield(
                       controller: teacherController,
                       keyboardType: TextInputType.text,
@@ -141,6 +175,7 @@ class AddSchedule extends StatelessWidget {
                           final day = controller.selectedDay.value;
                           final time = controller.selectedTime.value;
                           final teacher = teacherController.text.trim();
+                          // final teacher = controller.selectedTeacher.value;
                           final subject = subjectController.text.trim();
 
                           if (day.isEmpty || time.isEmpty || teacher.isEmpty || subject.isEmpty) {
