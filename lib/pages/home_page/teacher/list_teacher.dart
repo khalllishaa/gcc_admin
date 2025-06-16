@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
+import 'package:gcc_admin/components/TeachersCard.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
@@ -62,8 +63,9 @@ class Listteacher extends StatelessWidget {
                           SizedBox(height: AppStyles.spaceS),
                       itemBuilder: (context, index) {
                         final teacher = controller.teachers[index];
-                        return StudentCard(
+                        return Teacherscard(
                           name: teacher.name,
+                          status: teacher.status ?? '',
                           onEdit: () =>
                               Get.toNamed('/edit-teacher', arguments: teacher),
                           onDelete: () => controller.deleteTeacher(teacher.id),
@@ -86,7 +88,7 @@ class Listteacher extends StatelessWidget {
           }
         },
         backgroundColor: AppStyles.dark,
-        shape: const CircleBorder(),
+        shape:gi CircleBorder(),
         child: Icon(Icons.add, color: AppStyles.primaryLight),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

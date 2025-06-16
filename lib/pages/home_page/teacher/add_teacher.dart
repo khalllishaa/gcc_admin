@@ -74,43 +74,42 @@ class Addteacher extends StatelessWidget {
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                      text: 'Add Teacher',
-                      onPressed: () async {
-                        final name = nameController.text.trim();
-                        final classId =
-                            int.tryParse(classIdController.text.trim()) ?? 0;
+                        text: 'Add Teacher',
+                        onPressed: () async {
+                          final name = nameController.text.trim();
+                          final classId = int.tryParse(classIdController.text.trim()) ?? 0;
 
-                        if (name.isEmpty || classId == 0) {
-                          Get.snackbar('Validasi', 'Semua field harus diisi');
-                        } else {
-                          try {
-                            await controller.addTeacher(name, classId);
-                            Get.back();
-
-                            Get.snackbar(
-                              'Sukses',
-                              'Guru berhasil ditambahkan!',
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: AppStyles.welcome,
-                              colorText: AppStyles.dark,
-                              duration: Duration(seconds: 2),
-                              margin: EdgeInsets.all(16),
-                            );
-
-                            Get.toNamed('/list-teacher');
-                          } catch (e) {
-                            Get.snackbar(
-                              'Error',
-                              'Gagal menambahkan guru $e',
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: AppStyles.error,
-                              colorText: AppStyles.light,
-                              duration: Duration(seconds: 2),
-                              margin: EdgeInsets.all(16),
-                            );
+                          if (name.isEmpty || classId == 0) {
+                            Get.snackbar('Validasi', 'Semua field harus diisi');
+                          } else {
+                            try {
+                              final response = await TeacherService().addTeacher(name, classId, 'active');
+                              print("Sukses: $response");
+                              Get.back();
+                              Get.toNamed(Routes.listTeacher);
+                              Get.snackbar(
+                                'Sukses',
+                                'Guru berhasil ditambahkan!',
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: AppStyles.welcome,
+                                colorText: AppStyles.dark,
+                                duration: Duration(seconds: 2),
+                                margin: EdgeInsets.all(16),
+                              );
+                            } catch (e) {
+                              print('Error saat add: $e');
+                              Get.snackbar(
+                                'Error',
+                                'Gagal menambahkan guru: $e',
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: AppStyles.error,
+                                colorText: AppStyles.light,
+                                duration: Duration(seconds: 2),
+                                margin: EdgeInsets.all(16),
+                              );
+                            }
                           }
                         }
-                      },
                     ),
                   ],
                 ),
