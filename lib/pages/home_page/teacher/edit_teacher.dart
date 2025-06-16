@@ -12,9 +12,13 @@ class EditTeacher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ListTeacherController controller = Get.find();
+    final ListTeacherController controller = Get.find();
     final teacher = Get.arguments;
-    TextEditingController teacherNameController = TextEditingController(text: teacher.name);
+
+    final TextEditingController teacherNameController =
+    TextEditingController(text: teacher.name);
+
+    String status = teacher.status ?? 'active';
 
     return Scaffold(
       backgroundColor: AppStyles.light,
@@ -59,34 +63,69 @@ class EditTeacher extends StatelessWidget {
 
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
-                  text: 'Edit Teacher',
-                    onPressed: () async {
-                      final updatedName = teacherNameController.text.trim();
+                  text: 'Edit Nama Guru',
+                  onPressed: () async {
+                    final updatedName = teacherNameController.text.trim();
 
-                      if (updatedName.isEmpty) {
-                        Get.snackbar(
-                          'Validasi',
-                          'Nama tidak boleh kosong',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: AppStyles.error,
-                          colorText: AppStyles.light,
-                        );
-                        return;
-                      }
-
-                      try {
-                        await controller.updateTeacher(teacher.id, updatedName);
-                      } catch (e) {
-                        Get.snackbar(
-                          'Failed',
-                          'Gagal memperbarui nama guru: $e',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: AppStyles.error,
-                          colorText: AppStyles.light,
-                        );
-                        print('Error updating teacher: $e');
-                      }
+                    if (updatedName.isEmpty) {
+                      Get.snackbar(
+                        'Validasi',
+                        'Nama tidak boleh kosong',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                      );
+                      return;
                     }
+
+                    try {
+                      await controller.updateTeacher(teacher.id, updatedName);
+                      Get.back();
+                      Get.snackbar(
+                        'Sukses',
+                        'Nama guru berhasil diperbarui!',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.welcome,
+                        colorText: AppStyles.dark,
+                      );
+                    } catch (e) {
+                      Get.snackbar(
+                        'Failed',
+                        'Gagal memperbarui nama guru: $e',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                      );
+                    }
+                  },
+                ),
+
+                SizedBox(height: AppStyles.spaceM),
+                ReuseButton(
+                  text: 'Ubah Status (${status == 'active' ? 'inactive' : 'active'})',
+                  onPressed: () async {
+                    String newStatus = status == 'active' ? 'inactive' : 'active';
+                    try {
+                      await controller.updateTeacherStatus(teacher.id, newStatus);
+                      await Future.delayed(Duration(milliseconds: 500));
+                      Get.back();
+                      Get.snackbar(
+                        'Sukses',
+                        'Status guru diubah menjadi $newStatus',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.welcome,
+                        colorText: AppStyles.dark,
+                      );
+                    } catch (e) {
+                      Get.snackbar(
+                        'Error',
+                        'Gagal mengubah status: $e',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppStyles.error,
+                        colorText: AppStyles.light,
+                      );
+                    }
+                  },
                 ),
               ],
             ),

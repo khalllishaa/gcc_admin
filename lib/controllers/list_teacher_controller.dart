@@ -28,16 +28,15 @@ class ListTeacherController extends GetxController {
     }
   }
 
-  Future<void> addTeacher(String name, int classId) async {
+  Future<void> addTeacher(String name, int classId, String status) async {
     try {
-      final newTeacher = await _teacherService.addTeacher(name, classId);
+      final newTeacher = await _teacherService.addTeacher(name, classId, status);
       teachers.add(newTeacher);
 
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
   }
-
 
   Future<void> deleteTeacher(int id) async {
     try {
@@ -61,6 +60,7 @@ class ListTeacherController extends GetxController {
     try {
       isLoading.value = true;
       final updatedTeacher = await _teacherService.updateTeacherName(id, newName);
+      await fetchTeachers();
 
       final index = teachers.indexWhere((t) => t.id == id);
       if (index != -1) {
@@ -84,4 +84,9 @@ class ListTeacherController extends GetxController {
       Get.snackbar('Error', e.toString());
     }
   }
+
+  Future<void> updateTeacherStatus(int id, String newStatus) async {
+    await TeacherService().updateTeacherStatus(id, newStatus);
+  }
+
 }
