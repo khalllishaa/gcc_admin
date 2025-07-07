@@ -101,31 +101,76 @@ class EditTeacher extends StatelessWidget {
                 ),
 
                 SizedBox(height: AppStyles.spaceM),
-                ReuseButton(
-                  text: 'Ubah Status (${status == 'active' ? 'inactive' : 'active'})',
-                  onPressed: () async {
-                    String newStatus = status == 'active' ? 'inactive' : 'active';
-                    try {
-                      await controller.updateTeacherStatus(teacher.id, newStatus);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      Get.back();
-                      Get.snackbar(
-                        'Sukses',
-                        'Status guru diubah menjadi $newStatus',
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: AppStyles.welcome,
-                        colorText: AppStyles.dark,
-                      );
-                    } catch (e) {
-                      Get.snackbar(
-                        'Error',
-                        'Gagal mengubah status: $e',
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: AppStyles.error,
-                        colorText: AppStyles.light,
-                      );
-                    }
-                  },
+                // ReuseButton(
+                //   text: 'Ubah Status (${status == 'active' ? 'inactive' : 'active'})',
+                //   onPressed: () async {
+                //     String newStatus = status == 'active' ? 'inactive' : 'active';
+                //     try {
+                //       await controller.updateTeacherStatus(teacher.id, newStatus);
+                //       await Future.delayed(Duration(milliseconds: 500));
+                //       Get.back();
+                //       Get.snackbar(
+                //         'Sukses',
+                //         'Status guru diubah menjadi $newStatus',
+                //         snackPosition: SnackPosition.TOP,
+                //         backgroundColor: AppStyles.welcome,
+                //         colorText: AppStyles.dark,
+                //       );
+                //     } catch (e) {
+                //       Get.snackbar(
+                //         'Error',
+                //         'Gagal mengubah status: $e',
+                //         snackPosition: SnackPosition.TOP,
+                //         backgroundColor: AppStyles.error,
+                //         colorText: AppStyles.light,
+                //       );
+                //     }
+                //   },
+                // ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: status == 'active'
+                          ? AppStyles.secondary
+                          : AppStyles.grey1,
+                      padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingM),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppStyles.radiusXL),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: () async {
+                      String newStatus = status == 'active' ? 'inactive' : 'active';
+                      try {
+                        await controller.updateTeacherStatus(teacher.id, newStatus);
+                        await Future.delayed(Duration(milliseconds: 300));
+                        Get.back();
+                        Get.snackbar(
+                          'Sukses',
+                          'Status guru diubah menjadi $newStatus',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.welcome,
+                          colorText: AppStyles.dark,
+                        );
+                      } catch (e) {
+                        Get.snackbar(
+                          'Error',
+                          'Gagal mengubah status: $e',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.error,
+                          colorText: AppStyles.light,
+                        );
+                      }
+                    },
+                    child: Text(
+                      status == 'active' ? 'Set Inactive' : 'Set Active',
+                      style: TextStyle(
+                        color: AppStyles.light,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

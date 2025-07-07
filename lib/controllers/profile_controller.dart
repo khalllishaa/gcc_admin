@@ -15,15 +15,15 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCurrentUser();
+    // fetchCurrentUser();
   }
 
-  void fetchCurrentUser() async {
-    UsersModel? data = await UserService.getCurrentUser();
-    if (data != null) {
-      user.value = data;
-    }
-  }
+  // void fetchCurrentUser() async {
+  //   UsersModel? data = await UserService.getCurrentUser();
+  //   if (data != null) {
+  //     user.value = data;
+  //   }
+  // }
 
   Future<void> logout() async {
     final sharedPreferences = await SharedPreferences.getInstance();
