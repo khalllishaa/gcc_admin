@@ -7,15 +7,21 @@ import 'package:gcc_admin/components/SectionTile.dart';
 import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/subject_controller.dart';
+
 class AddSchedule extends StatelessWidget {
   const AddSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
     ScheduleController controller = Get.find();
+    SubjectController subjectController = Get.put(SubjectController());
+    subjectController.getSubjects();
+    final RxInt selectedTeacherId = 0.obs;
+    final RxInt selectedSubjectId = 0.obs;
 
-    final teacherController = TextEditingController();
-    final subjectController = TextEditingController();
+    // final teacherController = TextEditingController();
+    // final subjectController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,7 +62,7 @@ class AddSchedule extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SectionTitle(title: 'Day'),
-                    SizedBox(height: AppStyles.spaceXS),
+                    SizedBox(height: AppStyles.spaceS),
                     Obx(() => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingL),
@@ -121,94 +127,112 @@ class AddSchedule extends StatelessWidget {
                         ),
                       ),
                     )),
-
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
-                    // Obx(() {
-                    //   if (controller.isFetchingTeachers.value) {
-                    //     return CircularProgressIndicator(); // Atau shimmer
-                    //   }
-                    //
-                    //   return DropdownButtonFormField<String>(
-                    //     decoration: InputDecoration(
-                    //       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    //       border: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(12),
-                    //       ),
-                    //       filled: true,
-                    //       fillColor: Colors.grey[100],
-                    //       hintText: 'Select Teacher',
-                    //       hintStyle: TextStyle(color: Colors.grey[600]),
-                    //     ),
-                    //     value: controller.selectedTeacher.value.isEmpty
-                    //         ? null
-                    //         : controller.selectedTeacher.value,
-                    //     items: controller.teachers
-                    //         .map((teacher) => DropdownMenuItem(
-                    //       value: teacher.name,
-                    //       child: Text(teacher.name),
-                    //     ))
-                    //         .toList(),
-                    //     onChanged: (value) {
-                    //       controller.selectedTeacher.value = value ?? '';
-                    //     },
-                    //   );
-                    // }),
-                    Customtextfield(
-                      controller: teacherController,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Teacher',
-                    ),
+                    // ),
+                    Obx(() => DropdownButtonFormField<int>(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingL),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
+                        ),
+                        filled: true,
+                        fillColor: AppStyles.primaryLight.withOpacity(0.1),
+                        hintText: 'Select Teacher',
+                        hintStyle: TextStyle(color: AppStyles.grey1),
+                      ),
+                      dropdownColor: AppStyles.light,
+                      borderRadius: BorderRadius.circular(AppStyles.radius),
+                      value: selectedTeacherId.value == 0 ? null : selectedTeacherId.value,
+                      items: controller.teachers
+                          .map((teacher) => DropdownMenuItem(
+                        value: teacher.id,
+                        child: Text(teacher.name, style: AppStyles.profileText2),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        selectedTeacherId.value = value!;
+                      },
+                    )),
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Subject'),
                     SizedBox(height: AppStyles.spaceS),
-                    Customtextfield(
-                      controller: subjectController,
-                      keyboardType: TextInputType.text,
-                      hintText: 'Subject',
-                    ),
+                    Obx(() => DropdownButtonFormField<int>(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingL),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                          borderSide: BorderSide(color: AppStyles.primary, width: 1.5),
+                        ),
+                        filled: true,
+                        fillColor: AppStyles.primaryLight.withOpacity(0.1),
+                        hintText: 'Select Subject',
+                        hintStyle: TextStyle(color: AppStyles.grey1),
+                      ),
+                      dropdownColor: AppStyles.light,
+                      borderRadius: BorderRadius.circular(AppStyles.radius),
+                      value: selectedSubjectId.value == 0 ? null : selectedSubjectId.value,
+                      items: subjectController.subjects
+                          .map((subject) => DropdownMenuItem(
+                        value: subject.id,
+                        child: Text(subject.name, style: AppStyles.profileText2),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        selectedSubjectId.value = value!;
+                      },
+                    )),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                        text: 'Add Schedule',
-                        onPressed: () async {
-                          final day = controller.selectedDay.value;
-                          final time = controller.selectedTime.value;
-                          final teacher = teacherController.text.trim();
-                          // final teacher = controller.selectedTeacher.value;
-                          final subject = subjectController.text.trim();
+                      text: 'Add Schedule',
+                      onPressed: () async {
+                        final day = controller.selectedDay.value;
+                        final time = controller.selectedTime.value;
+                        final teacherId = selectedTeacherId.value;
+                        final subjectId = selectedSubjectId.value;
 
-                          if (day.isEmpty || time.isEmpty || teacher.isEmpty || subject.isEmpty) {
-                            Get.snackbar(
-                              'Error',
-                              'Semua field harus diisi.',
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: AppStyles.error,
-                              colorText: AppStyles.light,
-                              duration: Duration(seconds: 2),
-                              margin: EdgeInsets.all(16),
-                            );
-                          } else {
-                            await controller.addSchedule(
-                              day: day,
-                              time: time,
-                              teacher: teacher,
-                              subject: subject,
-                            );
-                            controller.selectedDay.value = '';
-                            controller.selectedTime.value = '';
-                            Get.back();
-                            Get.snackbar(
-                              'Sukses',
-                              'Schedule berhasil ditambahkan!',
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: AppStyles.welcome,
-                              colorText: AppStyles.dark,
-                              duration: Duration(seconds: 2),
-                              margin: EdgeInsets.all(16),
-                              );
-                          }
+                        if (day.isEmpty || time.isEmpty || teacherId == 0 || subjectId == 0) {
+                          Get.snackbar(
+                            'Error',
+                            'Semua field harus diisi',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: AppStyles.error,
+                            colorText: AppStyles.light,
+                            duration: Duration(seconds: 2),
+                            margin: EdgeInsets.all(16),
+                          );
+                        } else {
+                          await controller.addSchedule(
+                            day: day,
+                            time: time,
+                            teacherId: teacherId,
+                            subjectId: subjectId,
+                          );
+                          controller.selectedDay.value = '';
+                          controller.selectedTime.value = '';
+                          Get.back();
+                          Get.snackbar(
+                            'Sukses',
+                            'Schedule berhasil ditambahkan!',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: AppStyles.welcome,
+                            colorText: AppStyles.dark,
+                            duration: Duration(seconds: 2),
+                            margin: EdgeInsets.all(16),
+                          );
                         }
+                      },
                     ),
                   ],
                 ),
