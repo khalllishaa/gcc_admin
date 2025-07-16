@@ -17,13 +17,13 @@ class UserService {
       Uri.parse('${endpoint.baseUrl}/users/get'),
       headers: {
         'Authorization': 'Bearer $token',
-        'ngrok-skip-browser-warning': '1',
       },
     );
 
     if (response.statusCode == 200) {
-      final userJson = jsonDecode(response.body);
-      return UsersModel.fromJson(userJson);
+      final data = jsonDecode(response.body);
+      final userData = data['user'];
+      return UsersModel.fromJson(userData);
     }
     return null;
   }

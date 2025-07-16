@@ -19,66 +19,92 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppStyles.primary,
-      body: Column(
-        children: [
-          SizedBox(height: AppStyles.spaceXXL),
-          Center(
-            child: Text(
-              "Profile",
-              style: AppStyles.headingStyle.copyWith(fontSize: 24),
-            ),
-          ),
-          SizedBox(height: AppStyles.spaceL),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingXL, vertical: AppStyles.paddingFont),
-              decoration: BoxDecoration(
-                color: AppStyles.light,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(AppStyles.radius)),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: AppStyles.spaceXXL),
+              Center(
+                child: Text(
+                  "Profile",
+                  style: AppStyles.headingStyle.copyWith(fontSize: 24),
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Obx(() => ProfileImagePicker(
-                    image: controller.isImagePicked.value
-                        ? FileImage(File(controller.profileImage.value))
-                        : const AssetImage('images/profile.png') as ImageProvider,
-                    onPickFromCamera: () => controller.pickImage(ImageSource.camera),
-                    onPickFromGallery: () => controller.pickImage(ImageSource.gallery),
-                  )),
-                  SizedBox(height: AppStyles.spaceS),
-                  Obx(() {
-                    final user = controller.user.value;
-                    if (user == null) return CircularProgressIndicator();
-
-                    return Column(
-                      children: [
-                        Text(user.longName,
-                          style:AppStyles.welcome2.copyWith(color: AppStyles.dark, fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        Text(user.email,
-                          style: AppStyles.lesson.copyWith(color: AppStyles.dark),
-                        ),
-                        SizedBox(height: AppStyles.spaceL),
-                        ProfileItem(textPrimary: 'Nama Panjang', textSecond: user.longName),
-                        ProfileItem(textPrimary: 'No. Telepon', textSecond: user.phoneNumber),
-                        ProfileItem(textPrimary: 'Kelas', textSecond: user.classId.toString()),
-                      ],
-                    );
-                  }),
-                  Spacer(),
-                  ReuseButton(
-                    text: 'Sign Out',
-                    onPressed: () {
-                      controller.logout();
-                    },
+              SizedBox(height: AppStyles.spaceL),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppStyles.paddingXL,
+                  vertical: AppStyles.paddingFont,
+                ),
+                decoration: BoxDecoration(
+                  color: AppStyles.light,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(AppStyles.radius),
                   ),
-                ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Obx(() => ProfileImagePicker(
+                          image: controller.isImagePicked.value
+                              ? FileImage(File(controller.profileImage.value))
+                              : const AssetImage('images/profile.png')
+                                  as ImageProvider,
+                          onPickFromCamera: () =>
+                              controller.pickImage(ImageSource.camera),
+                          onPickFromGallery: () =>
+                              controller.pickImage(ImageSource.gallery),
+                        )),
+                    Obx(() {
+                      final user = controller.user.value;
+                      if (user == null) return CircularProgressIndicator();
+
+                      return Column(
+                        children: [
+                          Text(
+                            user.longName,
+                            style: AppStyles.welcome2.copyWith(
+                              color: AppStyles.dark,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            user.email,
+                            style: AppStyles.lesson
+                                .copyWith(color: AppStyles.dark),
+                          ),
+                          SizedBox(height: AppStyles.spaceL),
+                          ProfileItem(
+                            textPrimary: 'Nama Panjang',
+                            textSecond: user.longName,
+                          ),
+                          ProfileItem(
+                            textPrimary: 'No. Telepon',
+                            textSecond: user.phoneNumber,
+                          ),
+                          ProfileItem(
+                            textPrimary: 'Kelas',
+                            textSecond: user.classId.toString(),
+                          ),
+                        ],
+                      );
+                    }),
+                    SizedBox(height: AppStyles.spaceL),
+                    ReuseButton(
+                      text: 'Sign Out',
+                      onPressed: () {
+                        controller.logout();
+                      },
+                    ),
+                    SizedBox(height: AppStyles.spaceXL),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

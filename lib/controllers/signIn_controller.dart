@@ -48,7 +48,7 @@ class SignInController extends GetxController {
         if (user.role != 'admin') {
           Get.snackbar(
             'Akses Ditolak',
-            'Akun ini bukan siswa. Silakan login di aplikasi yang sesuai.',
+            'Akun ini bukan admin. Silakan login di aplikasi yang sesuai.',
             backgroundColor: Colors.red.withOpacity(0.7),
             colorText: Colors.white,
           );
