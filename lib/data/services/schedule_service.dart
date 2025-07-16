@@ -30,9 +30,11 @@ class ScheduleService {
     required String day,
     required String startTime,
     required String endTime,
-    required String teacher,
-    required String subject,
+    required int teacherId,
+    required int subjectId,
     required int classId,
+    String? teacherName,
+    String? subjectName,
   }) async {
     final url = Uri.parse('${endpoint.baseUrl}/schedules/create');
 
@@ -40,9 +42,11 @@ class ScheduleService {
       'day': day,
       'start_time': startTime,
       'end_time': endTime,
-      'teacher': teacher,
-      'subject': subject,
+      'teacher_id': teacherId,
+      'subject_id': subjectId,
       'class_id': classId,
+      'teacher': teacherName ?? '', // <-- tambahan
+      'subject': subjectName ?? '', // <-- tambahan
     };
 
     print('>> Sending schedule data: $body');

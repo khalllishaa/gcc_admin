@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gcc_admin/data/models/teacher_model.dart';
+import 'package:gcc_admin/controllers/subject_controller.dart';
 import 'package:gcc_admin/data/services/schedule_service.dart';
-import 'package:gcc_admin/data/services/teacher_service.dart';
 import 'package:get/get.dart';
 import '../components/AppStyles.dart';
 import '../data/models/class_model.dart';
 import '../data/models/schedule_model.dart';
+import '../data/models/teacher_model.dart';
+import '../data/services/teacher_service.dart';
 
 class ScheduleController extends GetxController {
   var classList = <ClassModel>[].obs;
@@ -19,29 +20,26 @@ class ScheduleController extends GetxController {
   RxString selectedDay = ''.obs;
   RxString selectedTime = ''.obs;
   RxList<TeacherModel> teachers = <TeacherModel>[].obs;
-  var isFetchingTeachers = false.obs;
   RxString selectedTeacher = ''.obs;
+  final RxString selectedSubject = ''.obs;
+  RxInt selectedTeacherId = 0.obs;
+  RxInt selectedSubjectId = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchActiveTeachers();
     ever(selectedClassId, (_) {
       fetchScheduleByClassId(selectedClassId.value);
     });
+    fetchActiveTeachers();
   }
 
   Future<void> fetchActiveTeachers() async {
     try {
-      isFetchingTeachers.value = true;
-
-      final response = await TeacherService().fetchTeachers(); // ← Ambil dari API
-      teachers.value = response.where((t) => t.status == 'active').toList(); // ← Filter aktif
-
+      final response = await TeacherService().fetchTeachers();
+      teachers.value = response.where((t) => t.status == 'active').toList();
     } catch (e) {
-      print('Error fetching teachers: $e');
-    } finally {
-      isFetchingTeachers.value = false;
+      print('Error fetch teachers: $e');
     }
   }
 
@@ -74,22 +72,28 @@ class ScheduleController extends GetxController {
   Future<void> addSchedule({
     required String day,
     required String time,
-    required String teacher,
-    required String subject,
+    required int teacherId,
+    required int subjectId,
   }) async {
     try {
       final parts = time.split(' - ');
       final startTime = parts[0].trim();
       final endTime = parts[1].trim();
 
+      final teacherName = teachers.firstWhere((e) => e.id == teacherId).name;
+      final subjectName = Get.find<SubjectController>().subjects.firstWhere((e) => e.id == subjectId).name;
+
       await ScheduleService.createSchedule(
         day: day,
         startTime: startTime,
         endTime: endTime,
-        teacher: teacher,
-        subject: subject,
+        teacherId: teacherId,
+        subjectId: subjectId,
         classId: selectedClassId.value,
+        teacherName: teacherName,
+        subjectName: subjectName,
       );
+
 
       fetchScheduleByClassId(selectedClassId.value);
     } catch (e) {
