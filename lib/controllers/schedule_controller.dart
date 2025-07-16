@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gcc_admin/data/models/teacher_model.dart';
 import 'package:gcc_admin/data/services/schedule_service.dart';
+import 'package:gcc_admin/data/services/teacher_service.dart';
 import 'package:get/get.dart';
 import '../components/AppStyles.dart';
 import '../data/models/class_model.dart';
@@ -16,13 +18,31 @@ class ScheduleController extends GetxController {
   var selectedClassId = 0.obs;
   RxString selectedDay = ''.obs;
   RxString selectedTime = ''.obs;
+  RxList<TeacherModel> teachers = <TeacherModel>[].obs;
+  var isFetchingTeachers = false.obs;
+  RxString selectedTeacher = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
+    fetchActiveTeachers();
     ever(selectedClassId, (_) {
       fetchScheduleByClassId(selectedClassId.value);
     });
+  }
+
+  Future<void> fetchActiveTeachers() async {
+    try {
+      isFetchingTeachers.value = true;
+
+      final response = await TeacherService().fetchTeachers(); // ← Ambil dari API
+      teachers.value = response.where((t) => t.status == 'active').toList(); // ← Filter aktif
+
+    } catch (e) {
+      print('Error fetching teachers: $e');
+    } finally {
+      isFetchingTeachers.value = false;
+    }
   }
 
   void fetchScheduleByClassId(int classId) async {

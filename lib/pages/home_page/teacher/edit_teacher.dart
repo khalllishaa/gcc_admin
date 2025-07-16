@@ -61,7 +61,52 @@ class EditTeacher extends StatelessWidget {
                   hintText: 'Masukkan Nama Terbaru',
                 ),
 
-                SizedBox(height: AppStyles.spaceL),
+                SizedBox(height: AppStyles.spaceS),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: status == 'active' ? AppStyles.primaryLight : AppStyles.grey1,
+                      minimumSize: Size(140, 40),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppStyles.paddingL,
+                        vertical: AppStyles.paddingS,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppStyles.radius),
+                      ),
+                    ),
+                    onPressed: () async {
+                      String newStatus = status == 'active' ? 'inactive' : 'active';
+                      try {
+                        await controller.updateTeacherStatus(teacher.id, newStatus);
+                        await Future.delayed(Duration(milliseconds: 500));
+                        Get.back();
+                        Get.snackbar(
+                          'Sukses',
+                          'Status guru diubah menjadi $newStatus',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.welcome,
+                          colorText: AppStyles.dark,
+                        );
+                      } catch (e) {
+                        Get.snackbar(
+                          'Error',
+                          'Gagal mengubah status: $e',
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: AppStyles.error,
+                          colorText: AppStyles.light,
+                        );
+                      }
+                    },
+                    child: Text(
+                      status == 'active' ? 'Active' : 'Inactive',
+                      style:AppStyles.welcome2,
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: AppStyles.spaceS),
                 ReuseButton(
                   text: 'Edit Nama Guru',
                   onPressed: () async {
@@ -92,34 +137,6 @@ class EditTeacher extends StatelessWidget {
                       Get.snackbar(
                         'Failed',
                         'Gagal memperbarui nama guru: $e',
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: AppStyles.error,
-                        colorText: AppStyles.light,
-                      );
-                    }
-                  },
-                ),
-
-                SizedBox(height: AppStyles.spaceM),
-                ReuseButton(
-                  text: 'Ubah Status (${status == 'active' ? 'inactive' : 'active'})',
-                  onPressed: () async {
-                    String newStatus = status == 'active' ? 'inactive' : 'active';
-                    try {
-                      await controller.updateTeacherStatus(teacher.id, newStatus);
-                      await Future.delayed(Duration(milliseconds: 500));
-                      Get.back();
-                      Get.snackbar(
-                        'Sukses',
-                        'Status guru diubah menjadi $newStatus',
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: AppStyles.welcome,
-                        colorText: AppStyles.dark,
-                      );
-                    } catch (e) {
-                      Get.snackbar(
-                        'Error',
-                        'Gagal mengubah status: $e',
                         snackPosition: SnackPosition.TOP,
                         backgroundColor: AppStyles.error,
                         colorText: AppStyles.light,
