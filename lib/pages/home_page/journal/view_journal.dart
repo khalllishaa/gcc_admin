@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
+import 'package:gcc_admin/data/models/journal_model.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../components/ViewJournalCard.dart';
 
@@ -9,6 +11,8 @@ class ViewJournal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final journal = Get.arguments as JournalModel;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -40,7 +44,7 @@ class ViewJournal extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Journal 13 Januari 2025",
+                      "Journal ${DateFormat('dd MMMM yyyy', 'id_ID').format(journal.createdAt)}",
                       style: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -56,21 +60,20 @@ class ViewJournal extends StatelessWidget {
           children: [
             ViewJournalCard(
               title: "Subject",
-              subtitle: "Bahasa Inggris",
+              subtitle: journal.subject.name,
               icon: Icons.menu_book,
             ),
-            SizedBox(height: AppStyles.spaceL),
+            SizedBox(height: AppStyles.spaceS),
             ViewJournalCard(
               title: "Teacher",
-              subtitle: "Miss Candra",
-              icon: Icons.menu_book,
+              subtitle: journal.teacher.name,
+              icon: Icons.person,
             ),
-            SizedBox(height: AppStyles.spaceL),
-            ViewJournalCard(
-              title: "Proposal",
-              subtitle: "Bla Bla Bla",
-              icon: Icons.menu_book,
-            ),
+            // ViewJournalCard(
+            //   title: "Materi",
+            //   subtitle: journal.content,
+            //   icon: Icons.description,
+            // ),
             SizedBox(height: AppStyles.spaceL),
           ],
         ),
