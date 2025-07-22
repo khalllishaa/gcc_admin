@@ -26,16 +26,48 @@ class JournalService {
     }
   }
 
+  // static Future<bool> postJournal(CreateJournalModel journal) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('${endpoint.baseUrl}/journals/create'),
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: json.encode(journal.toJson()),
+  //     );
+  //
+  //     print('Response Code: ${response.statusCode}');
+  //     print('Response Body: ${response.body}');
+  //
+  //     return response.statusCode == 200 || response.statusCode == 201;
+  //   } catch (e) {
+  //     print('Error posting journal: $e');
+  //     return false;
+  //   }
+  // }
+
   static Future<bool> postJournal(CreateJournalModel journal) async {
     try {
-      final response = await http.post(
+      var request = http.MultipartRequest(
+        'POST',
         Uri.parse('${endpoint.baseUrl}/journals/create'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(journal.toJson()),
       );
 
+      request.fields['classroom_id'] = journal.classroomId.toString();
+      request.fields['subject_id'] = journal.subjectId.toString();
+      request.fields['teacher_id'] = journal.teacherId.toString();
+
+      // Kalau ada file, attach ke request
+      if (journal.filePath != null && journal.filePath!.isNotEmpty) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'file', // pastikan ini sama dengan key yang diharapkan backend
+          journal.filePath!,
+        ));
+      }
+
+      var response = await request.send();
       print('Response Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
+
+      final responseBody = await response.stream.bytesToString();
+      print('Response Body: $responseBody');
 
       return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {

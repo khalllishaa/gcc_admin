@@ -14,8 +14,9 @@ class JournalController extends GetxController {
   final teacherId = 0.obs;
   final subjectId = 0.obs;
   final classroomId = 0.obs;
-  final filePath = ''.obs;
+  // final filePath = ''.obs;
   var postSuccess = false.obs;
+  RxString filePath = ''.obs;
 
   @override
   void onInit() {

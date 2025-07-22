@@ -1,4 +1,5 @@
 // import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
@@ -133,7 +134,7 @@ class AddJournal extends StatelessWidget {
                         selectedSubjectId.value = value!;
                       },
                     )),
-                    SizedBox(height: AppStyles.spaceL),
+                    SizedBox(height: AppStyles.spaceM),
                     // ReuseButton(
                     //   text: 'Submit Journal',
                     //   onPressed: () async {
@@ -168,8 +169,55 @@ class AddJournal extends StatelessWidget {
                     //       ),
                     //   ],
                     // )),
+                    // SectionTitle(title: 'Task'),
+                    // SizedBox(height: AppStyles.spaceS),
+                    // Textfield2(
+                    //   controller: TextEditingController(),
+                    //   keyboardType: TextInputType.text,
+                    //   hintText: "Task",
+                    //   onUploadPressed: () {
+                    //   },
+                    // ),
+                    SectionTitle(title: 'Upload File (Optional)'),
+                    SizedBox(height: AppStyles.spaceS),
+                    Obx(() => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            FilePickerResult? result = await FilePicker.platform.pickFiles(
+                              withData: true, // Web butuh ini kadang
+                            );
+
+                            if (result != null && result.files.single.path != null) {
+                              journalController.filePath.value = result.files.single.path!;
+                            }
+                          },
+                          icon: Icon(Icons.attach_file),
+                          label: Text(
+                            journalController.filePath.value.isEmpty
+                                ? 'Choose File'
+                                : 'Change File',
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppStyles.primaryDark,
+                            foregroundColor: AppStyles.light,
+                          ),
+                        ),
+                        if (journalController.filePath.value.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              "Selected: ${journalController.filePath.value.split('/').last}",
+                              style: TextStyle(fontSize: 12, color: AppStyles.grey1),
+                            ),
+                          ),
+                      ],
+                    )),
+                    SizedBox(height: AppStyles.spaceL),
+                    SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                      text: 'Submit Journal',
+                        text: 'Submit Journal',
                         onPressed: () async {
                           journalController.teacherId.value = selectedTeacherId.value;
                           journalController.subjectId.value = selectedSubjectId.value;
