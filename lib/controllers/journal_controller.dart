@@ -16,7 +16,7 @@ class JournalController extends GetxController {
   final classroomId = 0.obs;
   // final filePath = ''.obs;
   var postSuccess = false.obs;
-  RxString filePath = ''.obs;
+  // RxString filePath = ''.obs;
 
   @override
   void onInit() {
@@ -29,7 +29,7 @@ class JournalController extends GetxController {
       classroomId: classroomId.value,
       subjectId: subjectId.value,
       teacherId: teacherId.value,
-      filePath: filePath.value.isEmpty ? null : filePath.value,
+      // filePath: filePath.value.isEmpty ? null : filePath.value,
     );
 
     final success = await JournalService.postJournal(model);
