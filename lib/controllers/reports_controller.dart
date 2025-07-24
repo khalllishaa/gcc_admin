@@ -28,6 +28,18 @@ class ReportController extends GetxController {
     loadReports();
   }
 
+  Future<void> fetchReports() async {
+    isLoading.value = true;
+    try {
+      final data = await ReportService.fetchReports(); // ✅ sesuai yg udah kamu pakai
+      allReports.assignAll(data); // ✅ pakai variabel yang bener
+    } catch (e) {
+      print("Error saat fetchReports: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   void loadSubjects() async {
     try {
       final data = await SubjectService().fetchSubjects();

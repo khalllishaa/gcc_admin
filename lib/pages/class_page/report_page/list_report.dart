@@ -13,17 +13,20 @@ class ListReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ReportController());
-    final student = Get.arguments; // dari StudentCard
+    final student = Get.arguments;
 
+    if (controller.allReports.isEmpty && !controller.isLoading.value) {
+      Future.microtask(() => controller.fetchReports());
+    }
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingM),
         child: Column(
           children: [
             SizedBox(height: AppStyles.spaceXXL),
+
             Row(
               children: [
-                // Back Button
                 Container(
                   width: 40,
                   height: 40,
@@ -40,7 +43,6 @@ class ListReport extends StatelessWidget {
                 ),
                 SizedBox(width: AppStyles.spaceS),
 
-                // Dropdown Bulan
                 Expanded(
                   child: Obx(() {
                     return Container(
@@ -96,147 +98,88 @@ class ListReport extends StatelessWidget {
                               ),
                             );
                           }).toList(),
-                          // onChanged: (value) {
-                          //   controller.selectedMonth.value = value ?? '';
-                          // },
-                            onChanged: (value) {
-                              controller.selectedMonth.value = value?.isEmpty ?? true
-                                  ? monthNames[DateTime.now().month - 1]
-                                  : value!;
-                            },
+                          onChanged: (value) {
+                            controller.selectedMonth.value = value?.isEmpty ?? true
+                                ? monthNames[DateTime.now().month - 1]
+                                : value!;
+                          },
                         ),
                       ),
                     );
                   }),
                 ),
-
               ],
             ),
-            // SizedBox(height: AppStyles.spaceS),
             Expanded(
               child: Obx(() {
+                if (controller.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
                 final reportsForUser = controller.getFilteredReports(student.id);
 
-                if (controller.isLoading.value) {
-                  return Center(child: CircularProgressIndicator());
-                }
-
-                if (reportsForUser.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "Tidak ada laporan untuk siswa ini.",
-                      style: TextStyle(color: AppStyles.dark),
-                    ),
-                  );
-                }
-
-                return ListView(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        final String? note = reportsForUser.isNotEmpty ? reportsForUser.first.note : null;
-
-                        Get.to(() => ViewReport(), arguments: {
-                          'reports': reportsForUser,
-                          'note': note,
-                        });
-                      },
-                      child: CourseCard(
-                        title: 'Report - ${student.name}',
-                        subtitle: controller.selectedMonth.value.isEmpty
-                            ? 'Semua Bulan'
-                            : controller.selectedMonth.value,
-                        imagePath: "images/student.png",
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    controller.isLoading.value = true;
+                    await controller.fetchReports();
+                    controller.isLoading.value = false;
+                  },
+                  child: reportsForUser.isEmpty
+                      ? ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [
+                      Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: AppStyles.spaceeXL),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: Image.asset(
+                                'images/motorcycle.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SizedBox(height: AppStyles.spaceM),
+                            Text(
+                              'Belum ada report di bulan ini',
+                              style: AppStyles.profileText2,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  )
+                      : ListView(
+                    padding: EdgeInsets.only(top: AppStyles.paddingL),
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          final String? note = reportsForUser.isNotEmpty
+                              ? reportsForUser.first.note
+                              : null;
+
+                          Get.to(() => ViewReport(), arguments: {
+                            'reports': reportsForUser,
+                            'note': note,
+                          });
+                        },
+                        child: CourseCard(
+                          title: 'Report - ${student.name}',
+                          subtitle: controller.selectedMonth.value.isEmpty
+                              ? 'Semua Bulan'
+                              : controller.selectedMonth.value,
+                          imagePath: "images/student.png",
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }),
-              // child: Obx(() {
-              //   final filteredReports = controller.getFilteredReports(student.id);
-              //
-              //   if (controller.isLoading.value) {
-              //     return Center(child: CircularProgressIndicator());
-              //   }
-              //
-              //   if (filteredReports.isEmpty) {
-              //     return Center(
-              //       child: Text(
-              //         "Tidak ada laporan untuk siswa ini.",
-              //         style: TextStyle(color: AppStyles.dark),
-              //       ),
-              //     );
-              //   }
-              //
-              //   return ListView.separated(
-              //     padding:  EdgeInsets.symmetric(horizontal: AppStyles.paddingS, vertical: AppStyles.paddingS),
-              //     itemCount: filteredReports.length,
-              //     separatorBuilder: (context, index) => const SizedBox(height: 12),
-              //     itemBuilder: (context, index) {
-              //       final report = filteredReports[index];
-              //       return GestureDetector(
-              //         onTap: () => Get.toNamed('/view-report', arguments: report),
-              //         child: CourseCard(
-              //           title: 'Report ' + report.user.name,
-              //           subtitle: monthNames[report.createdAt.month - 1],
-              //           imagePath: "images/student.png",
-              //         ),
-              //       );
-              //     },
-              //   );
-              // }),
             ),
-
-            // Expanded(
-            //   child: Obx(() {
-            //     final filteredReports = controller.getFilteredReports(student.id);
-            //
-            //     if (controller.isLoading.value) {
-            //       return const Center(child: CircularProgressIndicator());
-            //     }
-            //
-            //     if (filteredReports.isEmpty) {
-            //       return const Center(child: Text("Tidak ada laporan untuk siswa ini."));
-            //     }
-            //
-            //     return ListView.separated(
-            //       separatorBuilder: (_, __) => const SizedBox(height: 12),
-            //       padding: const EdgeInsets.all(8),
-            //       itemCount: filteredReports.length,
-            //       itemBuilder: (context, index) {
-            //         final report = filteredReports[index];
-            //         return GestureDetector(
-            //           onTap: () => Get.toNamed('/view-report', arguments: report),
-            //           child: Container(
-            //             padding: const EdgeInsets.all(16),
-            //             decoration: BoxDecoration(
-            //               color: Colors.white,
-            //               borderRadius: BorderRadius.circular(12),
-            //               boxShadow: const [
-            //                 BoxShadow(color: Colors.black12, blurRadius: 4),
-            //               ],
-            //             ),
-            //             child: Row(
-            //               children: [
-            //                 Image.asset("images/student.png", width: 40, height: 40),
-            //                 const SizedBox(width: 12),
-            //                 Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Text(report.subject.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            //                     Text(monthNames[report.createdAt.month - 1]),
-            //                     Text("Rating: ${report.rating}"),
-            //                   ],
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //     );
-            //   }),
-            // ),
-
           ],
         ),
       ),
