@@ -92,7 +92,7 @@ class AppPages {
 
     GetPage(name: Routes.listReport, page: () => ListReport()),
     GetPage(name: Routes.viewReport, page: () => ViewReport()),
-    GetPage(name: Routes.addReport, page: () => AddReport()),
+    GetPage(name: Routes.addReport, page: () => AddReportView()),
 
     GetPage(name: Routes.listTeacher, page: () => Listteacher(),binding: ListTeacherBinding()),
     GetPage(name: Routes.addTeacher, page: () => Addteacher(), binding: ListTeacherBinding()),
