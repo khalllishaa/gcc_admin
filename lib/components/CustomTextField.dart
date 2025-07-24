@@ -6,6 +6,7 @@ class Customtextfield extends StatefulWidget {
   final TextInputType keyboardType;
   final String hintText;
   final bool obscureText;
+  final void Function(String)? onChanged;
 
   const Customtextfield({
     super.key,
@@ -13,6 +14,7 @@ class Customtextfield extends StatefulWidget {
     required this.keyboardType,
     required this.hintText,
     this.obscureText = false,
+    this.onChanged,
   });
 
   @override
@@ -44,6 +46,7 @@ class _CustomtextfieldState extends State<Customtextfield> {
             keyboardType: widget.keyboardType,
             obscureText: _obscureText,
             style: AppStyles.profileText2,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: TextStyle(color: AppStyles.grey1),

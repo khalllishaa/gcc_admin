@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/ClassCard.dart';
-import 'package:gcc_admin/controllers/menu_controller.dart';
 import 'package:get/get.dart';
+
+import '../../../controllers/class_controller.dart';
 
 class JournalClass extends StatelessWidget {
   const JournalClass({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final classC = Get.put(ClassController());
 
     return Scaffold(
       body: Padding(
@@ -43,56 +45,38 @@ class JournalClass extends StatelessWidget {
               ],
             ),
             SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/journal'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ], onDelete: () {  },
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/journal'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ], onDelete: () {  },
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/journal'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ], onDelete: () {  },
-              ),
-            ),
-            SizedBox(height: AppStyles.spaceS),
-            GestureDetector(
-              onTap: () => Get.toNamed('/journal'),
-              child: KelasCard(
-                imagePath: 'images/maths.png',
-                title: 'Kelas 8.1',
-                avatarImagePaths: [
-                  'images/categories.png',
-                  'images/learning.png',
-                  'images/logo_gcc.png',
-                ], onDelete: () {  },
-              ),
+
+            // WRAP LIST DENGAN SCROLLABLE
+            Expanded(
+              child: Obx(() => SingleChildScrollView(
+                child: Column(
+                  children: classC.classList.map((kelas) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.toNamed('/journal', arguments: {
+                            'classId': kelas.id,
+                            'className': kelas.name,
+                          }),
+                          child: KelasCard(
+                              imagePath: 'images/maths.png',
+                              title: kelas.name,
+                              avatarImagePaths: [
+                                'images/categories.png',
+                                'images/learning.png',
+                                'images/logo_gcc.png',
+                              ],
+                              onDelete: () {},
+                              showDeleteIcon: false
+
+                          ),
+                        ),
+                        SizedBox(height: AppStyles.spaceS),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              )),
             ),
           ],
         ),

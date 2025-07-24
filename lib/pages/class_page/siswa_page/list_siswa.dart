@@ -95,7 +95,8 @@ class ListStudent extends StatelessWidget {
                           onDelete: () {
                             controller.deleteStudent(student.id);
                           },
-                          onTap: () => Get.toNamed('/list-report'),
+                          // onTap: () => Get.toNamed('/list-report'),
+                          onTap: () => Get.toNamed('/list-report', arguments: student),
                         );
                       },
                     ),

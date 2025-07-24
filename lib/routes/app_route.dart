@@ -1,3 +1,4 @@
+import 'package:gcc_admin/bindings/journal_binding.dart';
 import 'package:gcc_admin/bindings/list_teacher_binding.dart';
 import 'package:gcc_admin/bindings/menu_binding.dart';
 import 'package:gcc_admin/bindings/schedule_binding.dart';
@@ -91,7 +92,7 @@ class AppPages {
 
     GetPage(name: Routes.listReport, page: () => ListReport()),
     GetPage(name: Routes.viewReport, page: () => ViewReport()),
-    GetPage(name: Routes.addReport, page: () => AddReport()),
+    GetPage(name: Routes.addReport, page: () => AddReportView()),
 
     GetPage(name: Routes.listTeacher, page: () => Listteacher(),binding: ListTeacherBinding()),
     GetPage(name: Routes.addTeacher, page: () => Addteacher(), binding: ListTeacherBinding()),
@@ -101,7 +102,7 @@ class AppPages {
     GetPage(name: Routes.viewSchedule, page: () => ViewSchedule(), binding: ScheduleBinding()),
     GetPage(name: Routes.addSchedule, page: () => AddSchedule(), binding: ScheduleBinding()),
 
-    GetPage(name: Routes.journal, page: () => Journal()),
+    GetPage(name: Routes.journal, page: () => Journal(), binding: JournalBinding()),
     GetPage(name: Routes.viewJournal, page: () => ViewJournal()),
     GetPage(name: Routes.addJournal, page: () => AddJournal()),
     GetPage(name: Routes.journalClass, page: () => JournalClass()),
