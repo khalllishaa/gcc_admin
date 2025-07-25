@@ -1,5 +1,4 @@
-// import 'package:file_picker/file_picker.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
@@ -71,7 +70,6 @@ class AddJournal extends StatelessWidget {
                     SizedBox(height: AppStyles.spaceS),
                     SectionTitle(title: 'Teacher'),
                     SizedBox(height: AppStyles.spaceS),
-                    // ),
                     Obx(() => DropdownButtonFormField<int>(
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -135,90 +133,204 @@ class AddJournal extends StatelessWidget {
                       },
                     )),
                     SizedBox(height: AppStyles.spaceM),
-                    // ReuseButton(
-                    //   text: 'Submit Journal',
-                    //   onPressed: () async {
-                    //     await journalController.submitJournal();
-                    //   },
-                    // ),
-                    // Obx(() => Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     SectionTitle(title: 'Upload File (Optional)'),
-                    //     SizedBox(height: AppStyles.spaceS),
-                    //     ElevatedButton.icon(
-                    //       onPressed: () async {
-                    //         FilePickerResult? result = await FilePicker.platform.pickFiles();
-                    //
-                    //         if (result != null) {
-                    //           journalController.filePath.value = result.files.single.path!;
-                    //         }
-                    //       },
-                    //       icon: Icon(Icons.attach_file),
-                    //       label: Text(journalController.filePath.value.isEmpty
-                    //           ? 'Choose File'
-                    //           : 'File selected'),
-                    //     ),
-                    //     if (journalController.filePath.value.isNotEmpty)
-                    //       Padding(
-                    //         padding: const EdgeInsets.only(top: 8),
-                    //         child: Text(
-                    //           journalController.filePath.value.split('/').last,
-                    //           style: TextStyle(fontSize: 12, color: AppStyles.grey1),
-                    //         ),
-                    //       ),
-                    //   ],
-                    // )),
-                    // SectionTitle(title: 'Task'),
-                    // SizedBox(height: AppStyles.spaceS),
-                    // Textfield2(
-                    //   controller: TextEditingController(),
-                    //   keyboardType: TextInputType.text,
-                    //   hintText: "Task",
-                    //   onUploadPressed: () {
-                    //   },
-                    // ),
+                    
+                    // File Upload Section
                     SectionTitle(title: 'Upload File (Optional)'),
                     SizedBox(height: AppStyles.spaceS),
-                    // Obx(() => Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     ElevatedButton.icon(
-                    //       onPressed: () async {
-                    //         FilePickerResult? result = await FilePicker.platform.pickFiles(
-                    //           withData: true, // Web butuh ini kadang
-                    //         );
-                    //
-                    //         if (result != null && result.files.single.path != null) {
-                    //           journalController.filePath.value = result.files.single.path!;
-                    //         }
-                    //       },
-                    //       icon: Icon(Icons.attach_file),
-                    //       label: Text(
-                    //         journalController.filePath.value.isEmpty
-                    //             ? 'Choose File'
-                    //             : 'Change File',
-                    //       ),
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor: AppStyles.primaryDark,
-                    //         foregroundColor: AppStyles.light,
-                    //       ),
-                    //     ),
-                    //     if (journalController.filePath.value.isNotEmpty)
-                    //       Padding(
-                    //         padding: const EdgeInsets.only(top: 8),
-                    //         child: Text(
-                    //           "Selected: ${journalController.filePath.value.split('/').last}",
-                    //           style: TextStyle(fontSize: 12, color: AppStyles.grey1),
-                    //         ),
-                    //       ),
-                    //   ],
-                    // )),
+                    Obx(() => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppStyles.primary,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(AppStyles.radius),
+                            color: AppStyles.primaryLight.withOpacity(0.1),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(AppStyles.paddingL),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload_outlined,
+                                  size: 48,
+                                  color: AppStyles.primary,
+                                ),
+                                SizedBox(height: AppStyles.spaceS),
+                                if (journalController.filePath.value.isEmpty) ...[
+                                  Text(
+                                    'Choose a file to upload',
+                                    style: TextStyle(
+                                      color: AppStyles.grey1,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(height: AppStyles.spaceXS),
+                                  Text(
+                                    'Supported formats: PDF, DOC, DOCX, JPG, PNG',
+                                    style: TextStyle(
+                                      color: AppStyles.grey1,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ] else ...[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle,
+                                        color: AppStyles.welcome,
+                                        size: 20,
+                                      ),
+                                      SizedBox(width: AppStyles.spaceXS),
+                                      Expanded(
+                                        child: Text(
+                                          journalController.filePath.value.split('/').last,
+                                          style: TextStyle(
+                                            color: AppStyles.dark,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                SizedBox(height: AppStyles.spaceM),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: () async {
+                                        try {
+                                          FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                            type: FileType.custom,
+                                            allowedExtensions: ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'],
+                                            withData: true,
+                                          );
+
+                                          if (result != null && result.files.single.path != null) {
+                                            journalController.filePath.value = result.files.single.path!;
+                                            
+                                            Get.snackbar(
+                                              'Success',
+                                              'File selected successfully',
+                                              snackPosition: SnackPosition.TOP,
+                                              backgroundColor: AppStyles.welcome,
+                                              colorText: AppStyles.dark,
+                                              duration: Duration(seconds: 2),
+                                              margin: EdgeInsets.all(16),
+                                            );
+                                          }
+                                        } catch (e) {
+                                          Get.snackbar(
+                                            'Error',
+                                            'Failed to select file: $e',
+                                            snackPosition: SnackPosition.TOP,
+                                            backgroundColor: AppStyles.error,
+                                            colorText: AppStyles.light,
+                                            duration: Duration(seconds: 3),
+                                            margin: EdgeInsets.all(16),
+                                          );
+                                        }
+                                      },
+                                      icon: Icon(Icons.attach_file, size: 18),
+                                      label: Text(
+                                        journalController.filePath.value.isEmpty
+                                            ? 'Choose File'
+                                            : 'Change File',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppStyles.primary,
+                                        foregroundColor: AppStyles.light,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: AppStyles.paddingL,
+                                          vertical: AppStyles.paddingS,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(AppStyles.radius),
+                                        ),
+                                      ),
+                                    ),
+                                    if (journalController.filePath.value.isNotEmpty)
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          journalController.filePath.value = '';
+                                          Get.snackbar(
+                                            'File Removed',
+                                            'Selected file has been removed',
+                                            snackPosition: SnackPosition.TOP,
+                                            backgroundColor: AppStyles.grey1,
+                                            colorText: AppStyles.light,
+                                            duration: Duration(seconds: 2),
+                                            margin: EdgeInsets.all(16),
+                                          );
+                                        },
+                                        icon: Icon(Icons.delete_outline, size: 18),
+                                        label: Text('Remove', style: TextStyle(fontSize: 14)),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppStyles.error,
+                                          foregroundColor: AppStyles.light,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: AppStyles.paddingL,
+                                            vertical: AppStyles.paddingS,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(AppStyles.radius),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                    
                     SizedBox(height: AppStyles.spaceL),
                     SizedBox(height: AppStyles.spaceL),
-                    ReuseButton(
-                        text: 'Submit Journal',
+                    
+                    // Submit Button
+                    Obx(() => ReuseButton(
+                        text: journalController.isLoading.value 
+                            ? 'Submitting...' 
+                            : 'Submit Journal',
                         onPressed: () async {
+                          if (journalController.isLoading.value) {
+                            return; // Do nothing if loading
+                          }
+                          
+                          // Validasi input
+                          if (selectedTeacherId.value == 0) {
+                            Get.snackbar(
+                              'Validation Error',
+                              'Please select a teacher',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.error,
+                              colorText: AppStyles.light,
+                            );
+                            return;
+                          }
+                          
+                          if (selectedSubjectId.value == 0) {
+                            Get.snackbar(
+                              'Validation Error',
+                              'Please select a subject',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: AppStyles.error,
+                              colorText: AppStyles.light,
+                            );
+                            return;
+                          }
+
                           journalController.teacherId.value = selectedTeacherId.value;
                           journalController.subjectId.value = selectedSubjectId.value;
 
@@ -228,7 +340,7 @@ class AddJournal extends StatelessWidget {
                             Navigator.pop(context);
                           }
                         }
-                    ),
+                    )),
                   ],
                 ),
               ),
