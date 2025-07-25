@@ -6,8 +6,11 @@ import 'package:gcc_admin/controllers/schedule_controller.dart';
 import 'package:gcc_admin/routes/app_route.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/subject_controller.dart';
+
 class ViewSchedule extends StatelessWidget {
   ScheduleController controller = Get.find();
+  final SubjectController subjectController = Get.put(SubjectController());
 
   ViewSchedule({super.key});
 
