@@ -43,17 +43,52 @@ class ScheduleController extends GetxController {
     }
   }
 
+  // void fetchScheduleByClassId(int classId) async {
+  //   print('Fetching schedule for class ID: $classId');
+  //   isLoading.value = true;
+  //   try {
+  //     final schedules = await ScheduleService.fetchSchedulesByClassId(classId);
+  //     scheduleList.value = schedules;
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
   void fetchScheduleByClassId(int classId) async {
     print('Fetching schedule for class ID: $classId');
     isLoading.value = true;
     try {
       final schedules = await ScheduleService.fetchSchedulesByClassId(classId);
       scheduleList.value = schedules;
+      enrichScheduleData(); // <- INI WAJIB DITAMBAH!
     } catch (e) {
       print('Error: $e');
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void enrichScheduleData() {
+    final teacherMap = { for (var t in teachers) t.id: t.name };
+    final subjectMap = { for (var s in Get.find<SubjectController>().subjects) s.id: s.name };
+
+    scheduleList.value = scheduleList.map((schedule) {
+      return ScheduleModels(
+        id: schedule.id,
+        day: schedule.day,
+        startTime: schedule.startTime,
+        endTime: schedule.endTime,
+        teacher: teacherMap[schedule.teacherId] ?? 'Unknown Teacher',
+        subject: subjectMap[schedule.subjectId] ?? 'Unknown Subject',
+        classId: schedule.classId,
+        createdAt: schedule.createdAt,
+        updatedAt: schedule.updatedAt,
+        teacherId: schedule.teacherId,
+        subjectId: schedule.subjectId,
+      );
+    }).toList();
   }
 
   void loadSchedules(int classId) async {

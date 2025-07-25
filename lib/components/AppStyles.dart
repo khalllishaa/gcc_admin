@@ -6,6 +6,7 @@ class AppStyles {
   static const Color dark = Color(0xFF191919);
   static const Color grey1 = Color(0xFF606060);
   static const Color grey2 = Color(0xFFE8E8E8);
+  static const Color grey3 = Color(0xFF989696);
   static const Color primary = Color(0xFF00666B);
   static const Color primaryLight = Color(0xFF40B2B7);
   static const Color primaryDark = Color(0xFF00979F);
@@ -27,6 +28,7 @@ class AppStyles {
   static const TextStyle lesson = TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.light);
   static const TextStyle profileText1 = TextStyle(fontSize: 14, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.dark);
   static const TextStyle profileText2 = TextStyle(fontSize: 16, fontFamily: 'Poppins', fontWeight: FontWeight.w500, color: AppStyles.dark);
+  static const TextStyle report1 = TextStyle(fontSize: 18, fontFamily: 'Poppins', fontWeight: FontWeight.bold, color: AppStyles.primaryDark);
 
   //Box Decoration
   static BoxDecoration categoryLineDecoration = BoxDecoration(color: AppStyles.primaryDark, borderRadius: BorderRadius.circular(AppStyles.radiusS),);
