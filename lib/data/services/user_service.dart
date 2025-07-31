@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:convert';
+import 'dart:io';
 import 'package:gcc_admin/data/services/endpoint.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,5 +27,23 @@ class UserService {
       return UsersModel.fromJson(userData);
     }
     return null;
+  }
+
+  static Future<bool> uploadProfilePicture(int userId, File imageFile) async {
+    final uri = Uri.parse('${endpoint.baseUrl}/users/update/$userId');
+    final request = http.MultipartRequest('POST', uri)
+      ..fields['_method'] = 'PUT'
+      ..files.add(await http.MultipartFile.fromPath(
+        'profile_picture',
+        imageFile.path,
+      ));
+
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+
+    print('Upload response: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    return response.statusCode == 200;
   }
 }

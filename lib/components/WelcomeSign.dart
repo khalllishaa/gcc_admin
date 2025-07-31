@@ -5,8 +5,13 @@ import 'package:get/get.dart';
 
 class WelcomeSign extends StatelessWidget {
   final String username;
+  final String? profileUrl;
 
-  const WelcomeSign({Key? key, required this.username}) : super(key: key);
+  const WelcomeSign({
+    Key? key,
+    required this.username,
+    this.profileUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,7 @@ class WelcomeSign extends StatelessWidget {
               ),
             ),
             SizedBox(width: AppStyles.paddingXL),
-            // Logo
+            // Profile Image
             GestureDetector(
               onTap: () {
                 mainMenuController.updateIndex(2);
@@ -61,7 +66,9 @@ class WelcomeSign extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage("images/profile.png"),
+                    image: (profileUrl != null && profileUrl!.isNotEmpty)
+                        ? NetworkImage(profileUrl!)
+                        : AssetImage("images/profile.png") as ImageProvider,
                     fit: BoxFit.cover,
                   ),
                 ),

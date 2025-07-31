@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../data/models/journal_model.dart';
 import '../data/services/journal_service.dart';
+import '../pages/home_page/journal/journal.dart';
 
 class JournalController extends GetxController {
   RxList<JournalModel> journals = <JournalModel>[].obs;
@@ -224,4 +225,5 @@ class JournalController extends GetxController {
     print('Is Loading: ${isLoading.value}');
     print('==================');
   }
+
 }

@@ -56,7 +56,7 @@ class ScheduleController extends GetxController {
   //   }
   // }
 
-  void fetchScheduleByClassId(int classId) async {
+  Future<void> fetchScheduleByClassId(int classId) async {
     print('Fetching schedule for class ID: $classId');
     isLoading.value = true;
     try {
