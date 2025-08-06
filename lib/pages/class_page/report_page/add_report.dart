@@ -159,6 +159,7 @@ class AddReportView extends StatelessWidget {
                                 controller.isLoading.value = false;
 
                                 Get.back();
+                                // Get.toNamed('/add-report', arguments: {'userId': userId});
                                 Get.snackbar("Sukses", "Laporan berhasil dikirim",
                                     snackPosition: SnackPosition.BOTTOM,
                                     backgroundColor: Colors.green.shade100,

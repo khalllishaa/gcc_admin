@@ -13,11 +13,15 @@ class ListReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ReportController());
-    final student = Get.arguments;
+    // final student = Get.arguments;
+    final student = Get.arguments is Map<String, dynamic> && Get.arguments.containsKey('student')
+        ? Get.arguments['student']
+        : Get.arguments;
 
     if (controller.allReports.isEmpty && !controller.isLoading.value) {
       Future.microtask(() => controller.fetchReports());
     }
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppStyles.paddingL, vertical: AppStyles.paddingM),
@@ -125,23 +129,19 @@ class ListReport extends StatelessWidget {
                     controller.isLoading.value = false;
                   },
                   child: reportsForUser.isEmpty
-                      ? ListView(
+                      ? SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
-                    children: [
-                      Center(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(height: AppStyles.spaceeXL),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              child: Image.asset(
-                                'images/motorcycle.png',
-                                fit: BoxFit.contain,
-                              ),
+                            Image.asset(
+                              'images/motorcycle.png',
+                              width: 200,
+                              fit: BoxFit.contain,
                             ),
                             SizedBox(height: AppStyles.spaceM),
                             Text(
@@ -151,7 +151,7 @@ class ListReport extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   )
                       : ListView(
                     padding: EdgeInsets.only(top: AppStyles.paddingL),
@@ -173,6 +173,10 @@ class ListReport extends StatelessWidget {
                               ? 'Semua Bulan'
                               : controller.selectedMonth.value,
                           imagePath: "images/student.png",
+                            // onDelete: () {
+                            //   final reportId = reportsForUser.first.id; // ambil ID report yang ditampilkan
+                            //   controller.deleteReport(reportId);
+                            // }
                         ),
                       ),
                     ],
