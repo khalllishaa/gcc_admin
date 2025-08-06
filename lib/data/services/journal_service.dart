@@ -183,4 +183,20 @@ class JournalService {
       return {'error': e.toString()};
     }
   }
+
+  static Future<JournalModel> getJournalById(int id) async {
+    final url = '${endpoint.baseUrl}/journals/$id';
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Accept': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return JournalModel.fromJson(data['data'] ?? data); // tergantung struktur response-mu
+    } else {
+      throw Exception('Failed to load journal by ID: ${response.statusCode}');
+    }
+  }
+
 }

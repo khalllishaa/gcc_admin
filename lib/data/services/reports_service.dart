@@ -115,4 +115,15 @@ class ReportService {
       }
     }
   }
+
+  static Future<void> deleteReport(int reportId) async {
+    final response = await http.delete(
+      Uri.parse('${endpoint.baseUrl}/reports/$reportId/delete'),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Gagal menghapus report');
+    }
+  }
+
 }

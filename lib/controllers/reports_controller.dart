@@ -119,6 +119,22 @@ class ReportController extends GetxController {
     return allReports.where((r) =>
     r.user.id == userId && r.createdAt.month == selectedMonthIndex).toList();
   }
+
+  Future<void> deleteReport(int reportId) async {
+    try {
+      isLoading.value = true;
+      await ReportService.deleteReport(reportId);
+      allReports.removeWhere((report) => report.id == reportId);
+      Get.snackbar('Berhasil', 'Report berhasil dihapus',
+          snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      Get.snackbar('Error', 'Gagal menghapus report: $e',
+          snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 }
 
 List<String> monthNames = [

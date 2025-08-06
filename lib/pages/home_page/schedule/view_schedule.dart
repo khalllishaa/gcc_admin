@@ -50,55 +50,64 @@ class ViewSchedule extends StatelessWidget {
             SizedBox(height: AppStyles.spaceM),
             Obx(() {
               if (controller.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
+                return Expanded(child: Center(child: CircularProgressIndicator()));
               }
 
               if (controller.scheduleList.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: AppStyles.spaceeXL),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: Image.asset(
-                          'images/motorcycle.png',
-                          fit: BoxFit.contain,
+                return Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: AppStyles.spaceeXL),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Image.asset(
+                            'images/motorcycle.png',
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: AppStyles.spaceM),
-                      Text(
-                        'Tidak ada schedule di kelas ini',
-                        style: AppStyles.profileText2,
-                      ),
-                    ],
+                        SizedBox(height: AppStyles.spaceM),
+                        Text(
+                          'Tidak ada schedule di kelas ini',
+                          style: AppStyles.profileText2,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
-              return Column(
-                children: List.generate(
-                  controller.scheduleList.length,
-                      (index) {
-                    final schedule = controller.scheduleList[index];
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: AppStyles.spaceS),
-                      child: ScheduleCard(
-                        day: schedule.day ?? 'Unknown Day',
-                        subject: schedule.subject ?? 'Unknown Subject',
-                        time: '${schedule.startTime ?? "-"} - ${schedule.endTime ?? "-"}',
-                        teacher: schedule.teacher ?? 'Unknown Teacher',
-                        onDelete: () {
-                          controller.deleteSchedule(schedule.id);
-                        },
-                      ),
-                    );
+
+              return Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await controller.fetchScheduleByClassId(controller.selectedClassId.value);
                   },
+                  child: ListView.builder(
+                    itemCount: controller.scheduleList.length,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      final schedule = controller.scheduleList[index];
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: AppStyles.spaceS),
+                        child: ScheduleCard(
+                          day: schedule.day ?? 'Unknown Day',
+                          subject: schedule.subject ?? 'Unknown Subject',
+                          time: '${schedule.startTime ?? "-"} - ${schedule.endTime ?? "-"}',
+                          teacher: schedule.teacher ?? 'Unknown Teacher',
+                          onDelete: () {
+                            controller.deleteSchedule(schedule.id);
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
-            }),
+            })
           ],
         ),
       ),

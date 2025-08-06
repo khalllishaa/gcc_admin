@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../components/ProfileImage.dart';
+import '../../controllers/journal_controller.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -19,92 +20,115 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppStyles.primary,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: AppStyles.spaceXXL),
-              Center(
-                child: Text(
-                  "Profile",
-                  style: AppStyles.headingStyle.copyWith(fontSize: 24),
-                ),
-              ),
-              SizedBox(height: AppStyles.spaceL),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppStyles.paddingXL,
-                  vertical: AppStyles.paddingFont,
-                ),
-                decoration: BoxDecoration(
-                  color: AppStyles.light,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(AppStyles.radius),
+      body: Column(
+        children: [
+          SizedBox(height: AppStyles.spaceXXL),
+          Center(
+            child: Text(
+              "Profile",
+              style: AppStyles.headingStyle.copyWith(fontSize: 24),
+            ),
+          ),
+          SizedBox(height: AppStyles.spaceL),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                final userId = controller.user.value?.id;
+                if (userId != null) {
+                  await controller.fetchCurrentUser();
+                }
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppStyles.light,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(AppStyles.radius),
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppStyles.paddingXL,
+                    vertical: 84,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Obx(() {
+                        final isPicked = controller.isImagePicked.value;
+                        final pickedPath = controller.profileImage.value;
+                        final user = controller.user.value;
+
+                        ImageProvider imageProvider;
+
+                        if (isPicked && pickedPath.isNotEmpty) {
+                          imageProvider = FileImage(File(pickedPath));
+                        } else if (user?.profilePicture != null && user!.profilePicture!.isNotEmpty) {
+                          try {
+                            final path = user.profilePicture;
+                            final url = 'https://gcc-api.rplrus.com/$path';
+                            imageProvider = NetworkImage(url);
+                          } catch (e) {
+                            imageProvider = AssetImage('images/profile.png');
+                          }
+                        } else {
+                          imageProvider = AssetImage('images/profile.png');
+                        }
+
+                        return ProfileImagePicker(
+                          image: imageProvider,
+                          onPickFromCamera: () => controller.pickImage(ImageSource.camera),
+                          onPickFromGallery: () => controller.pickImage(ImageSource.gallery),
+                        );
+                      }),
+                      SizedBox(height: AppStyles.spaceS),
+                      Obx(() {
+                        final user = controller.user.value;
+                        // final journalController = Get.find<JournalController>();
+                        // final filteredJournals = journalController.getFilteredJournals();
+                        //
+                        // final kelas = filteredJournals.isNotEmpty
+                        //     ? filteredJournals.first.classroom?.name ?? 'Kelas tidak diketahui'
+                        //     : 'Kelas tidak diketahui';
+
+                        if (user == null) return CircularProgressIndicator();
+
+                        return Column(
+                          children: [
+                            Text(
+                              user.longName,
+                              style: AppStyles.welcome2.copyWith(
+                                color: AppStyles.dark,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              user.email,
+                              style: AppStyles.lesson.copyWith(color: AppStyles.dark),
+                            ),
+                            SizedBox(height: AppStyles.spaceL),
+                            ProfileItem(textPrimary: 'Nama Panjang', textSecond: user.longName),
+                            ProfileItem(textPrimary: 'No. Telepon', textSecond: user.phoneNumber),
+                            // ProfileItem(textPrimary: 'Kelas', textSecond: kelas),
+                          ],
+                        );
+                      }),
+                      SizedBox(height: AppStyles.spaceL),
+                      ReuseButton(
+                        text: 'Sign Out',
+                        onPressed: () {
+                          controller.logout();
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Obx(() => ProfileImagePicker(
-                          image: controller.isImagePicked.value
-                              ? FileImage(File(controller.profileImage.value))
-                              : const AssetImage('images/profile.png')
-                                  as ImageProvider,
-                          onPickFromCamera: () =>
-                              controller.pickImage(ImageSource.camera),
-                          onPickFromGallery: () =>
-                              controller.pickImage(ImageSource.gallery),
-                        )),
-                    Obx(() {
-                      final user = controller.user.value;
-                      if (user == null) return CircularProgressIndicator();
-
-                      return Column(
-                        children: [
-                          Text(
-                            user.longName,
-                            style: AppStyles.welcome2.copyWith(
-                              color: AppStyles.dark,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            user.email,
-                            style: AppStyles.lesson
-                                .copyWith(color: AppStyles.dark),
-                          ),
-                          SizedBox(height: AppStyles.spaceL),
-                          ProfileItem(
-                            textPrimary: 'Nama Panjang',
-                            textSecond: user.longName,
-                          ),
-                          ProfileItem(
-                            textPrimary: 'No. Telepon',
-                            textSecond: user.phoneNumber,
-                          ),
-                          ProfileItem(
-                            textPrimary: 'Kelas',
-                            textSecond: user.classId.toString(),
-                          ),
-                        ],
-                      );
-                    }),
-                    SizedBox(height: AppStyles.spaceL),
-                    ReuseButton(
-                      text: 'Sign Out',
-                      onPressed: () {
-                        controller.logout();
-                      },
-                    ),
-                    SizedBox(height: AppStyles.spaceXL),
-                  ],
-                ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

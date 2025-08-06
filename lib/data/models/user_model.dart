@@ -18,6 +18,7 @@ class UsersModel {
   final DateTime updatedAt;
   final int? classId;
   final int? packageId;
+  String? profilePicture;
 
   UsersModel({
     required this.id,
@@ -31,6 +32,7 @@ class UsersModel {
     required this.updatedAt,
     this.classId,
     this.packageId,
+    this.profilePicture,
   });
 
   factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
@@ -45,7 +47,9 @@ class UsersModel {
         updatedAt: DateTime.parse(json["updated_at"]),
         classId: json["class_id"],
         packageId: json["package_id"],
-      );
+        profilePicture: json['profile_picture'],
+
+  );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -59,5 +63,7 @@ class UsersModel {
         "updated_at": updatedAt.toIso8601String(),
         "class_id": classId,
         "package_id": packageId,
+        "profile_picture": profilePicture,
+
       };
 }

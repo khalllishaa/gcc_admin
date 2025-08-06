@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:get/get.dart';
@@ -18,10 +21,23 @@ class ProfileController extends GetxController {
     fetchCurrentUser();
   }
 
-  void fetchCurrentUser() async {
+  // void fetchCurrentUser() async {
+  //   UsersModel? data = await UserService.getCurrentUser();
+  //   if (data != null) {
+  //     user.value = data;
+  //
+  //     final prefs = await SharedPreferences.getInstance();
+  //     prefs.setString('userData', json.encode(data.toJson()));
+  //   }
+  // }
+
+  Future<void> fetchCurrentUser([int? id]) async {
     UsersModel? data = await UserService.getCurrentUser();
     if (data != null) {
       user.value = data;
+
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('userData', json.encode(data.toJson()));
     }
   }
 
@@ -82,6 +98,49 @@ class ProfileController extends GetxController {
     if (pickedFile != null) {
       profileImage.value = pickedFile.path;
       isImagePicked.value = true;
+
+      await uploadPickedImage();
+    }
+  }
+
+  Future<void> uploadPickedImage() async {
+    if (user.value == null || profileImage.value.isEmpty) return;
+
+    final userId = user.value!.id;
+    final imageFile = File(profileImage.value);
+
+    // Get.snackbar(
+    //   'Uploading',
+    //   'Mengunggah foto profil...',
+    //   backgroundColor: AppStyles.secondaryLight,
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   margin: EdgeInsets.all(12),
+    // );
+
+    try {
+      bool success = await UserService.uploadProfilePicture(userId, imageFile);
+
+      if (success) {
+        // Get.snackbar(
+        //   'Berhasil',
+        //   'Foto profil berhasil diunggah!',
+        //   backgroundColor: Colors.green,
+        //   colorText: Colors.white,
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
+
+        fetchCurrentUser(userId); // Refresh data user setelah upload
+      } else {
+        throw Exception('Gagal upload');
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Gagal',
+        'Upload gagal: ${e.toString()}',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

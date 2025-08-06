@@ -17,6 +17,7 @@ class JournalModel {
   final Subject subject;
   final Teacher teacher;
   final DateTime createdAt;
+  final String? description;
 
   JournalModel({
     required this.id,
@@ -28,6 +29,7 @@ class JournalModel {
     required this.subject,
     required this.teacher,
     required this.createdAt,
+    this.description,
   });
 
   factory JournalModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class JournalModel {
       subject: Subject.fromJson(json['subject']),
       teacher: Teacher.fromJson(json['teacher']),
       createdAt: DateTime.parse(json['created_at']),
+      description: json['description'],
     );
   }
 
