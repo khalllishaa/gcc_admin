@@ -39,7 +39,7 @@ class Listteacher extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Teacher',
+                      title: 'Daftar Guru',
                       image: 'images/categories.png',
                     ),
                   ),

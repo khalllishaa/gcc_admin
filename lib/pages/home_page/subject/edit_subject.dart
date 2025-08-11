@@ -46,7 +46,7 @@ class EditSubject extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Edit Subject',
+                      title: 'Edit MaPel',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -58,12 +58,12 @@ class EditSubject extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SectionTitle(title: 'Nama Mata Pelajaran'),
+                    SectionTitle(title: 'Edit Mapel'),
                     SizedBox(height: AppStyles.spaceS),
                     Customtextfield(
                       controller: nameController,
                       keyboardType: TextInputType.text,
-                      hintText: 'PPKN',
+                      hintText: 'Masukkan Mapel',
                     ),
                     SizedBox(height: AppStyles.spaceM),
                     ReuseButton(

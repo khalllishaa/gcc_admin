@@ -50,7 +50,7 @@ class AddSchedule extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Add Schedule',
+                      title: 'Tambah Jadwal',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -61,7 +61,7 @@ class AddSchedule extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SectionTitle(title: 'Day'),
+                    SectionTitle(title: 'Hari'),
                     SizedBox(height: AppStyles.spaceS),
                     Obx(() => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
@@ -76,7 +76,7 @@ class AddSchedule extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: AppStyles.primaryLight.withOpacity(0.1),
-                        hintText: 'Select Day',
+                        hintText: 'Pilih Hari',
                         hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
                       dropdownColor: AppStyles.light,
@@ -97,7 +97,7 @@ class AddSchedule extends StatelessWidget {
                       },
                     )),
                     SizedBox(height: AppStyles.spaceS),
-                    SectionTitle(title: 'Time'),
+                    SectionTitle(title: 'Waktu'),
                     SizedBox(height: AppStyles.spaceXS),
                     Obx(() => GestureDetector(
                       onTap: () => controller.pickTimeRange(context),
@@ -113,7 +113,7 @@ class AddSchedule extends StatelessWidget {
                           children: [
                             Text(
                               controller.selectedTime.value.isEmpty
-                                  ? 'Select Time'
+                                  ? 'Pilih Waktu'
                                   : controller.selectedTime.value,
                               style: TextStyle(
                                 fontSize: 14,
@@ -128,7 +128,7 @@ class AddSchedule extends StatelessWidget {
                       ),
                     )),
                     SizedBox(height: AppStyles.spaceS),
-                    SectionTitle(title: 'Teacher'),
+                    SectionTitle(title: 'Guru'),
                     SizedBox(height: AppStyles.spaceS),
                     // ),
                     Obx(() => DropdownButtonFormField<int>(
@@ -145,7 +145,7 @@ class AddSchedule extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: AppStyles.primaryLight.withOpacity(0.1),
-                        hintText: 'Select Teacher',
+                        hintText: 'Pilih Guru',
                         hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
                       dropdownColor: AppStyles.light,
@@ -162,7 +162,7 @@ class AddSchedule extends StatelessWidget {
                       },
                     )),
                     SizedBox(height: AppStyles.spaceS),
-                    SectionTitle(title: 'Subject'),
+                    SectionTitle(title: 'Mata Pelajaran'),
                     SizedBox(height: AppStyles.spaceS),
                     Obx(() => DropdownButtonFormField<int>(
                       decoration: InputDecoration(
@@ -177,7 +177,7 @@ class AddSchedule extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: AppStyles.primaryLight.withOpacity(0.1),
-                        hintText: 'Select Subject',
+                        hintText: 'Pilih Mata Pelajaran',
                         hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
                       dropdownColor: AppStyles.light,
@@ -195,7 +195,7 @@ class AddSchedule extends StatelessWidget {
                     )),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                      text: 'Add Schedule',
+                      text: 'Tambah Jadwal',
                       onPressed: () async {
                         final day = controller.selectedDay.value;
                         final time = controller.selectedTime.value;

@@ -47,7 +47,7 @@ class AddStudent extends StatelessWidget {
                     Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Add Siswa',
+                        title: 'Tambah Data Siswa',
                       ),
                     ),
                   ],
@@ -98,7 +98,7 @@ class AddStudent extends StatelessWidget {
                 SectionTitle(title: 'Kofirmasi Password'),
                 Customtextfield(
                   controller: confirmPasswordController,
-                  hintText: 'Confirm password',
+                  hintText: 'Konfirmasi password',
                   obscureText: true,
                   keyboardType: TextInputType.text,
                 ),
@@ -106,7 +106,7 @@ class AddStudent extends StatelessWidget {
                 SizedBox(height: AppStyles.space),
 
                 ReuseButton(
-                  text: 'Add Student',
+                  text: 'Tambah Data Siswa',
                   onPressed: () async {
                     if (nameController.text.isEmpty ||
                         longNameController.text.isEmpty ||

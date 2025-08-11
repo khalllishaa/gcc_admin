@@ -38,7 +38,7 @@ class ViewSubject extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Subject',
+                      title: 'Mata Pelajaran',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -75,7 +75,7 @@ class ViewSubject extends StatelessWidget {
                           SizedBox(height: AppStyles.spaceM),
                           Center(
                             child: Text(
-                              'Tidak ada subject di kelas ini',
+                              'Tidak ada mata pelajaran di kelas ini',
                               style: AppStyles.profileText2,
                             ),
                           ),

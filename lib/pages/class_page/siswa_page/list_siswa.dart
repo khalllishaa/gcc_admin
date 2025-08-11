@@ -43,7 +43,7 @@ class ListStudent extends StatelessWidget {
                         return CategoriesLine(
                           image: 'images/categories.png',
                           title: controller.selectedClassName.isEmpty
-                              ? 'Class'
+                              ? 'Kelas'
                               : controller.selectedClassName.value,
                         );
                       }),

@@ -136,34 +136,44 @@ class Journal extends StatelessWidget {
                       Center(
                         child: Column(
                           children: [
+                            // Container(
+                            //   padding: EdgeInsets.all(AppStyles.paddingXL),
+                            //   decoration: BoxDecoration(
+                            //     color: AppStyles.dark.withOpacity(0.05),
+                            //     shape: BoxShape.circle,
+                            //   ),
+                            //   child: Icon(
+                            //     Icons.book_outlined,
+                            //     size: 64,
+                            //     color: AppStyles.dark.withOpacity(0.3),
+                            //   ),
+                            // ),
+                            // SizedBox(height: AppStyles.spaceL),
+                            // Text(
+                            //   'Belum ada journal',
+                            //   style: TextStyle(
+                            //     color: AppStyles.dark.withOpacity(0.8),
+                            //     fontSize: 18,
+                            //     fontWeight: FontWeight.w600,
+                            //   ),
+                            // ),
                             Container(
-                              padding: EdgeInsets.all(AppStyles.paddingXL),
-                              decoration: BoxDecoration(
-                                color: AppStyles.dark.withOpacity(0.05),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.book_outlined,
-                                size: 64,
-                                color: AppStyles.dark.withOpacity(0.3),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: Image.asset(
+                                'images/motorcycle.png',
+                                fit: BoxFit.contain,
                               ),
                             ),
-                            SizedBox(height: AppStyles.spaceL),
+                            SizedBox(height: AppStyles.spaceM),
                             Text(
-                              'Belum ada journal',
-                              style: TextStyle(
-                                color: AppStyles.dark.withOpacity(0.8),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              'Tidak ada materi untuk tanggal',
+                              style: AppStyles.profileText2,
                             ),
-                            SizedBox(height: AppStyles.spaceS),
+                            SizedBox(height: AppStyles.spaceXXS),
                             Text(
-                              'untuk tanggal ${DateFormat('dd MMMM yyyy', 'id_ID').format(journalC.selectedDate.value)}',
-                              style: TextStyle(
-                                color: AppStyles.dark.withOpacity(0.6),
-                                fontSize: 14,
-                              ),
+                              '${DateFormat('dd MMMM yyyy', 'id_ID').format(journalC.selectedDate.value)}',
+                              style: AppStyles.profileText2,
                               textAlign: TextAlign.center,
                             ),
                           ],

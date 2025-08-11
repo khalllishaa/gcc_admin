@@ -40,7 +40,7 @@ class AddReportView extends StatelessWidget {
                   Expanded(
                     child: CategoriesLine(
                       image: 'images/categories.png',
-                      title: 'Add Reports',
+                      title: 'Tambah Laporan',
                     ),
                   ),
                 ],

@@ -38,17 +38,17 @@ class Bottomnav extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(IconlyLight.home),
               activeIcon: Icon(IconlyBold.home),
-              label: 'Home',
+              label: 'Beranda',
             ),
             BottomNavigationBarItem(
               icon: Icon(IconlyLight.paper),
               activeIcon: Icon(IconlyBold.paper),
-              label: 'Class',
+              label: 'Kelas',
             ),
             BottomNavigationBarItem(
               icon: Icon(IconlyLight.profile),
               activeIcon: Icon(IconlyBold.profile),
-              label: 'Profile',
+              label: 'Profil',
             ),
           ],
           selectedItemColor: AppStyles.light,

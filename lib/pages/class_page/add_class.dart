@@ -44,7 +44,7 @@ class AddClass extends StatelessWidget {
                     Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Add Class',
+                        title: 'Tambah Kelas',
                       ),
                     ),
                   ],
@@ -59,7 +59,7 @@ class AddClass extends StatelessWidget {
                 ),
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
-                  text: 'Add Class',
+                  text: 'Tambah Kelas',
                   onPressed: () {
                     controller.addClass();
                   },

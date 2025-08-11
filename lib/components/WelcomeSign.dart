@@ -36,7 +36,7 @@ class WelcomeSign extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Hello!',
+                        'Hai!',
                         style: AppStyles.heading1,
                       ),
                       SizedBox(width: AppStyles.spaceS),
@@ -48,7 +48,7 @@ class WelcomeSign extends StatelessWidget {
                   ),
                   SizedBox(height: AppStyles.spaceXS),
                   Text(
-                    'Welcome to GCC',
+                    'Selamat Datang di GCC!',
                     style: AppStyles.heading2,
                   ),
                 ],

@@ -22,7 +22,7 @@ class ClassPage extends StatelessWidget {
             Obx(() {
               final user = userController.user.value;
               return WelcomeSign(
-                username: user != null ? user.longName : 'Guest',
+                username: user != null ? user.name : 'Guest',
                 profileUrl: (user != null && user.profilePicture != null && user.profilePicture!.isNotEmpty)
                     ? 'https://gcc-api.rplrus.com/${user.profilePicture}'
                     : null,

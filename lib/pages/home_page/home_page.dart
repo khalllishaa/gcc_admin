@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
             Obx(() {
               final user = userController.user.value;
               return WelcomeSign(
-                username: user != null ? user.longName : 'Guest',
+                username: user != null ? user.name : 'Guest',
                 profileUrl: (user != null && user.profilePicture != null && user.profilePicture!.isNotEmpty)
                     ? 'https://gcc-api.rplrus.com/${user.profilePicture}'
                     : null,
@@ -39,38 +39,42 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: AppStyles.spaceS),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: CategoriesLine(
-                          title: 'Home Page',
-                          image: 'images/categories.png',
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () => Get.toNamed('/notif'),
-                            child: Container(
-                              margin: EdgeInsets.only(left: AppStyles.paddingS),
-                              padding: EdgeInsets.all(AppStyles.paddingS),
-                              decoration: BoxDecoration(
-                                color: AppStyles.primaryDark,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.notifications,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: AppStyles.spaceS),
-                        ],
-                      )
-                    ],
+                  CategoriesLine(
+                    title: 'Halaman Utama',
+                    image: 'images/categories.png',
                   ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     Expanded(
+                  //       child: CategoriesLine(
+                  //         title: 'Halaman Utama',
+                  //         image: 'images/categories.png',
+                  //       ),
+                  //     ),
+                  //     Column(
+                  //       children: [
+                  //         GestureDetector(
+                  //           onTap: () => Get.toNamed('/notif'),
+                  //           child: Container(
+                  //             margin: EdgeInsets.only(left: AppStyles.paddingS),
+                  //             padding: EdgeInsets.all(AppStyles.paddingS),
+                  //             decoration: BoxDecoration(
+                  //               color: AppStyles.primaryDark,
+                  //               shape: BoxShape.circle,
+                  //             ),
+                  //             child: Icon(
+                  //               Icons.notifications,
+                  //               color: Colors.white,
+                  //               size: 24,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         SizedBox(height: AppStyles.spaceS),
+                  //       ],
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -83,7 +87,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       SizedBox(height: AppStyles.spaceS),
                       WavyCard(
-                        title: 'List Guru',
+                        title: 'Daftar Guru',
                         onTap: () => Get.toNamed('/list-teacher'),
                       ),
                       WavyCard(
