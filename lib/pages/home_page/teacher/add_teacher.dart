@@ -45,7 +45,7 @@ class Addteacher extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Add Teacher',
+                      title: 'Tambah Guru',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -74,7 +74,7 @@ class Addteacher extends StatelessWidget {
                     ),
                     SizedBox(height: AppStyles.spaceL),
                     ReuseButton(
-                        text: 'Add Teacher',
+                        text: 'Tambah Guru',
                         onPressed: () async {
                           final name = nameController.text.trim();
                           final classId = int.tryParse(classIdController.text.trim()) ?? 0;

@@ -45,7 +45,7 @@ class AddSubject extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Add Subject',
+                      title: 'Tambah Mapel',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -66,7 +66,7 @@ class AddSubject extends StatelessWidget {
                     ),
                     SizedBox(height: AppStyles.spaceM),
                     ReuseButton(
-                      text: 'Add Subject',
+                      text: 'Tambah Mata Pelajaran',
                       onPressed: () {
                         controller.addSubject(nameController.text);
                         Get.back();

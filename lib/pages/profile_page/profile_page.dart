@@ -25,7 +25,7 @@ class ProfilePage extends StatelessWidget {
           SizedBox(height: AppStyles.spaceXXL),
           Center(
             child: Text(
-              "Profile",
+              "Profil",
               style: AppStyles.headingStyle.copyWith(fontSize: 24),
             ),
           ),
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                         return Column(
                           children: [
                             Text(
-                              user.longName,
+                              user.name,
                               style: AppStyles.welcome2.copyWith(
                                 color: AppStyles.dark,
                                 fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class ProfilePage extends StatelessWidget {
                       }),
                       SizedBox(height: AppStyles.spaceL),
                       ReuseButton(
-                        text: 'Sign Out',
+                        text: 'Keluar',
                         onPressed: () {
                           controller.logout();
                         },

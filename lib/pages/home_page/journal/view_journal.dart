@@ -144,13 +144,13 @@ class ViewJournal extends StatelessWidget {
                       child: Column(
                         children: [
                           ViewJournalCard(
-                            title: "Subject",
+                            title: "Mata Pelajaran",
                             subtitle: journal.subject.name,
                             icon: Icons.menu_book,
                           ),
                           SizedBox(height: AppStyles.spaceS),
                           ViewJournalCard(
-                            title: "Teacher",
+                            title: "Guru",
                             subtitle: journal.teacher.name,
                             icon: Icons.person,
                           ),

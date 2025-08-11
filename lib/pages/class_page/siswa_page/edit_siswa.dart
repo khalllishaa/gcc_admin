@@ -46,7 +46,7 @@ class EditStudent extends StatelessWidget {
                     Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Edit Siswa',
+                        title: 'Edit Data Siswa',
                       ),
                     ),
                   ],
@@ -61,7 +61,7 @@ class EditStudent extends StatelessWidget {
 
                 SizedBox(height: AppStyles.spaceL),
                 ReuseButton(
-                  text: 'Edit Student',
+                  text: 'Edit Data Siswa',
                   onPressed: () async {
                     final updatedName = studentNameController.text;
 

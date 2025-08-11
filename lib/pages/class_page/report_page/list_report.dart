@@ -145,7 +145,7 @@ class ListReport extends StatelessWidget {
                             ),
                             SizedBox(height: AppStyles.spaceM),
                             Text(
-                              'Belum ada report di bulan ini',
+                              'Belum ada laporan di bulan ini',
                               style: AppStyles.profileText2,
                             ),
                           ],
@@ -168,7 +168,7 @@ class ListReport extends StatelessWidget {
                           });
                         },
                         child: CourseCard(
-                          title: 'Report - ${student.name}',
+                          title: 'Laporan - ${student.name}',
                           subtitle: controller.selectedMonth.value.isEmpty
                               ? 'Semua Bulan'
                               : controller.selectedMonth.value,

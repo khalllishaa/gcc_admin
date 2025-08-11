@@ -41,7 +41,7 @@ class ViewReport extends StatelessWidget {
                     Expanded(
                       child: CategoriesLine(
                         image: 'images/categories.png',
-                        title: 'Detail Report',
+                        title: 'Detail Laporan',
                       ),
                     ),
                   ],

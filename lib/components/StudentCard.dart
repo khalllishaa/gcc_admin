@@ -85,8 +85,8 @@ class DeleteConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Delete"),
-      content: Text("Are you sure you want to delete this item?"),
+      title: Text("Hapus"),
+      content: Text("Apakah anda yakin ingin menghapus data ini?"),
       titleTextStyle: AppStyles.welcome2.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
       contentTextStyle: AppStyles.welcome2,
       backgroundColor: AppStyles.primary,
@@ -102,7 +102,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
             foregroundColor: AppStyles.light,
           ),
           child: Text(
-            "No",
+            "Tidak",
             style: AppStyles.welcome2,
           ),
         ),
@@ -119,7 +119,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
             ),
           ),
           child: Text(
-            "Yes",
+            "Iya",
             style: AppStyles.welcome2,
           ),
         ),

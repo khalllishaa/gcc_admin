@@ -56,7 +56,7 @@ class AddJournal extends StatelessWidget {
                   SizedBox(width: AppStyles.spaceS),
                   Expanded(
                     child: CategoriesLine(
-                      title: 'Add Journal',
+                      title: 'Tambah Materi',
                       image: 'images/categories.png',
                     ),
                   ),
@@ -68,7 +68,7 @@ class AddJournal extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: AppStyles.spaceS),
-                    SectionTitle(title: 'Teacher'),
+                    SectionTitle(title: 'Guru'),
                     SizedBox(height: AppStyles.spaceS),
                     Obx(() => DropdownButtonFormField<int>(
                       decoration: InputDecoration(
@@ -84,7 +84,7 @@ class AddJournal extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: AppStyles.primaryLight.withOpacity(0.1),
-                        hintText: 'Select Teacher',
+                        hintText: 'Pilih Guru',
                         hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
                       dropdownColor: AppStyles.light,
@@ -101,7 +101,7 @@ class AddJournal extends StatelessWidget {
                       },
                     )),
                     SizedBox(height: AppStyles.spaceS),
-                    SectionTitle(title: 'Subject'),
+                    SectionTitle(title: 'Mata Pelajaran'),
                     SizedBox(height: AppStyles.spaceS),
                     Obx(() => DropdownButtonFormField<int>(
                       decoration: InputDecoration(
@@ -116,7 +116,7 @@ class AddJournal extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: AppStyles.primaryLight.withOpacity(0.1),
-                        hintText: 'Select Subject',
+                        hintText: 'Pilih Mata Pelajaran',
                         hintStyle: TextStyle(color: AppStyles.grey1),
                       ),
                       dropdownColor: AppStyles.light,
@@ -135,7 +135,7 @@ class AddJournal extends StatelessWidget {
                     SizedBox(height: AppStyles.spaceM),
                     
                     // File Upload Section
-                    SectionTitle(title: 'Upload File (Optional)'),
+                    SectionTitle(title: 'Unggah File'),
                     SizedBox(height: AppStyles.spaceS),
                     Obx(() => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +162,7 @@ class AddJournal extends StatelessWidget {
                                 SizedBox(height: AppStyles.spaceS),
                                 if (journalController.filePath.value.isEmpty) ...[
                                   Text(
-                                    'Choose a file to upload',
+                                    'Pilih file untuk diunggah',
                                     style: TextStyle(
                                       color: AppStyles.grey1,
                                       fontSize: 16,
@@ -170,7 +170,7 @@ class AddJournal extends StatelessWidget {
                                   ),
                                   SizedBox(height: AppStyles.spaceXS),
                                   Text(
-                                    'Supported formats: PDF, DOC, DOCX, JPG, PNG',
+                                    'Format: PDF, DOC, DOCX, JPG, PNG',
                                     style: TextStyle(
                                       color: AppStyles.grey1,
                                       fontSize: 12,
@@ -242,8 +242,8 @@ class AddJournal extends StatelessWidget {
                                       icon: Icon(Icons.attach_file, size: 18),
                                       label: Text(
                                         journalController.filePath.value.isEmpty
-                                            ? 'Choose File'
-                                            : 'Change File',
+                                            ? 'Pilih File'
+                                            : 'Ganti File',
                                         style: TextStyle(fontSize: 14),
                                       ),
                                       style: ElevatedButton.styleFrom(
@@ -302,7 +302,7 @@ class AddJournal extends StatelessWidget {
                     Obx(() => ReuseButton(
                         text: journalController.isLoading.value 
                             ? 'Submitting...' 
-                            : 'Submit Journal',
+                            : 'Tambah Materi',
                         onPressed: () async {
                           if (journalController.isLoading.value) {
                             return; // Do nothing if loading

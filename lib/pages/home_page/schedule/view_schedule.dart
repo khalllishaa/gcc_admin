@@ -41,7 +41,7 @@ class ViewSchedule extends StatelessWidget {
                 SizedBox(width: AppStyles.spaceS),
                 Expanded(
                   child: CategoriesLine(
-                    title: 'Schedule',
+                    title: 'Jadwal Bimbel',
                     image: 'images/categories.png',
                   ),
                 ),
@@ -61,7 +61,7 @@ class ViewSchedule extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: AppStyles.spaceeXL),
+                        // SizedBox(height: AppStyles.spaceS),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -72,7 +72,7 @@ class ViewSchedule extends StatelessWidget {
                         ),
                         SizedBox(height: AppStyles.spaceM),
                         Text(
-                          'Tidak ada schedule di kelas ini',
+                          'Tidak ada jadwal bimbel di kelas ini',
                           style: AppStyles.profileText2,
                         ),
                       ],
@@ -95,9 +95,9 @@ class ViewSchedule extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: AppStyles.spaceS),
                         child: ScheduleCard(
                           day: schedule.day ?? 'Unknown Day',
-                          subject: schedule.subject ?? 'Unknown Subject',
+                          subject: schedule.subject ?? 'Tidak Diketahui',
                           time: '${schedule.startTime ?? "-"} - ${schedule.endTime ?? "-"}',
-                          teacher: schedule.teacher ?? 'Unknown Teacher',
+                          teacher: schedule.teacher ?? 'Tidak Diketahui',
                           onDelete: () {
                             controller.deleteSchedule(schedule.id);
                           },

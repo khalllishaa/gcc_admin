@@ -38,7 +38,7 @@ class JournalClass extends StatelessWidget {
                 SizedBox(width: AppStyles.spaceS),
                 Expanded(
                   child: CategoriesLine(
-                    title: 'Choose Class',
+                    title: 'Pilih Kelas',
                     image: 'images/categories.png',
                   ),
                 ),
