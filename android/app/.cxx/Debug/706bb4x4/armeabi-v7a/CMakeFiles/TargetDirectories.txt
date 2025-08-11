@@ -1,0 +1,2 @@
+D:/NGODING/gcc_admin/android/app/.cxx/Debug/706bb4x4/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/NGODING/gcc_admin/android/app/.cxx/Debug/706bb4x4/armeabi-v7a/CMakeFiles/rebuild_cache.dir
