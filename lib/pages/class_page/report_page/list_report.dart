@@ -3,20 +3,100 @@ import 'package:gcc_admin/pages/class_page/report_page/view_report.dart';
 import 'package:get/get.dart';
 import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/JournalCard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 import '../../../controllers/reports_controller.dart';
 import '../../../routes/app_route.dart';
 
-class ListReport extends StatelessWidget {
+class ListReport extends StatefulWidget {
   const ListReport({super.key});
 
   @override
+  State<ListReport> createState() => _ListReportState();
+}
+
+class _ListReportState extends State<ListReport> {
+  dynamic student;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadStudentFromPreferences();
+  }
+
+  // Function to load student data from SharedPreferences
+  Future<void> _loadStudentFromPreferences() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? studentJson = prefs.getString('selected_student');
+
+      if (studentJson != null && studentJson.isNotEmpty) {
+        Map<String, dynamic> studentMap = jsonDecode(studentJson);
+
+        // Create a student object from the JSON data
+        student = _StudentFromJson(studentMap);
+        print('Student loaded from SharedPreferences: $studentJson');
+      } else {
+        // Fallback: try to get from arguments if SharedPreferences is empty
+        student = Get.arguments is Map<String, dynamic> && Get.arguments.containsKey('student')
+            ? Get.arguments['student']
+            : Get.arguments;
+        print('Using student from arguments as fallback');
+      }
+    } catch (e) {
+      print('Error loading student from SharedPreferences: $e');
+      // Fallback to arguments
+      student = Get.arguments is Map<String, dynamic> && Get.arguments.containsKey('student')
+          ? Get.arguments['student']
+          : Get.arguments;
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Helper function to create student object from JSON
+  dynamic _StudentFromJson(Map<String, dynamic> json) {
+    // Create a simple object with the required properties
+    return _Student(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (student == null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Data siswa tidak ditemukan',
+                style: AppStyles.profileText2,
+              ),
+              SizedBox(height: AppStyles.spaceM),
+              ElevatedButton(
+                onPressed: () => Get.back(),
+                child: Text('Kembali'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     final controller = Get.put(ReportController());
-    // final student = Get.arguments;
-    final student = Get.arguments is Map<String, dynamic> && Get.arguments.containsKey('student')
-        ? Get.arguments['student']
-        : Get.arguments;
 
     if (controller.allReports.isEmpty && !controller.isLoading.value) {
       Future.microtask(() => controller.fetchReports());
@@ -173,10 +253,10 @@ class ListReport extends StatelessWidget {
                               ? 'Semua Bulan'
                               : controller.selectedMonth.value,
                           imagePath: "images/student.png",
-                            // onDelete: () {
-                            //   final reportId = reportsForUser.first.id; // ambil ID report yang ditampilkan
-                            //   controller.deleteReport(reportId);
-                            // }
+                          // onDelete: () {
+                          //   final reportId = reportsForUser.first.id; // ambil ID report yang ditampilkan
+                          //   controller.deleteReport(reportId);
+                          // }
                         ),
                       ),
                     ],
@@ -188,7 +268,18 @@ class ListReport extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/add-report', arguments: {'userId': student.id}),
+        onPressed: () async {
+          // Navigate to add-report and wait for result
+          final result = await Get.toNamed('/add-report');
+
+          // If result indicates success, refresh the reports
+          if (result != null && result is Map<String, dynamic> && result['success'] == true) {
+            print('Refreshing reports after successful creation...');
+            controller.isLoading.value = true;
+            await controller.fetchReports();
+            controller.isLoading.value = false;
+          }
+        },
         backgroundColor: AppStyles.dark,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: AppStyles.primaryLight),
@@ -196,4 +287,12 @@ class ListReport extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+}
+
+// Simple student class for JSON mapping
+class _Student {
+  final int id;
+  final String name;
+
+  _Student({required this.id, required this.name});
 }
