@@ -1,19 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import '../../../components/AppStyles.dart';
 import '../../../components/CategoriesLine.dart';
 import '../../../components/CustomTextField.dart';
 import '../../../components/ReuseButton.dart';
 import '../../../controllers/reports_controller.dart';
 
-class AddReportView extends StatelessWidget {
-  final controller = Get.put(ReportController());
-  final int userId = Get.arguments['userId'];
-
+class AddReportView extends StatefulWidget {
   AddReportView({super.key});
 
   @override
+  State<AddReportView> createState() => _AddReportViewState();
+}
+
+class _AddReportViewState extends State<AddReportView> {
+  final controller = Get.put(ReportController());
+  int? userId;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserIdFromPreferences();
+  }
+
+  // Function to load userId from SharedPreferences
+  Future<void> _loadUserIdFromPreferences() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? studentJson = prefs.getString('selected_student');
+
+      if (studentJson != null && studentJson.isNotEmpty) {
+        Map<String, dynamic> studentMap = jsonDecode(studentJson);
+        userId = studentMap['id'];
+        print('UserId loaded from SharedPreferences: $userId');
+      } else {
+        // Fallback: try to get from arguments if SharedPreferences is empty
+        final arguments = Get.arguments;
+        if (arguments != null && arguments is Map<String, dynamic> && arguments.containsKey('userId')) {
+          userId = arguments['userId'];
+          print('Using userId from arguments as fallback: $userId');
+        }
+      }
+    } catch (e) {
+      print('Error loading userId from SharedPreferences: $e');
+      // Fallback to arguments
+      final arguments = Get.arguments;
+      if (arguments != null && arguments is Map<String, dynamic> && arguments.containsKey('userId')) {
+        userId = arguments['userId'];
+      }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+        backgroundColor: AppStyles.light,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (userId == null) {
+      return Scaffold(
+        backgroundColor: AppStyles.light,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Data siswa tidak ditemukan',
+                style: AppStyles.profileText2,
+              ),
+              SizedBox(height: AppStyles.spaceM),
+              ElevatedButton(
+                onPressed: () => Get.back(),
+                child: Text('Kembali'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppStyles.light,
       body: SafeArea(
@@ -136,7 +211,7 @@ class AddReportView extends StatelessWidget {
                       }
 
                       return Obx(() {
-                        final alreadySubmitted = controller.hasSubmittedReport(userId);
+                        final alreadySubmitted = controller.hasSubmittedReport(userId!);
                         final isLoading = controller.isLoading.value;
 
                         final canSubmit = !alreadySubmitted && !isLoading;
@@ -155,7 +230,7 @@ class AddReportView extends StatelessWidget {
                                 ? () async {
                               try {
                                 controller.isLoading.value = true;
-                                await controller.submitReports(userId);
+                                await controller.submitReports(userId!);
                                 controller.isLoading.value = false;
 
                                 Get.back();

@@ -3,11 +3,34 @@ import 'package:gcc_admin/components/AppStyles.dart';
 import 'package:gcc_admin/components/CategoriesLine.dart';
 import 'package:gcc_admin/components/StudentCard.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 import '../../../controllers/class_controller.dart';
 
 class ListStudent extends StatelessWidget {
   const ListStudent({super.key});
+
+  // Function to save student data to SharedPreferences
+  Future<void> _saveStudentToPreferences(dynamic student) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      // Convert student object to JSON string
+      String studentJson = jsonEncode({
+        'id': student.id,
+        'name': student.name,
+        // Add other student properties as needed
+        // 'email': student.email,
+        // 'class': student.class,
+      });
+
+      await prefs.setString('selected_student', studentJson);
+      print('Student saved to SharedPreferences: $studentJson');
+    } catch (e) {
+      print('Error saving student to SharedPreferences: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +118,11 @@ class ListStudent extends StatelessWidget {
                           onDelete: () {
                             controller.deleteStudent(student.id);
                           },
-                          // onTap: () => Get.toNamed('/list-report'),
-                          onTap: () => Get.toNamed('/list-report', arguments: student),
+                          // Updated onTap to save to SharedPreferences
+                          onTap: () async {
+                            await _saveStudentToPreferences(student);
+                            Get.toNamed('/list-report');
+                          },
                         );
                       },
                     ),
